@@ -1,0 +1,7 @@
+besi 1000
+tembaga 1500
+air 100
+kayu 500
+permata 3000
+emas 2500
+perak 2000
