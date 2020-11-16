@@ -9,8 +9,8 @@ void MakeEmpty (TabEl * T)
     IdxType i;
     for (i = IdxMin; i < IdxMax+1; i++)
     {
-        Id(Elmt(*T,i)) = ValUndef;
-        Value(Elmt(*T,i)) = ValUndef;
+        Id(*T,i) = ValUndef;
+        Value(*T,i) = ValUndef;
     }
     
 }
@@ -20,7 +20,7 @@ int NbElmt (TabEl T)
     IdxType i = IdxMin;
     int Neff = 0;
     
-    while ((Id(Elmt(T,i)) != ValUndef) && (i<=IdxMax))
+    while ((Id(T,i) != ValUndef) && (i<=IdxMax))
     {
         Neff+=1;
         i++;
@@ -82,9 +82,9 @@ void BacaIsi (TabEl * T)
         for (i=IdxMin; i<=N-1; i++) {
             printf("Elemen ke-%d\n", i+1);
             printf("Masukkan ID item: ");
-            scanf("%d", &Id(Elmt(*T,i)));
+            scanf("%d", &Id(*T,i));
             printf("Masukkan nilai: ");
-            scanf("%d", &Value(Elmt(*T,i)));
+            scanf("%d", &Value(*T,i));
         }
     }
 }
@@ -102,12 +102,12 @@ void TulisIsiTab (TabEl T)
         {
             if (i!=GetLastIdx(T)) {
                 printf("{");
-                printf("ID: %d,", Id(Elmt(T,i)));
-                printf(" Value: %d},\n", Value(Elmt(T,i)));
+                printf("ID: %d,", Id(T,i));
+                printf(" Value: %d},\n", Value(T,i));
             } else {
                 printf("{");
-                printf("ID: %d,", Id(Elmt(T,i)));
-                printf(" Value: %d}", Value(Elmt(T,i)));
+                printf("ID: %d,", Id(T,i));
+                printf(" Value: %d}", Value(T,i));
             }
         }
         printf("]");
@@ -120,7 +120,7 @@ IdxType SearchId (TabEl T, int X)
     IdxType i = GetFirstIdx(T);
 
     while ((i<=GetLastIdx(T))) {
-        if (Id(Elmt(T,i)) == X)
+        if (Id(T,i) == X)
         {
             return i;
         } else {
@@ -140,7 +140,7 @@ int ValueOfId (TabEl T, int X)
 {
     IdxType i = SearchId(T,X);
 
-    return Value(Elmt(T,i));
+    return Value(T,i);
 }
 
 void AddAsLastEl (TabEl * T, ElType X)
@@ -154,7 +154,7 @@ void DelLastEl (TabEl * T, ElType * X)
 {
     if (!IsEmpty(*T)) {
         *X = Elmt(*T,GetLastIdx(*T));
-        Id(Elmt(*T,GetLastIdx(*T))) = ValUndef;
-        Value(Elmt(*T,GetLastIdx(*T))) = ValUndef;
+        Id(*T,GetLastIdx(*T)) = ValUndef;
+        Value(*T,GetLastIdx(*T)) = ValUndef;
     }
 }

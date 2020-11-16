@@ -32,8 +32,8 @@ typedef struct {
 } TabEl;
 /* Indeks yang digunakan [IdxMin..IdxMax] */
 /* ********** SELEKTOR ********** */
-#define Id(e)    (e).id
-#define Value(e)  (e).value
+#define Id(T,i)    (T).TI[(i)].id
+#define Value(T,i)  (T).TI[(i)].value
 #define Elmt(T,i) (T).TI[(i)]
 
 
