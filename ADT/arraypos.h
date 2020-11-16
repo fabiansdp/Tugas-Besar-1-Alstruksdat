@@ -17,15 +17,13 @@
 /* Indeks tak terdefinisi*/
 #define ValUndef -1
 /* Nilai elemen tak terdefinisi*/
-#define CharUndef '\0'
-/* String elemen tak terdefinisi */
-#define NMax 50
-/* Panjang string maks */
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType;  /* type indeks */
+
+/*Element type berupa tuple item id dan valuenya*/
 typedef struct {
-   char key[NMax];
+   int id;
    int value;
 } ElType;
 
@@ -34,7 +32,7 @@ typedef struct {
 } TabEl;
 /* Indeks yang digunakan [IdxMin..IdxMax] */
 /* ********** SELEKTOR ********** */
-#define Key(e)    (e).key
+#define Id(e)    (e).id
 #define Value(e)  (e).value
 #define Elmt(T,i) (T).TI[(i)]
 
@@ -101,17 +99,17 @@ void TulisIsiTab (TabEl T);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
-IdxType SearchKey (TabEl T, char X);
+IdxType SearchId (TabEl T, int X);
 /* Search apakah ada elemen tabel T yang memiliki key X */
 /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = X */
 /* Jika tidak ada, mengirimkan IdxUndef */
 /* Menghasilkan indeks tak terdefinisi (IdxUndef) jika tabel T kosong */
 /* Skema Searching yang digunakan bebas */
-boolean SearchK (TabEl T, ElType X);
+boolean SearchK (TabEl T, int X);
 /* Search apakah ada elemen tabel T yang memiliki key X */
 /* Jika ada, menghasilkan true, jika tidak ada menghasilkan false */
 /* Skema searching yang digunakan bebas */
-int ValueOfKey (TabEl T, char X);
+int ValueOfId (TabEl T, int X);
 /* Search value sebuah key X di dalam Tabel T */
 /* Jika ada mengirim valuenya, jika tidak ada mengirim ValUndef */
 

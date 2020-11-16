@@ -65,3 +65,17 @@ void SalinKata()
 
     CKata.Length = i;
 }
+
+boolean IsKataSama(Kata K1, Kata K2) {
+    if (K1.Length == K2.Length) {
+        for (int i=0; i<K1.Length; i++) {
+            if (K1.TabKata[i] != K2.TabKata[i]) {
+                return false;
+            }
+        }
+    } else {
+        return false;
+    }
+
+    return true;
+}

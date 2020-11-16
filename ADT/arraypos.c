@@ -9,7 +9,7 @@ void MakeEmpty (TabEl * T)
     IdxType i;
     for (i = IdxMin; i < IdxMax+1; i++)
     {
-        Key(Elmt(*T,i))[0] = CharUndef;
+        Id(Elmt(*T,i)) = ValUndef;
         Value(Elmt(*T,i)) = ValUndef;
     }
     
@@ -20,7 +20,7 @@ int NbElmt (TabEl T)
     IdxType i = IdxMin;
     int Neff = 0;
     
-    while ((Value(Elmt(T,i)) != ValUndef) && (i<=IdxMax))
+    while ((Id(Elmt(T,i)) != ValUndef) && (i<=IdxMax))
     {
         Neff+=1;
         i++;
@@ -81,9 +81,8 @@ void BacaIsi (TabEl * T)
     {
         for (i=IdxMin; i<=N-1; i++) {
             printf("Elemen ke-%d\n", i+1);
-            getchar();
-            printf("Masukkan item: ");
-            fgets(Key(Elmt(*T,i)), 50, stdin);
+            printf("Masukkan ID item: ");
+            scanf("%d", &Id(Elmt(*T,i)));
             printf("Masukkan nilai: ");
             scanf("%d", &Value(Elmt(*T,i)));
         }
@@ -103,15 +102,11 @@ void TulisIsiTab (TabEl T)
         {
             if (i!=GetLastIdx(T)) {
                 printf("{");
-                printf("Key: ");
-                for (int j=0; j<NMax; j++) {
-                    printf("%c", Key(Elmt(T,i))[j]);
-                }
-                printf(",");
+                printf("ID: %d,", Id(Elmt(T,i)));
                 printf(" Value: %d},\n", Value(Elmt(T,i)));
             } else {
                 printf("{");
-                printf("Key: %c,", *Key(Elmt(T,i)));
+                printf("ID: %d,", Id(Elmt(T,i)));
                 printf(" Value: %d}", Value(Elmt(T,i)));
             }
         }
@@ -120,12 +115,12 @@ void TulisIsiTab (TabEl T)
     
 }
 
-IdxType SearchKey (TabEl T, char X)
+IdxType SearchId (TabEl T, int X)
 {
     IdxType i = GetFirstIdx(T);
 
     while ((i<=GetLastIdx(T))) {
-        if (*Key(Elmt(T,i)) == X)
+        if (Id(Elmt(T,i)) == X)
         {
             return i;
         } else {
@@ -136,19 +131,16 @@ IdxType SearchKey (TabEl T, char X)
     return IdxUndef;
 }
 
-boolean SearchK (TabEl T, ElType X)
+boolean SearchK (TabEl T, int X)
 {
-    return (SearchK(T,X) != IdxUndef);
+    return (SearchId(T,X) != IdxUndef);
 }
 
-int ValueOfKey (TabEl T, char X)
+int ValueOfId (TabEl T, int X)
 {
-    if (SearchKey(T,X) == IdxUndef) {
-        return ValUndef;
-    } else {
-        IdxType i = SearchKey(T,X);
-        return Value(Elmt(T,i));
-    }
+    IdxType i = SearchId(T,X);
+
+    return Value(Elmt(T,i));
 }
 
 void AddAsLastEl (TabEl * T, ElType X)
@@ -162,9 +154,7 @@ void DelLastEl (TabEl * T, ElType * X)
 {
     if (!IsEmpty(*T)) {
         *X = Elmt(*T,GetLastIdx(*T));
-        for (int i=0; i<NMax; i++) {
-            Key(Elmt(*T,GetLastIdx(*T)))[i] = CharUndef;
-        }
+        Id(Elmt(*T,GetLastIdx(*T))) = ValUndef;
         Value(Elmt(*T,GetLastIdx(*T))) = ValUndef;
     }
 }
