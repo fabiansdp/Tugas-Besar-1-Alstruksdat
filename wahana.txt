@@ -5,4 +5,3 @@
 "Candy Village" 40000 "Wahana foto-foto"
 "Candy Swing" 30000 "Wahana perahu kora-kora"
 "Blackforest Tornado" 60000 "Wahana tornado"
-"Strawbery Spring" 40000 "Wahana ontang-anting"
