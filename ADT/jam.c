@@ -75,11 +75,11 @@ Jam DetikToJam(int N)
     return J;
 }
 
-void TambahMenit(Jam J, int X)
+void TambahMenit(Jam *J, int X)
 {
 	int detik;
 	int detikdarijam;
 	detik = X*60;
-	detikdarijam =JamToDetik(J) + detik;
-	DetikToJam(detikdarijam);	
+	detikdarijam =JamToDetik(*J) + detik;
+	*J = DetikToJam(detikdarijam);	
 }
