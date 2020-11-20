@@ -1,4 +1,4 @@
-air 100
-kayu 200
-batu 300
-besi 400
+100 air
+200 kayu
+300 batu
+400 besi
