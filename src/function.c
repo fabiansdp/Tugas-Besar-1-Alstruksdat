@@ -8,18 +8,43 @@ void build()
 {
     printf("ini BUILD\n");
 }
+
 void upgrade()
 {
     printf("ini UPGRADE\n");
 }
+
 void buy()
 {
     printf("ini BUY\n");
 }
-void undo()
-{
 
-    printf("ini UNDO\n");
+void undo(Stack *S)
+{
+    // Melakukan Pop terhadap exeStack
+    // dan mendelete element command
+    COMMAND C;
+
+    Pop(S, &C);
+
+    switch (Comm(C)) {
+        case 1:
+            printf("Undo Build");
+            break;
+        case 2:
+            printf("Undo Upgrade");
+            break;
+        case 3:
+            printf("Undo Buy");
+            break;
+        case 4:
+            printf("Undo Undo");
+            break;
+        default:
+            break;
+    }
+
+    MakeEmptyCOMMAND(&C);
 }
 
 void execute(Stack *S)
@@ -27,29 +52,29 @@ void execute(Stack *S)
     Stack exeStack;
     while (!IsEmpty(*S))
     {
-        COMMAND ElementStack;
-        Pop(S, &ElementStack);
-        Push(&exeStack, ElementStack);
+        COMMAND C;
+        Pop(S, &C);
+        Push(&exeStack, C);
     }
     while (!IsEmpty(exeStack))
     {
-        COMMAND ElementStack;
-        Pop(&exeStack, &ElementStack);
-        if (Comm(ElementStack) == 1)
+        COMMAND C;
+        Pop(&exeStack, &C);
+        if (Comm(C) == 1)
         {
             build();
         }
-        else if (Comm(ElementStack) == 2)
+        else if (Comm(C) == 2)
         {
             upgrade();
         }
-        else if (Comm(ElementStack) == 3)
+        else if (Comm(C) == 3)
         {
             buy();
         }
-        else if (Comm(ElementStack) == 4)
+        else if (Comm(C) == 4)
         {
-            undo();
+            undo(&exeStack);
         }
     }
 }
