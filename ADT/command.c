@@ -20,6 +20,18 @@ COMMAND MakeCOMMAND(int comm, int name, int amount, int map, POINT coordinate, i
     return C;
 }
 
+void MakeEmptyCOMMAND(COMMAND *C)
+/* Membentuk sebuah COMMAND yang komponenya nil */
+{
+    Comm(*C) = Nil;
+    Name(*C) = Nil;
+    Amount(*C) = Nil;
+    Map(*C) = Nil;
+    Absis(Coordinate(*C)) = Nil;
+    Ordinat(Coordinate(*C)) = Nil;
+    Time(*C) = Nil;
+}
+
 void TulisCOMMAND(COMMAND C)
 /* Nilai C ditulis ke layar dengan format "(comm,name,amount,map,(X,Y),time)"*/
 /* I.S. C terdefinisi */

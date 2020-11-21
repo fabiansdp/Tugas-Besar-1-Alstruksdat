@@ -52,6 +52,9 @@ typedef struct
 COMMAND MakeCOMMAND(int comm, int name, int amount, int map, POINT coordinate, int time);
 /* Membentuk sebuah COMMAND dari komponen-komponennya */
 
+void MakeEmptyCOMMAND(COMMAND *C);
+/* Membentuk sebuah COMMAND yang komponenya nil */
+
 void TulisCOMMAND(COMMAND C);
 /* Nilai C ditulis ke layar dengan format "(comm,name,amount,map,(X,Y),time)"*/
 /* I.S. C terdefinisi */

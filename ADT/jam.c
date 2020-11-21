@@ -40,17 +40,17 @@ void TulisJam(Jam J)
 /* Proses : Menulis ke layar*/
 {
     if(Hour(J) <10 && Minute(J) <10){
-        printf("0%d:0%d",Hour(J),Minute(J));    
+        printf("0%d:0%d\n",Hour(J),Minute(J));    
     }else
     {
         if(Hour(J) < 10){
-            printf("0%d:%d",Hour(J),Minute(J));
+            printf("0%d:%d\n",Hour(J),Minute(J));
         }
         if(Minute(J)<10){
-            printf("%d:0%d",Hour(J),Minute(J));
+            printf("%d:0%d\n",Hour(J),Minute(J));
         }
-        if(Hour(J) > 10 && Minute(J)>10){
-            printf("%d:%d",Hour(J),Minute(J));
+        if(Hour(J) >= 10 && Minute(J)>=10){
+            printf("%d:%d\n",Hour(J),Minute(J));
         }
     }
     
@@ -75,11 +75,11 @@ Jam DetikToJam(int N)
     return J;
 }
 
-void TambahMenit(Jam J, int X)
+void TambahMenit(Jam *J, int X)
 {
 	int detik;
 	int detikdarijam;
 	detik = X*60;
-	detikdarijam =JamToDetik(J) + detik;
-	DetikToJam(detikdarijam);	
+	detikdarijam =JamToDetik(*J) + detik;
+	*J = DetikToJam(detikdarijam);	
 }

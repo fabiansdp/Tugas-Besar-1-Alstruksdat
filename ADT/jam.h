@@ -39,7 +39,7 @@ int JamToDetik(Jam J);
 Jam DetikToJam(int N);
 /* Konversi detik ke Jam */
 
-void TambahMenit(Jam J, int X);
+void TambahMenit(Jam *J, int X);
 /*Nambah X menit ke current time*/
 
 #endif
