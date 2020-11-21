@@ -15,7 +15,6 @@ typedef struct
     BUY     = 3
     UNDO    = 4
     */
-    int comm;
     /*
     ID WAHANA
     "Candy Crush"           = 11
@@ -32,7 +31,8 @@ typedef struct
     batu    = 23
     besi    = 24
     */
-    int name;
+    int comm;         /* ID Command */
+    int name;         /* ID Wahana */
     int amount;       /* Diisi jumlah material yang dibutuhkan, isi Nil jika tidak membutuhkan komponen ini */
     int map;          /* Diisi peta 1/2/3/4, isi Nil jika tidak membutuhkan komponen ini */
     POINT coordinate; /* Diisi koordinat dalam peta dengan selektor di adt point, isi Nil jika tidak membutuhkan komponen ini */
