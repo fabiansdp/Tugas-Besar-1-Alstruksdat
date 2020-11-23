@@ -97,6 +97,62 @@ int main()
     }
     //antrian
     MakeEmpty(&Q, MaxAntrian);
+    while (!IsFullQueue(Q))
+    {
+        /*Inisialisasi infotype_pq*/
+        srand(crntname); //lebih baik nanti pake ADT time
+        Nama(temp)=Nama[crntname];
+        Prio(temp)=crntname;
+        Kesabaran(temp)=(rand()%3)+1;
+        // Kesabaran(temp)=default_angka;
+        /*Selama tidak full, bisa tambah antrian*/
+        TambahAntrian(&Q,temp);
+        /*Setiap bertambah waktu tambah antrian(not implemented)*/
+        crntname++; /*Nama selanjutnya*/
+        if (crntname==27)
+        {
+            crntname=0;
+        }
+    }
+    printf("Antrian awal\n");
+    PrintAntrian(Q);
+
+    //Cek wahana yang ingin dinaiki
+    int nama=0;
+    char ch; 
+    ch = Wahana(ElmtQ(Q,0),nama);
+    printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,0)));
+    while (ch !='.')
+    {
+        printf("%c",ch);
+        nama++;
+        ch = Wahana(ElmtQ(Q,0),nama);
+    }
+    printf("\n");
+
+    nama=0;
+    ch = Wahana(ElmtQ(Q,2),nama);
+    printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,2)));
+    while (ch !='.')
+    {
+        printf("%c",ch);
+        nama++;
+        ch = Wahana(ElmtQ(Q,2),nama);
+    }
+    printf("\n");
+    printf("Antrian[%d/%d]",NBElmtQueue(Q),MaxAntrian);
+
+    //Simulasi antrian habis dari penuh
+    while (!IsEmptyQueue(Q))
+    {
+        KurangAntrian(&Q,&served);
+        printf("Pelanggan %c dilayani\n",Nama(served));
+        printf("Antrian[%d/%d]",NBElmtQueue(Q),MaxAntrian);
+        if (!IsEmptyQueue(Q))
+        {
+            PrintAntrian(Q);
+        }
+    }
     //stack
     Comm(comm1) = 1;
     Comm(comm2) = 2;
