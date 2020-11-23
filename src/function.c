@@ -50,13 +50,13 @@ void undo(Stack *S)
 void execute(Stack *S)
 {
     Stack exeStack;
-    while (!IsEmpty(*S))
+    while (!IsEmptyStack(*S))
     {
         COMMAND C;
         Pop(S, &C);
         Push(&exeStack, C);
     }
-    while (!IsEmpty(exeStack))
+    while (!IsEmptyStack(exeStack))
     {
         COMMAND C;
         Pop(&exeStack, &C);

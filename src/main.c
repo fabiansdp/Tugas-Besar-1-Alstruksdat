@@ -4,11 +4,100 @@
 #include "../ADT/command.c"
 #include "../ADT/stackt.c"
 #include "function.c"
+//test Furqon
+#include "peta.c"
+#include "antrian.c"
+
+//kamus peta
+extern MATRIKS L;
+extern Arr_POINT AP;
+// extern int tipe_point;
+extern POINT player_loc; 
+//kamus antrian
+extern int MaxAntrian;
+extern int default_angka;
+PrioQueueChar Q;
+// int jmlhWahana = 3;
+extern char Nama[]; 
+extern int crntname;
+extern infotype_pq temp;
+extern infotype_pq served;
+//kamus peta_2
+char input;
+int i,j;
+boolean loop;
+int adjacent;
+//kamus stack
+Stack S;
+COMMAND comm1, comm2, comm3, comm4;
 
 int main()
 {
-    Stack S;
-    COMMAND comm1, comm2, comm3, comm4;
+    //peta
+    for (i = 0; i <= 9; i++)
+    {
+        for (j = 0; j <= 19; j++)
+        {
+            tipe_point[i][j]=0;
+        }
+    }
+
+    MakeMATRIKS(10,20,&L);
+    BacaPeta(1,&L);
+    TulisPeta(1,L);
+    TitikPeta(L,AP);
+    for (i = 0; i <= 199; i++)
+    {
+        if (AP.P[i].X!=0 && AP.P[i].Y!=0)
+        {
+            printf("%d ",AP.tipe[i]);
+            printf("%f,",AP.P[i].X);
+            printf("%f\n",AP.P[i].Y);
+        }           
+        // printf("%f,",P[i].X);
+        // printf("%f\n",P[i].Y);
+    }
+
+    printf("X untuk keluar\n");
+    loop=true;    
+    do
+    {
+        adjacent=Adjacency();
+        printf("Nilai adjacent: %d\n",adjacent);
+        printf("Masukkan arah pergerakan:\n");
+        scanf("%c",&input);
+        if (adjacent==5)
+        {
+            printf("Sebelah wahana\n");
+        }
+        else if (adjacent==3)
+        {
+            printf("Sebelah office\n");
+        }
+
+        if (input=='X')
+        {
+            loop=false;
+        }
+        else
+        {
+            Movement(input,&L);
+            PrintPeta(L);
+        }
+    } while (loop);
+
+    //cek tipe_point
+    for (i = 0; i <= 9; i++)
+    {
+        for (j = 0; j <= 19; j++)
+        {
+            printf("%d",tipe_point[i][j]);
+        }
+        printf("\n");
+    }
+    //antrian
+    MakeEmpty(&Q, MaxAntrian);
+    //stack
     Comm(comm1) = 1;
     Comm(comm2) = 2;
     Comm(comm3) = 3;

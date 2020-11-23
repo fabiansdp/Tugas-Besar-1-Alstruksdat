@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "prioqueuechar.h"
-#include "prioqueuechar.c"
-#include "boolean.h"
+// #include "prioqueuechar.h"
+#include "../ADT/prioqueuechar.c"
+#include "../ADT/boolean.h"
 /* Kamus */
 int MaxAntrian = 10;
 int default_angka = 10;
@@ -10,13 +10,13 @@ PrioQueueChar Q;
 // int jmlhWahana = 3;
 char Nama[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}; 
 int crntname = 0;
-infotype temp;
-infotype served;
+infotype_pq temp;
+infotype_pq served;
 /* Algoritma */
 
-void TambahAntrian(PrioQueueChar *Q, infotype X)
+void TambahAntrian(PrioQueueChar *Q, infotype_pq X)
 /*I.S. Menambah antrian Q mungkin kosong*/
-/*F.S. infotype ditambahkan ke Q*/
+/*F.S. infotype_pq ditambahkan ke Q*/
 {
     /*KamusLokal*/
     int n;
@@ -68,7 +68,7 @@ void TambahAntrian(PrioQueueChar *Q, infotype X)
     Enqueue(Q,X);
 }
 
-void KurangAntrian(PrioQueueChar *Q, infotype *X)
+void KurangAntrian(PrioQueueChar *Q, infotype_pq *X)
 /*I.S. Mengurangi antrian tidak mungkin kosong*/
 /*F.S. Elemen dikurangi, kesabaran dikurangi*/
 {
@@ -76,13 +76,13 @@ void KurangAntrian(PrioQueueChar *Q, infotype *X)
     int i,j,n;
     int i2,j2;
     int zcount;
-    // infotype swap;
+    // infotype_pq swap;
     boolean loop,geser;
     /*Algoritma*/
     Dequeue(Q,X);
     // printf("Proses %c\n",Nama(*X));
     /*Kurangi kesabaran*/
-    if (!IsEmpty(*Q))
+    if (!IsEmptyQueue(*Q))
     {
         zcount=0;
         i = Head(*Q);   
@@ -91,7 +91,7 @@ void KurangAntrian(PrioQueueChar *Q, infotype *X)
         while (loop)
         {
             /*Jika kesabaran habis*/
-            if (Kesabaran(Elmt(*Q,i)) == 0)
+            if (Kesabaran(ElmtQ(*Q,i)) == 0)
             {
                 zcount++;
             }
@@ -103,7 +103,7 @@ void KurangAntrian(PrioQueueChar *Q, infotype *X)
         }
 
         // printf("\nJumlah element zero %d\n",zcount);
-        if (NBElmt(*Q)==zcount)
+        if (NBElmtQueue(*Q)==zcount)
         {
             Head(*Q)=Nil;
             Tail(*Q)=Nil;
@@ -118,7 +118,7 @@ void KurangAntrian(PrioQueueChar *Q, infotype *X)
 
             while (zcount>0) {
                 //buang element ke-i bernilai 0 dari antrian    
-                if (Kesabaran(Elmt(*Q,i)) == 0) {
+                if (Kesabaran(ElmtQ(*Q,i)) == 0) {
                     geser=true;
                     i2=i;
                     j2=Tail(*Q);
@@ -132,7 +132,7 @@ void KurangAntrian(PrioQueueChar *Q, infotype *X)
                         }
                         else
                         {
-                            Elmt(*Q,i2)=Elmt(*Q,(i2+1)%MaxEl(*Q));
+                            ElmtQ(*Q,i2)=ElmtQ(*Q,(i2+1)%MaxEl(*Q));
                             i2=(i2+1)%MaxEl(*Q);
                         }
                     }                    
@@ -152,83 +152,85 @@ void KurangAntrian(PrioQueueChar *Q, infotype *X)
         while (loop)
         {
             /*Jika kesabaran habis*/
-            if (Kesabaran(Elmt(*Q,i)) != 0)
+            if (Kesabaran(ElmtQ(*Q,i)) != 0)
             {
-                Kesabaran(Elmt(*Q,i)) -= 1;
+                Kesabaran(ElmtQ(*Q,i)) -= 1;
             }
             if (i==j)
             {
                 loop=false;
             }
             //tambah prio
-            Prio(Elmt(*Q,i))++;
+            Prio(ElmtQ(*Q,i))++;
             i=(i+1)%MaxEl(*Q);
         }
     }
     /*Setiap kurangi waktu (not implemented)*/
 }
 
-int main()
-{
-    /*Kamus*/
-    /*Algoritma*/
-    MakeEmpty(&Q, MaxAntrian);
-    while (!IsFull(Q))
-    {
-        /*Inisialisasi infotype*/
-        srand(crntname); //lebih baik nanti pake ADT time
-        Nama(temp)=Nama[crntname];
-        Prio(temp)=crntname;
-        Kesabaran(temp)=(rand()%3)+1;
-        // Kesabaran(temp)=default_angka;
-        /*Selama tidak full, bisa tambah antrian*/
-        TambahAntrian(&Q,temp);
-        /*Setiap bertambah waktu tambah antrian(not implemented)*/
-        crntname++; /*Nama selanjutnya*/
-        if (crntname==27)
-        {
-            crntname=0;
-        }
-    }
-    printf("Antrian awal\n");
-    PrintAntrian(Q);
+//untuk testing
 
-    //Cek wahana yang ingin dinaiki
-    int nama=0;
-    char ch; 
-    ch = Wahana(Elmt(Q,0),nama);
-    printf("Wahana pelanggan %c: \n",Nama(Elmt(Q,0)));
-    while (ch !='.')
-    {
-        printf("%c",ch);
-        nama++;
-        ch = Wahana(Elmt(Q,0),nama);
-    }
-    printf("\n");
+// int main()
+// {
+//     /*Kamus*/
+//     /*Algoritma*/
+//     MakeEmpty(&Q, MaxAntrian);
+//     while (!IsFull(Q))
+//     {
+//         /*Inisialisasi infotype_pq*/
+//         srand(crntname); //lebih baik nanti pake ADT time
+//         Nama(temp)=Nama[crntname];
+//         Prio(temp)=crntname;
+//         Kesabaran(temp)=(rand()%3)+1;
+//         // Kesabaran(temp)=default_angka;
+//         /*Selama tidak full, bisa tambah antrian*/
+//         TambahAntrian(&Q,temp);
+//         /*Setiap bertambah waktu tambah antrian(not implemented)*/
+//         crntname++; /*Nama selanjutnya*/
+//         if (crntname==27)
+//         {
+//             crntname=0;
+//         }
+//     }
+//     printf("Antrian awal\n");
+//     PrintAntrian(Q);
 
-    nama=0;
-    ch = Wahana(Elmt(Q,2),nama);
-    printf("Wahana pelanggan %c: \n",Nama(Elmt(Q,2)));
-    while (ch !='.')
-    {
-        printf("%c",ch);
-        nama++;
-        ch = Wahana(Elmt(Q,2),nama);
-    }
-    printf("\n");
-    printf("Antrian[%d/%d]",NBElmt(Q),MaxAntrian);
+//     //Cek wahana yang ingin dinaiki
+//     int nama=0;
+//     char ch; 
+//     ch = Wahana(ElmtQ(Q,0),nama);
+//     printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,0)));
+//     while (ch !='.')
+//     {
+//         printf("%c",ch);
+//         nama++;
+//         ch = Wahana(ElmtQ(Q,0),nama);
+//     }
+//     printf("\n");
 
-    //Simulasi antrian habis dari penuh
-    while (!IsEmpty(Q))
-    {
-        KurangAntrian(&Q,&served);
-        printf("Pelanggan %c dilayani\n",Nama(served));
-        printf("Antrian[%d/%d]",NBElmt(Q),MaxAntrian);
-        if (!IsEmpty(Q))
-        {
-            PrintAntrian(Q);
-        }
-    }
+//     nama=0;
+//     ch = Wahana(ElmtQ(Q,2),nama);
+//     printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,2)));
+//     while (ch !='.')
+//     {
+//         printf("%c",ch);
+//         nama++;
+//         ch = Wahana(ElmtQ(Q,2),nama);
+//     }
+//     printf("\n");
+//     printf("Antrian[%d/%d]",NBElmt(Q),MaxAntrian);
+
+//     //Simulasi antrian habis dari penuh
+//     while (!IsEmpty(Q))
+//     {
+//         KurangAntrian(&Q,&served);
+//         printf("Pelanggan %c dilayani\n",Nama(served));
+//         printf("Antrian[%d/%d]",NBElmt(Q),MaxAntrian);
+//         if (!IsEmpty(Q))
+//         {
+//             PrintAntrian(Q);
+//         }
+//     }
     
-    return 0;
-}
+//     return 0;
+// }

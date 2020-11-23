@@ -72,7 +72,7 @@ ElType GetElmtDiagonal (MATRIKS M, indeks i)
 {
     /*Kamus Lokal*/
     /*Algoritma*/
-    return Elmt(M,i,i);
+    return ElmtM(M,i,i);
 }
 
 /* ********** Assignment  MATRIKS ********** */
@@ -86,7 +86,7 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl)
     {
         for (j = GetFirstIdxKol(MIn); j <= GetLastIdxKol(MIn); j++)
         {
-            Elmt(*MHsl,i,j)=Elmt(MIn,i,j);
+            ElmtM(*MHsl,i,j)=ElmtM(MIn,i,j);
         }
     }
     NBrsEff(*MHsl) = NBrsEff(MIn);
@@ -115,7 +115,7 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
         {
             for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++)
             {
-                scanf("%d",&Elmt(*M,i,j));
+                scanf("%d",&ElmtM(*M,i,j));
             }
         }
     }
@@ -139,7 +139,7 @@ void TulisMATRIKS (MATRIKS M)
     {
         for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++)
         {
-            printf("%d",Elmt(M,i,j));
+            printf("%d",ElmtM(M,i,j));
             if (j<GetLastIdxKol(M))
             {
                 printf(" ");
@@ -166,7 +166,7 @@ MATRIKS TambahMATRIKS (MATRIKS M1, MATRIKS M2)
     {
         for (j = GetFirstIdxKol(M1); j <= GetLastIdxKol(M1); j++)
         {
-            Elmt(Mout,i,j)= Elmt(M1,i,j) + Elmt(M2,i,j);
+            ElmtM(Mout,i,j)= ElmtM(M1,i,j) + ElmtM(M2,i,j);
         }
     }
 
@@ -186,7 +186,7 @@ MATRIKS KurangMATRIKS (MATRIKS M1, MATRIKS M2)
     {
         for (j = GetFirstIdxKol(M1); j <= GetLastIdxKol(M1); j++)
         {
-            Elmt(Mout,i,j)= Elmt(M1,i,j) - Elmt(M2,i,j);
+            ElmtM(Mout,i,j)= ElmtM(M1,i,j) - ElmtM(M2,i,j);
         }
     }
     return(Mout);
@@ -209,9 +209,9 @@ MATRIKS KaliMATRIKS (MATRIKS M1, MATRIKS M2)
             temp=0;
             for (k = GetFirstIdxKol(M1); k <= GetLastIdxBrs(M2); k++)
             {
-                temp += (Elmt(M1,i,k)*Elmt(M2,k,j));
+                temp += (ElmtM(M1,i,k)*ElmtM(M2,k,j));
             }
-            Elmt(Mout,i,j)=temp;
+            ElmtM(Mout,i,j)=temp;
         }
     }
     return(Mout);    
@@ -229,7 +229,7 @@ MATRIKS KaliKons (MATRIKS M, ElType X)
     {
         for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++)
         {
-            Elmt(Mout,i,j)= Elmt(M,i,j) * X;
+            ElmtM(Mout,i,j)= ElmtM(M,i,j) * X;
         }
     }
     return(Mout);
@@ -246,7 +246,7 @@ void PKaliKons (MATRIKS * M, ElType K)
     {
         for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++)
         {
-            Elmt(*M,i,j)= Elmt(*M,i,j) * K;
+            ElmtM(*M,i,j)= ElmtM(*M,i,j) * K;
         }
     }
 }
@@ -275,7 +275,7 @@ boolean EQMatriks (MATRIKS M1, MATRIKS M2)
             j = GetFirstIdxKol(M1);
 			while (result && j<=GetLastIdxKol(M1))
 			{
-				if (Elmt(M1, i,j) != Elmt(M2, i, j))
+				if (ElmtM(M1, i,j) != ElmtM(M2, i, j))
 				{
 					result = false;
 				}
@@ -346,7 +346,7 @@ boolean IsSimetri (MATRIKS M)
             j = GetFirstIdxKol(M);
             while (result && (j<=GetLastIdxKol(M)))
             {
-                if (Elmt(M,i,j) != Elmt(M,j,i))
+                if (ElmtM(M,i,j) != ElmtM(M,j,i))
                 {
                     result=false;
                 }
@@ -377,7 +377,7 @@ boolean IsSatuan (MATRIKS M)
         i = GetFirstIdxBrs(M);
         while (result && (i<=GetLastIdxBrs(M)))
         {   
-            if (Elmt(M,i,i)!=1)
+            if (ElmtM(M,i,i)!=1)
             {
                 result = false;
             }
@@ -385,7 +385,7 @@ boolean IsSatuan (MATRIKS M)
             j = GetFirstIdxKol(M);
             while (result && (j<=GetLastIdxKol(M)))
             {
-                if ((Elmt(M,i,j)!=0)&&(i!=j))
+                if ((ElmtM(M,i,j)!=0)&&(i!=j))
                 {
                     result=false;
                 }
@@ -414,7 +414,7 @@ boolean IsSparse (MATRIKS M)
     {
         for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++)
         {
-            if (Elmt(M,i,j)!=0)
+            if (ElmtM(M,i,j)!=0)
             {
                 jumlah++;
             }
@@ -436,7 +436,7 @@ MATRIKS Inverse1 (MATRIKS M)
     {
         for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++)
         {
-            Elmt(Mout,i,j)= Elmt(M,i,j) * -1;
+            ElmtM(Mout,i,j)= ElmtM(M,i,j) * -1;
         }
     }
     return(Mout);
@@ -455,11 +455,11 @@ float Determinan (MATRIKS M)
     /*Algoritma*/
     if (NBElmt(M)==4)
     {
-        result = (Elmt(M,1,1)*Elmt(M,0,0)-Elmt(M,0,1)*Elmt(M,1,0));
+        result = (ElmtM(M,1,1)*ElmtM(M,0,0)-ElmtM(M,0,1)*ElmtM(M,1,0));
     }
     else if (NBElmt(M)==1)
     {
-        result = Elmt(M,0,0);
+        result = ElmtM(M,0,0);
     }
     else if (NBElmt(M)==0)
     {
@@ -480,13 +480,13 @@ float Determinan (MATRIKS M)
                 {
                     if (!(j==k))
                     {
-                        Elmt(Mout,b,a) = Elmt(M,i,j);
+                        ElmtM(Mout,b,a) = ElmtM(M,i,j);
                         a++;
                     }
                 }
             }
 
-            result += sign * Elmt(M,GetFirstIdxBrs(M),k)*Determinan(Mout);
+            result += sign * ElmtM(M,GetFirstIdxBrs(M),k)*Determinan(Mout);
             sign *= -1;
         }
     }
@@ -505,7 +505,7 @@ void PInverse1 (MATRIKS * M)
     {
         for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++)
         {
-            Elmt(*M,i,j)= Elmt(*M,i,j) * -1;
+            ElmtM(*M,i,j)= ElmtM(*M,i,j) * -1;
         }
     }
 }
@@ -522,9 +522,9 @@ void Transpose (MATRIKS * M)
     {
         for (j = GetFirstIdxKol(*M); j<i; j++)
         {
-            temp = Elmt(*M,i,j);
-            Elmt(*M,i,j)= Elmt(*M,j,i);
-            Elmt(*M,j,i)= temp;
+            temp = ElmtM(*M,i,j);
+            ElmtM(*M,i,j)= ElmtM(*M,j,i);
+            ElmtM(*M,j,i)= temp;
         }
     }   
 }
@@ -542,7 +542,7 @@ float RataBrs (MATRIKS M, indeks i)
     /*Algoritma*/
     for (j = 0; j<= GetLastIdxKol(M); j++)
     {
-        jmlh += (float)Elmt(M,i,j);
+        jmlh += (float)ElmtM(M,i,j);
     }
     n = NKolEff(M);
     hasil = jmlh/n;
@@ -560,7 +560,7 @@ float RataKol (MATRIKS M, indeks j)
     /*Algoritma*/
     for (i = 0; i<= GetLastIdxBrs(M); i++)
     {
-        jmlh += (float)Elmt(M,i,j);
+        jmlh += (float)ElmtM(M,i,j);
     }
     n = NBrsEff(M);
     hasil = jmlh/n;
@@ -575,18 +575,18 @@ void MaxMinBrs (MATRIKS M, indeks i, ElType * max, ElType * min)
     /*Kamus Lokal*/
     indeks j;
     /*Algoritma*/
-    *max=Elmt(M,i,0);
-    *min=Elmt(M,i,0);
+    *max=ElmtM(M,i,0);
+    *min=ElmtM(M,i,0);
 
     for (j = 0; j<= GetLastIdxKol(M); j++)
     {
-        if (Elmt(M,i,j)>*max)
+        if (ElmtM(M,i,j)>*max)
         {
-            *max=Elmt(M,i,j);
+            *max=ElmtM(M,i,j);
         }
-        if (Elmt(M,i,j)<*min)
+        if (ElmtM(M,i,j)<*min)
         {
-            *min=Elmt(M,i,j);
+            *min=ElmtM(M,i,j);
         }
     }
 }
@@ -599,18 +599,18 @@ void MaxMinKol (MATRIKS M, indeks j, ElType * max, ElType * min)
     /*Kamus Lokal*/
     indeks i;
     /*Algoritma*/
-    *max=Elmt(M,0,j);
-    *min=Elmt(M,0,j);
+    *max=ElmtM(M,0,j);
+    *min=ElmtM(M,0,j);
 
     for (i = 0; i<= GetLastIdxBrs(M); i++)
     {
-        if (Elmt(M,i,j)>*max)
+        if (ElmtM(M,i,j)>*max)
         {
-            *max=Elmt(M,i,j);
+            *max=ElmtM(M,i,j);
         }
-        if (Elmt(M,i,j)<*min)
+        if (ElmtM(M,i,j)<*min)
         {
-            *min=Elmt(M,i,j);
+            *min=ElmtM(M,i,j);
         }
     }
 }           
@@ -624,7 +624,7 @@ int CountXBrs (MATRIKS M, indeks i, ElType X)
     /*Algoritma*/
     for (j = 0; j<= GetLastIdxKol(M); j++)
     {
-        if (Elmt(M,i,j)==X)
+        if (ElmtM(M,i,j)==X)
         {
             count++;
         }
@@ -641,7 +641,7 @@ int CountXKol (MATRIKS M, indeks j, ElType X)
     /*Algoritma*/
     for (i = 0; i<= GetLastIdxBrs(M); i++)
     {
-        if (Elmt(M,i,j)==X)
+        if (ElmtM(M,i,j)==X)
         {
             count++;
         }

@@ -2,7 +2,7 @@
 #include "stackt.h"
 #include "boolean.h"
 
-void CreateEmpty(Stack *S)
+void CreateEmptyStack(Stack *S)
 {
     Top(*S) = Nil;
     TimeS(*S) = 0;
@@ -13,21 +13,21 @@ void CreateEmpty(Stack *S)
 /* Ciri stack kosong : TOP bernilai Nil */
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty(Stack S)
+boolean IsEmptyStack(Stack S)
 {
     return Top(S) == Nil;
 }
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
-boolean IsFull(Stack S)
+boolean IsFullStack(Stack S)
 {
-    return Top(S) == MaxEl - 1;
+    return Top(S) == MaxElS - 1;
 }
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
 void Push(Stack *S, COMMAND X)
 {
-    if (!IsFull(*S))
+    if (!IsFullStack(*S))
     {
         Top(*S)++;
         InfoTop(*S) = X;
@@ -41,7 +41,7 @@ void Push(Stack *S, COMMAND X)
 /* ************ Menghapus sebuah elemen Stack ************ */
 void Pop(Stack *S, COMMAND *X)
 {
-    if (!IsEmpty(*S))
+    if (!IsEmptyStack(*S))
     {
         (*X) = InfoTop(*S);
         TimeS(*S) = TimeS(*S) + Time(InfoTop(*S));

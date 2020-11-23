@@ -17,20 +17,20 @@ typedef struct {
     char nama;  /* nama pengunjung */
     char wahana[100]; /* nama wahana */ 
     int kesabaran; /* tingkatan kesabaran */ 
-} infotype;
+}infotype_pq;
 typedef int address;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype PrioQueueChar : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
 typedef struct {
-    infotype * T;   /* tabel penyimpan elemen */
+    infotype_pq * T;   /* tabel penyimpan elemen */
     address HEAD;  /* alamat penghapusan */
     address TAIL;  /* alamat penambahan */
-    int MaxEl;     /* Max elemen queue */
-} PrioQueueChar;
+    int MaxElQ;     /* Max elemen queue */
+}PrioQueueChar;
 /* Definisi PrioQueueChar kosong: HEAD=Nil; TAIL=Nil. */
 
 /* ********* AKSES (Selektor) ********* */
-/* Jika e adalah infotype dan Q adalah PrioQueueChar, maka akses elemen : */
+/* Jika e adalah infotype_pq dan Q adalah PrioQueueChar, maka akses elemen : */
 #define Prio(e)     (e).prio
 #define Nama(e)     (e).nama
 #define Wahana(e,i) (e).wahana[i]
@@ -39,16 +39,16 @@ typedef struct {
 #define Tail(Q)     (Q).TAIL
 #define InfoHead(Q) (Q).T[(Q).HEAD]
 #define InfoTail(Q) (Q).T[(Q).TAIL]
-#define MaxEl(Q)    (Q).MaxEl
-#define Elmt(Q,i)   (Q).T[(i)]
+#define MaxEl(Q)    (Q).MaxElQ
+#define ElmtQ(Q,i)   (Q).T[(i)]
 
 /* ********* Prototype ********* */
-boolean IsEmpty (PrioQueueChar Q);
+boolean IsEmptyQueue (PrioQueueChar Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
-boolean IsFull (PrioQueueChar Q);
+boolean IsFullQueue (PrioQueueChar Q);
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
-int NBElmt (PrioQueueChar Q);
+int NBElmtQueue (PrioQueueChar Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 
 /* *** Kreator *** */
@@ -60,18 +60,18 @@ void MakeEmpty (PrioQueueChar * Q, int Max);
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 
 /* *** Destruktor *** */
-void DeAlokasi(PrioQueueChar * Q);
+void DeAlokasiQueue(PrioQueueChar * Q);
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
 
 /* *** Primitif Add/Delete *** */
-void Enqueue (PrioQueueChar * Q, infotype X);
+void Enqueue (PrioQueueChar * Q, infotype_pq X);
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut mengecil berdasarkan prio */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X disisipkan pada posisi yang tepat sesuai dengan prioritas,
         TAIL "maju" dengan mekanisme circular buffer; */
-void Dequeue (PrioQueueChar * Q, infotype * X);
+void Dequeue (PrioQueueChar * Q, infotype_pq * X);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;

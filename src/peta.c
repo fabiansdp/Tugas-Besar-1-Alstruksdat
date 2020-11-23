@@ -49,7 +49,7 @@ void BacaPeta(int x, MATRIKS *L)
         if(i<=9 && j<=19)
         {
             // L[i][j]=ch;
-            Elmt(*L,i,j)=ch; 
+            ElmtM(*L,i,j)=ch; 
             //masukkan ke dalam matriks
         }
         // printf("%c",L[i][j]);
@@ -68,7 +68,7 @@ void BacaPeta(int x, MATRIKS *L)
     {
         for (j = 0; j <= 19; j++)
         {
-            printf("%c",Elmt(*L,i,j));
+            printf("%c",ElmtM(*L,i,j));
             // printf("%c",L[i][j]);
         }
         printf("\n");
@@ -107,7 +107,7 @@ void TulisPeta(int x, MATRIKS L)
     {
         for (j = 0; j <= 19; j++)
         {
-            fprintf(fh,"%c",Elmt(L,i,j));
+            fprintf(fh,"%c",ElmtM(L,i,j));
             // fprintf(fh,"%c",L[i][j]);
         }
         fprintf(fh,"\n");
@@ -127,7 +127,7 @@ void TitikPeta(MATRIKS L, Arr_POINT AP)
     {
         for (j = 0; j <= 19; j++)
         {
-            temp=Elmt(L,i,j);
+            temp=ElmtM(L,i,j);
             // printf("%c",temp);
             if (temp =='A')
             {
@@ -206,8 +206,8 @@ void Movement(char ch, MATRIKS *L)
             Absis(player_loc)-=1;
             tipe_point[x][y]=0;
             //ubah matriks peta
-            Elmt(*L,x-1,y)='P';
-            Elmt(*L,x,y)='-';
+            ElmtM(*L,x-1,y)='P';
+            ElmtM(*L,x,y)='-';
         }
         break;
     case 'A':
@@ -220,8 +220,8 @@ void Movement(char ch, MATRIKS *L)
             Ordinat(player_loc)-=1;
             tipe_point[x][y]=0;
             //ubah matriks peta
-            Elmt(*L,x,y-1)='P';
-            Elmt(*L,x,y)='-';
+            ElmtM(*L,x,y-1)='P';
+            ElmtM(*L,x,y)='-';
         }
         break;
     case 'S':
@@ -234,8 +234,8 @@ void Movement(char ch, MATRIKS *L)
             Absis(player_loc)+=1;
             tipe_point[x][y]=0;
             //ubah matriks peta
-            Elmt(*L,x+1,y)='P';
-            Elmt(*L,x,y)='-';
+            ElmtM(*L,x+1,y)='P';
+            ElmtM(*L,x,y)='-';
         }
         break;
     case 'D':
@@ -248,8 +248,8 @@ void Movement(char ch, MATRIKS *L)
             Ordinat(player_loc)+=1;
             tipe_point[x][y]=0;
             //ubah matriks peta
-            Elmt(*L,x,y+1)='P';
-            Elmt(*L,x,y)='-';
+            ElmtM(*L,x,y+1)='P';
+            ElmtM(*L,x,y)='-';
         }
         break;
     default:
@@ -288,7 +288,7 @@ void PrintPeta(MATRIKS L)
     {
         for (j = 0; j <= 19; j++)
         {
-            printf("%c",Elmt(L,i,j));
+            printf("%c",ElmtM(L,i,j));
         }
         printf("\n");
     }
@@ -316,76 +316,76 @@ int Adjacency()
     return 0;
 }
 
-//testing fungsi
-int main()
-{
-    //kamus
-    char input;
-    int i,j;
-    boolean loop;
-    int adjacent;
-    //algoritma
-    for (i = 0; i <= 9; i++)
-    {
-        for (j = 0; j <= 19; j++)
-        {
-            tipe_point[i][j]=0;
-        }
-    }
+// testing fungsi
+// int main()
+// {
+//     //kamus peta
+//     char input;
+//     int i,j;
+//     boolean loop;
+//     int adjacent;
+//     //algoritma
+//     for (i = 0; i <= 9; i++)
+//     {
+//         for (j = 0; j <= 19; j++)
+//         {
+//             tipe_point[i][j]=0;
+//         }
+//     }
 
-    MakeMATRIKS(10,20,&L);
-    BacaPeta(1,&L);
-    TulisPeta(1,L);
-    TitikPeta(L,AP);
-    for (i = 0; i <= 199; i++)
-    {
-        if (AP.P[i].X!=0 && AP.P[i].Y!=0)
-        {
-            printf("%d ",AP.tipe[i]);
-            printf("%f,",AP.P[i].X);
-            printf("%f\n",AP.P[i].Y);
-        }           
-        // printf("%f,",P[i].X);
-        // printf("%f\n",P[i].Y);
-    }
+//     MakeMATRIKS(10,20,&L);
+//     BacaPeta(1,&L);
+//     TulisPeta(1,L);
+//     TitikPeta(L,AP);
+//     for (i = 0; i <= 199; i++)
+//     {
+//         if (AP.P[i].X!=0 && AP.P[i].Y!=0)
+//         {
+//             printf("%d ",AP.tipe[i]);
+//             printf("%f,",AP.P[i].X);
+//             printf("%f\n",AP.P[i].Y);
+//         }           
+//         // printf("%f,",P[i].X);
+//         // printf("%f\n",P[i].Y);
+//     }
 
-    printf("X untuk keluar\n");
-    loop=true;    
-    do
-    {
-        adjacent=Adjacency();
-        printf("Nilai adjacent: %d\n",adjacent);
-        printf("Masukkan arah pergerakan:\n");
-        scanf("%c",&input);
-        if (adjacent==5)
-        {
-            printf("Sebelah wahana\n");
-        }
-        else if (adjacent==3)
-        {
-            printf("Sebelah office\n");
-        }
+//     printf("X untuk keluar\n");
+//     loop=true;    
+//     do
+//     {
+//         adjacent=Adjacency();
+//         printf("Nilai adjacent: %d\n",adjacent);
+//         printf("Masukkan arah pergerakan:\n");
+//         scanf("%c",&input);
+//         if (adjacent==5)
+//         {
+//             printf("Sebelah wahana\n");
+//         }
+//         else if (adjacent==3)
+//         {
+//             printf("Sebelah office\n");
+//         }
 
-        if (input=='X')
-        {
-            loop=false;
-        }
-        else
-        {
-            Movement(input,&L);
-            PrintPeta(L);
-        }
-    } while (loop);
+//         if (input=='X')
+//         {
+//             loop=false;
+//         }
+//         else
+//         {
+//             Movement(input,&L);
+//             PrintPeta(L);
+//         }
+//     } while (loop);
 
-    //cek tipe_point
-    for (i = 0; i <= 9; i++)
-    {
-        for (j = 0; j <= 19; j++)
-        {
-            printf("%d",tipe_point[i][j]);
-        }
-        printf("\n");
-    }
-    return 0;
-}
+//     //cek tipe_point
+//     for (i = 0; i <= 9; i++)
+//     {
+//         for (j = 0; j <= 19; j++)
+//         {
+//             printf("%d",tipe_point[i][j]);
+//         }
+//         printf("\n");
+//     }
+//     return 0;
+// }
 
