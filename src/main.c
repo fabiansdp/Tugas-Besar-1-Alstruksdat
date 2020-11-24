@@ -91,7 +91,6 @@ void PrintPrep()
         printf("%c",player_name.TabKata[i]);
     }
     printf("\n");
-    temp_jam=DetikToJam(abs(JamToDetik(buka)-JamToDetik(crnt_jam)));
     printf("Current time: %d.%d\n",Hour(crnt_jam),Minute(crnt_jam));
     printf("Current time: %d.%d\n",Hour(buka),Minute(buka));
     if(Hour(temp_jam)>0) printf("Time Remaining: %d hour(s)",Hour(temp_jam));
@@ -213,48 +212,67 @@ void PrepPhase()
             {
                 printf("Input w\n");
                 Movement('W',&L);
+                TambahMenit(&crnt_jam,5);
+                temp_jam=DetikToJam(JamToDetik(temp_jam)-300);
             }
             else if (IsKataSama(ck,com_A))
             {
                 printf("Input a\n");
                 Movement('A',&L);
+                TambahMenit(&crnt_jam,5);
+                temp_jam=DetikToJam(JamToDetik(temp_jam)-300);
             }
             else if (IsKataSama(ck,com_S))
             {
                 printf("Input s\n");
                 Movement('S',&L);
+                TambahMenit(&crnt_jam,5);
+                temp_jam=DetikToJam(JamToDetik(temp_jam)-300);
             }
             else if (IsKataSama(ck,com_D))
             {
                 printf("Input d\n");
                 Movement('D',&L);
+                TambahMenit(&crnt_jam,5);
+                temp_jam=DetikToJam(JamToDetik(temp_jam)-300);
             }
+            // COMMAND MakeCOMMAND(int comm, int name, int amount, int map, POINT coordinate, int time);
             else if (IsKataSama(ck,com_build))
             {
-                printf("Input build\n");
+                comm1 = MakeCOMMAND(1,0,0,crnt_map,player_loc,5);
+                // printf("Input build\n");
+                build();
             }
             else if (IsKataSama(ck,com_upgrade))
             {
-                printf("Input upgrade\n");
+                comm2 = MakeCOMMAND(2,0,0,crnt_map,player_loc,5);
+                // printf("Input upgrade\n");
+                upgrade();
             }
             else if (IsKataSama(ck,com_buy))
             {
-                printf("Input buy\n");
+                comm3 = MakeCOMMAND(3,0,0,crnt_map,player_loc,5);
+                // printf("Input buy\n");
+                buy();
             }
             else if (IsKataSama(ck,com_undo))
             {
-                printf("Input undo\n");
+                // printf("Input undo\n");
+                undo(&S);
             }
             else if (IsKataSama(ck,com_execute))
             {
                 printf("Input execute\n");
+                execute(&S);
                 prep_loop=false;
+                crnt_jam=buka;
                 main_loop=true;
             }
             else if (IsKataSama(ck,com_main))
             {
                 printf("Input main\n");
                 prep_loop=false;
+                crnt_jam=buka;
                 main_loop=true;
             }
             else
@@ -262,6 +280,12 @@ void PrepPhase()
                 printf("Input tidak valid \n");
             }
             ADVKATA();
+        }
+        if (JamToDetik(temp_jam)<=0)
+        {
+            prep_loop=false;
+            crnt_jam=buka;
+            main_loop=true;
         }
         if (!main_loop)
         {
@@ -299,6 +323,7 @@ int main()
     buka=MakeJam(9,0);
     tutup=MakeJam(21,0);
     crnt_day=1;
+    temp_jam=DetikToJam(abs(JamToDetik(buka)-JamToDetik(crnt_jam)));
 
     //peta
     //setup matriks tipe
