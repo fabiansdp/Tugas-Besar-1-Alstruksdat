@@ -112,18 +112,16 @@ void CreateNamaWahana(ArrayWahana *W)
         // Gini aja aku bingung banget
         while (fscanf(fh, "%s", c) != EOF) {
             if (count == 2) {
+                (*W).ArrayW[number].nama.Length = mystrlen(c);
                 for (int j = 0; j<mystrlen(c); j++) {
                     (*W).ArrayW[number].nama.TabKata[j] = c[j];
-                    (*W).ArrayW[number].nama.Length = j;
                 }
             }
 
             if (count == 6) {
+                (*W).ArrayW[number].deskripsi.Length = mystrlen(c);
                 for (int j = 0; j<mystrlen(c); j++) {
-                    if (&c[j] != "-") {
-                        (*W).ArrayW[number].deskripsi.TabKata[j] = c[j];
-                        (*W).ArrayW[number].nama.Length = j;
-                    } 
+                    (*W).ArrayW[number].deskripsi.TabKata[j] = c[j];
                 }
             }
 
@@ -135,6 +133,7 @@ void CreateNamaWahana(ArrayWahana *W)
                 number += 1;
             }
         }
+        printf("%d\n", (*W).ArrayW[4].nama.Length);
         fclose(fh);
     }
 }
@@ -191,14 +190,3 @@ void LaporanWahana(ArrayWahana W, int id)
     printf("Penghasilan Total: %d\n", TotalPenghasilan(W,i));
     printf("Penghasilan Hari Ini: %d\n\n", PenghasilanHarian(W,i));
 }
-
-// Buat Testing
-// int main() {
-//     ArrayWahana W;
-//     CreateDataWahana(&W);
-//     CreateNamaWahana(&W);
-
-//     InfoWahana(W, 13);
-
-//     return 0;
-// }
