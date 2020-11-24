@@ -108,32 +108,32 @@ int main()
     //     }           
     // }
 
-    printf("X untuk keluar\n");
-    loop=true;    
-    do
-    {
-        adjacent=Adjacency();
-        printf("Nilai adjacent: %d\n",adjacent);
-        printf("Masukkan arah pergerakan:\n");
-        scanf("%c",&input);
-        if (adjacent==5)
-        {
-            printf("Sebelah wahana\n");
-        }
-        else if (adjacent==3)
-        {
-            printf("Sebelah office\n");
-        }
-        if (input=='X')
-        {
-            loop=false;
-        }
-        else if (input=='W'||input=='A'||input=='S'||input=='D')
-        {
-            Movement(input,&L);
-            PrintPeta(L);
-        }
-    } while (loop);
+    // printf("X untuk keluar\n");
+    // loop=true;    
+    // do
+    // {
+    //     adjacent=Adjacency();
+    //     printf("Nilai adjacent: %d\n",adjacent);
+    //     printf("Masukkan arah pergerakan:\n");
+    //     scanf("%c",&input);
+    //     if (adjacent==5)
+    //     {
+    //         printf("Sebelah wahana\n");
+    //     }
+    //     else if (adjacent==3)
+    //     {
+    //         printf("Sebelah office\n");
+    //     }
+    //     if (input=='X')
+    //     {
+    //         loop=false;
+    //     }
+    //     else if (input=='W'||input=='A'||input=='S'||input=='D')
+    //     {
+    //         Movement(input,&L);
+    //         PrintPeta(L);
+    //     }
+    // } while (loop);
 
     //cek tipe_point
     for (i = 0; i <= 9; i++)
