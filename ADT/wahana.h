@@ -4,6 +4,9 @@
 #define wahana_H
 
 #include "boolean.h"
+#include "mesinkar.h"
+#include "mesinkata.h"
+#include "point.h"
 
 /*  Kamus Umum */
 #define IdxMax 99
@@ -15,46 +18,59 @@
 #define ValUndef -1
 /* Nilai elemen tak terdefinisi*/
 
-/* Struktur Data Khusus buat Wahana */
+/* Struktur buat Laporan Wahana*/
+typedef struct {
+    int naiktotal;
+    int penghasilantotal;
+    int naikharian;
+    int penghasilanharian;
+} Laporan;
+
+/* Struktur Data Khusus buat Detail Wahana */
 typedef struct {
     int id, harga, kapasitas, durasi, status;
-    char namaWahana[50];
-    char deskripsi[100];
+    POINT lokasi;
+    Kata nama;
+    Kata deskripsi;
+    Laporan laporan;
 } Wahana;
 
 typedef struct {
-    Wahana TI[11];
+    Wahana ArrayW[IdxMax+1];
+    int jumlahWahana;
 } ArrayWahana;
 
-#define ID(W) (W).id
-#define Harga(W) (W).harga
-#define Kapasitas(W) (W).kapasitas
-#define Durasi(W) (W).durasi
-#define Status(W) (W).status
+#define ID(W,i) (W).ArrayW[(i)].id
+#define Harga(W,i) (W).ArrayW[(i)].harga
+#define Kapasitas(W,i) (W).ArrayW[(i)].kapasitas
+#define Durasi(W,i) (W).ArrayW[(i)].durasi
+#define Status(W,i) (W).ArrayW[(i)].status
+#define NaikTotal(W,i) (W).ArrayW[(i)].laporan.naiktotal
+#define TotalPenghasilan(W,i) (W).ArrayW[(i)].laporan.penghasilantotal
+#define NaikHarian(W,i) (W).ArrayW[(i)].laporan.naikharian
+#define PenghasilanHarian(W,i) (W).ArrayW[(i)].laporan.penghasilanharian
+#define JumlahWahana(W) (W).jumlahWahana
 
 // Baca dari teks file
-void TeksWahana();
+void ListWahana();
 
-// Buat Wahana
-void CreateDatabaseWahana(ArrayWahana *ArrayW);
+// Buat Data Wahana Untuk Int
+void CreateDataWahana(ArrayWahana *ArrayW);
 
-// Ambil ID Wahana
-int idWahana(Wahana W);
+// Buat Data wahana untuk Char
+void CreateNamaWahana(ArrayWahana *W);
 
-// Ambil Harga Wahana
-int hargaWahana(Wahana W);
+// Hitung panjang string
+int mystrlen(char *str);
 
-// Ambil Kapasitas Wahana
-int kapasitasWahana(Wahana W);
+// Return Index
+int searchID(ArrayWahana W, int id);
 
-// Ambil Durasi Wahana
-int durasiWahana(Wahana W);
+// Informasi Dasar Wahana by ID
+void InfoWahana(ArrayWahana W, int id);
 
-// Ambil Status Wahana
-int statusWahana(Wahana W);
-
-// Ambil Detail Wahana
-void detailWahana(Wahana W);
+// Laporan Wahana by ID
+void LaporanWahana(ArrayWahana W, int id);
 
 #endif
 
