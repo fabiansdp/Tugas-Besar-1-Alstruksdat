@@ -38,18 +38,24 @@ boolean start_loop;
 Kata ck;
 Kata start;
 Kata new_line;
+boolean first;
 
 void read_kata_start()
 {
+    // if(!first)
+    // {
+    //     fgetc(stdin); 
+    // }
     STARTKATA();
     ck=CKata;
     if (EndKata)
     {
         printf("Input kosong \n");
-        start_loop=false;   
+        ADVKATA(); 
     }
     while(!EndKata)
     {
+        
         if (IsKataSama(ck,start))
         {
             printf("Memulai permainan baru \n");
@@ -58,7 +64,6 @@ void read_kata_start()
         else
         {
             printf("Input tidak valid \n");
-            start_loop=false;
         }
         ADVKATA();
     }
@@ -76,11 +81,26 @@ int main()
     start_loop=true;
     new_line.TabKata[0]='\n';
     new_line.Length=1;
-    while (start_loop)   
+    first=true;
+    if (start_loop)
     {
         read_kata_start();
+        first=false;
     }
+    // if (start_loop)
+    // {
+    //     read_kata_start();
+    // }
     
+    // while (start_loop)   
+    // {
+    //     read_kata_start();
+    //     first=false;
+    //     // if(!first)
+    //     // {
+    //     //     getchar();
+    //     // } 
+    // }
     //peta
     //set matriks tipe
     for (i = 0; i <= 9; i++)
