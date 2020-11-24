@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+//include ADT
 #include "../ADT/boolean.h"
 #include "../ADT/command.c"
 #include "../ADT/stackt.c"
-#include "function.c"
-//test Furqon
+#include "../ADT/mesinkata.c"
+#include "../ADT/mesinkar.c"
+//include from src
 #include "peta.c"
 #include "antrian.c"
+#include "function.c"
 
 //kamus peta
 extern MATRIKS L;
@@ -30,10 +33,76 @@ int adjacent;
 //kamus stack
 Stack S;
 COMMAND comm1, comm2, comm3, comm4;
+//kamus main
+boolean start_loop;
+Kata ck;
+Kata start;
+Kata new_line;
+boolean first;
+
+void read_kata_start()
+{
+    // if(!first)
+    // {
+    //     fgetc(stdin); 
+    // }
+    STARTKATA();
+    ck=CKata;
+    if (EndKata)
+    {
+        printf("Input kosong \n");
+        ADVKATA(); 
+    }
+    while(!EndKata)
+    {
+        
+        if (IsKataSama(ck,start))
+        {
+            printf("Memulai permainan baru \n");
+            start_loop=false;
+        }
+        else
+        {
+            printf("Input tidak valid \n");
+        }
+        ADVKATA();
+    }
+}
 
 int main()
 {
+    //menu awal
+    printf("Welcome to Willy wangky's\n");
+    printf("New game / load game / exit? \n");
+    start.TabKata[0]='n';
+    start.TabKata[1]='e';
+    start.TabKata[2]='w';
+    start.Length=3;
+    start_loop=true;
+    new_line.TabKata[0]='\n';
+    new_line.Length=1;
+    first=true;
+    if (start_loop)
+    {
+        read_kata_start();
+        first=false;
+    }
+    // if (start_loop)
+    // {
+    //     read_kata_start();
+    // }
+    
+    // while (start_loop)   
+    // {
+    //     read_kata_start();
+    //     first=false;
+    //     // if(!first)
+    //     // {
+    //     //     getchar();
+    //     // } 
+    // }
     //peta
+    //set matriks tipe
     for (i = 0; i <= 9; i++)
     {
         for (j = 0; j <= 19; j++)
@@ -42,49 +111,49 @@ int main()
         }
     }
 
+    //set matriks peta
     MakeMATRIKS(10,20,&L);
     BacaPeta(1,&L);
     TulisPeta(1,L);
-    TitikPeta(L,AP);
-    for (i = 0; i <= 199; i++)
-    {
-        if (AP.P[i].X!=0 && AP.P[i].Y!=0)
-        {
-            printf("%d ",AP.tipe[i]);
-            printf("%f,",AP.P[i].X);
-            printf("%f\n",AP.P[i].Y);
-        }           
-        // printf("%f,",P[i].X);
-        // printf("%f\n",P[i].Y);
-    }
+    TitikPeta(L,AP); //set titik pada peta
 
-    printf("X untuk keluar\n");
-    loop=true;    
-    do
-    {
-        adjacent=Adjacency();
-        printf("Nilai adjacent: %d\n",adjacent);
-        printf("Masukkan arah pergerakan:\n");
-        scanf("%c",&input);
-        if (adjacent==5)
-        {
-            printf("Sebelah wahana\n");
-        }
-        else if (adjacent==3)
-        {
-            printf("Sebelah office\n");
-        }
+    //cek titik
+    // for (i = 0; i <= 199; i++)
+    // {
+    //     if (AP.P[i].X!=0 && AP.P[i].Y!=0)
+    //     {
+    //         printf("%d ",AP.tipe[i]);
+    //         printf("%f,",AP.P[i].X);
+    //         printf("%f\n",AP.P[i].Y);
+    //     }           
+    // }
 
-        if (input=='X')
-        {
-            loop=false;
-        }
-        else
-        {
-            Movement(input,&L);
-            PrintPeta(L);
-        }
-    } while (loop);
+    // printf("X untuk keluar\n");
+    // loop=true;    
+    // do
+    // {
+    //     adjacent=Adjacency();
+    //     printf("Nilai adjacent: %d\n",adjacent);
+    //     printf("Masukkan arah pergerakan:\n");
+    //     scanf("%c",&input);
+    //     if (adjacent==5)
+    //     {
+    //         printf("Sebelah wahana\n");
+    //     }
+    //     else if (adjacent==3)
+    //     {
+    //         printf("Sebelah office\n");
+    //     }
+    //     if (input=='X')
+    //     {
+    //         loop=false;
+    //     }
+    //     else if (input=='W'||input=='A'||input=='S'||input=='D')
+    //     {
+    //         Movement(input,&L);
+    //         PrintPeta(L);
+    //     }
+    // } while (loop);
 
     //cek tipe_point
     for (i = 0; i <= 9; i++)
@@ -153,7 +222,7 @@ int main()
             PrintAntrian(Q);
         }
     }
-    //stack
+    //stack command
     Comm(comm1) = 1;
     Comm(comm2) = 2;
     Comm(comm3) = 3;

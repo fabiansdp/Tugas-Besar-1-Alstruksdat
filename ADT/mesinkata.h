@@ -7,11 +7,11 @@
 #include "boolean.h"
 #include "mesinkar.h"
 
-#define NMax 50
+#define NMaxKata 50
 #define BLANK ' '
 
 typedef struct {
-	char TabKata[NMax]; /* container penyimpan kata, indeks yang dipakai [0..NMax-1] */
+	char TabKata[NMaxKata]; /* container penyimpan kata, indeks yang dipakai [0..NMaxKata-1] */
     int Length;
 } Kata;
 
@@ -43,7 +43,7 @@ void SalinKata();
    F.S. : CKata berisi kata yang sudah diakuisisi; 
           CC = BLANK atau CC = MARK; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
-          Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+          Jika panjang kata melebihi NMaxKata, maka sisa kata "dipotong" */
 
 boolean IsKataSama(Kata K1, Kata K2);
 /* Mendapat input 2 kata dan menyocokkan apakah kedua kata sama*/

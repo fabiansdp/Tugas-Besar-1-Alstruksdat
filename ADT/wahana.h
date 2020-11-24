@@ -36,7 +36,7 @@ typedef struct {
 void TeksWahana();
 
 // Buat Wahana
-void CreateWahana(Wahana *W, int id);
+void CreateDatabaseWahana(ArrayWahana *ArrayW);
 
 // Ambil ID Wahana
 int idWahana(Wahana W);

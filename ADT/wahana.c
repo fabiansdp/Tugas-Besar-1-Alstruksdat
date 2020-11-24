@@ -36,7 +36,7 @@ void ListWahana()
     }
 }
 
-// Buat Wahana sesuai id
+// Buat Wahana
 void CreateDatabaseWahana(ArrayWahana *ArrayW)
 {
     
