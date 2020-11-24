@@ -1,7 +1,7 @@
-"Candy Crush" 50000 "Wahana roller coaster"
-"Chocolate Forest" 30000 "Wahana labirin"
-"Bombom car" 40000 "Wahana mobil bombom car"
-"Lemon Splash" 30000 "Wahana mandi bola"
-"Candy Village" 40000 "Wahana foto-foto"
-"Candy Swing" 30000 "Wahana perahu kora-kora"
-"Blackforest Tornado" 60000 "Wahana tornado"
+11 Candy-Crush 50000 10 5 Wahana-Roller-Coaster
+12 Chocolate-Forest 30000 7 3 Wahana-Labirin
+13 Bombom-Car 40000 10 4 Wahana-Mobil-Bombom-Car
+14 Lemon-Splash 30000 9 3 Wahana-Mandi-Bola
+15 Candy-Village 40000 8 4 Wahana-Foto-Foto
+16 Candy-Swing 30000 7 3 Wahana-Perahu
+17 Blackforest-Tornado 60000 10 6 Wahana-Tornado
