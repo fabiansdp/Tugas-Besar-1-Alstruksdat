@@ -186,7 +186,7 @@ void Movement(char ch, MATRIKS *L)
     switch (ch)
     {
     case 'W':
-        printf("Test atas\n");
+        // printf("Test atas\n");
         if (tipe_point[x-1][y]==0)
         {
             //ubah tipe
@@ -200,7 +200,7 @@ void Movement(char ch, MATRIKS *L)
         }
         break;
     case 'A':
-        printf("Test kiri\n");
+        // printf("Test kiri\n");
         if (tipe_point[x][y-1]==0)
         {
             //ubah tipe
@@ -214,7 +214,7 @@ void Movement(char ch, MATRIKS *L)
         }
         break;
     case 'S':
-        printf("Test bawah\n");
+        // printf("Test bawah\n");
         if (tipe_point[x+1][y]==0)
         {
             //ubah tipe
@@ -228,7 +228,7 @@ void Movement(char ch, MATRIKS *L)
         }
         break;
     case 'D':
-        printf("Test kanan\n");
+        // printf("Test kanan\n");
         if (tipe_point[x][y+1]==0)
         {
             //ubah tipe
