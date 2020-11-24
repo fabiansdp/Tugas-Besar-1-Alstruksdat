@@ -66,6 +66,7 @@ void TambahAntrian(PrioQueueChar *Q, infotype_pq X)
         break;
     }
     Enqueue(Q,X);
+    seed++;
 }
 
 void KurangAntrian(PrioQueueChar *Q, infotype_pq *X)

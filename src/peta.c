@@ -24,7 +24,7 @@ void BacaPeta(int x, MATRIKS *L)
     FILE *fh;
     char ch;
     int i=0,j=0;
-    puts("Cek file");
+    // puts("Cek file");
     /* Algoritma */
     switch (x)
     {
@@ -61,17 +61,6 @@ void BacaPeta(int x, MATRIKS *L)
             fgetc(fh); //enter diskip
         }
         //putchar(ch);
-    }
-
-    //printmatriks
-    for (i = 0; i <= 9; i++)
-    {
-        for (j = 0; j <= 19; j++)
-        {
-            printf("%c",ElmtM(*L,i,j));
-            // printf("%c",L[i][j]);
-        }
-        printf("\n");
     }
     fclose(fh);
 }

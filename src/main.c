@@ -6,6 +6,7 @@
 #include "../ADT/stackt.c"
 #include "../ADT/mesinkata.c"
 #include "../ADT/mesinkar.c"
+#include "../ADT/jam.c"
 //include from src
 #include "peta.c"
 #include "antrian.c"
@@ -35,17 +36,27 @@ Stack S;
 COMMAND comm1, comm2, comm3, comm4;
 //kamus main
 boolean start_loop;
+//kamus main,kata
 Kata ck;
 Kata start;
-Kata new_line;
-boolean first;
+Kata exit_menu;
+Kata player_name;
+//kamus main,jam
+Jam crnt_jam;
+Jam buka;
+Jam tutup;
+//kamus main,int
+int crnt_day;
+int crnt_map;
+int player_money;
+int total_aksi;
+int total_waktu;
+int total_uang;
 
-void read_kata_start()
+void ReadKataStart()
 {
-    // if(!first)
-    // {
-    //     fgetc(stdin); 
-    // }
+    /* Kamus Lokal */
+    /* Algoritma */    
     STARTKATA();
     ck=CKata;
     if (EndKata)
@@ -55,10 +66,14 @@ void read_kata_start()
     }
     while(!EndKata)
     {
-        
         if (IsKataSama(ck,start))
         {
             printf("Memulai permainan baru \n");
+            start_loop=false;
+        }
+        else if (IsKataSama(ck,exit_menu))
+        {
+            printf("Input keluar \n");
             start_loop=false;
         }
         else
@@ -69,40 +84,81 @@ void read_kata_start()
     }
 }
 
+void PrintLegend()
+{
+    printf("Legend:\n");
+    printf("A = Antrian\n");
+    printf("P = Player\n");
+    printf("W = Wahana\n");
+    printf("O = Office\n");
+    printf("<, ^, >, V = Gerbang\n");
+}
+
+void PrintPrep()
+{
+    /* Kamus Lokal */
+    /* Algoritma */
+    printf("Preparation phase day %d\n",crnt_day);
+    PrintPeta(L);
+    PrintLegend();
+    printf("\n");
+    printf("Name: ");
+    for (int i = 0; i < player_name.Length; i++)
+    {
+        printf("%c",player_name.TabKata[i]);
+    }
+    printf("\n");
+    printf("Current time: %d.%d\n",Hour(crnt_jam),Minute(crnt_jam));
+    printf("Current time: %d.%d\n",Hour(buka),Minute(buka));
+    printf("Time Remaining: %d hour(s)\n",abs(Hour(buka)-Hour(crnt_jam)));
+    printf("Total aksi yang akan dilakukan: %d\n",total_aksi);
+    printf("Total waktu yang dibutuhkan: %d\n",total_waktu);
+    printf("Total uang yang dibutuhkan: %d\n",total_uang);
+    printf("\n");
+    printf("Masukkan Perintah: ");
+}
+
 int main()
 {
     //menu awal
     printf("Welcome to Willy wangky's\n");
     printf("New game / load game / exit? \n");
+    //setup kata
     start.TabKata[0]='n';
     start.TabKata[1]='e';
     start.TabKata[2]='w';
     start.Length=3;
+    exit_menu.TabKata[0]='e';
+    exit_menu.TabKata[1]='x';
+    exit_menu.TabKata[2]='i';
+    exit_menu.TabKata[3]='t';
+    exit_menu.Length=4;
+
+    //menu awal
     start_loop=true;
-    new_line.TabKata[0]='\n';
-    new_line.Length=1;
-    first=true;
-    if (start_loop)
+    while (start_loop)   
     {
-        read_kata_start();
-        first=false;
+        ReadKataStart();
+        if (IsKataSama(ck,exit_menu))
+        {
+            printf("Terima kasih telah bermain \n");
+            return 0;
+        }
     }
-    // if (start_loop)
-    // {
-    //     read_kata_start();
-    // }
-    
-    // while (start_loop)   
-    // {
-    //     read_kata_start();
-    //     first=false;
-    //     // if(!first)
-    //     // {
-    //     //     getchar();
-    //     // } 
-    // }
+
+    //input nama
+    printf("Masukkan nama: \n");
+    STARTKATA();
+    player_name=CKata;
+
+    //setup jam
+    crnt_jam=MakeJam(21,0);
+    buka=MakeJam(9,0);
+    tutup=MakeJam(21,0);
+    crnt_day=1;
+
     //peta
-    //set matriks tipe
+    //setup matriks tipe
     for (i = 0; i <= 9; i++)
     {
         for (j = 0; j <= 19; j++)
@@ -110,23 +166,18 @@ int main()
             tipe_point[i][j]=0;
         }
     }
-
-    //set matriks peta
+    //setup matriks peta
+    crnt_map=1;
     MakeMATRIKS(10,20,&L);
-    BacaPeta(1,&L);
-    TulisPeta(1,L);
+    BacaPeta(crnt_map,&L);
     TitikPeta(L,AP); //set titik pada peta
-
-    //cek titik
-    // for (i = 0; i <= 199; i++)
-    // {
-    //     if (AP.P[i].X!=0 && AP.P[i].Y!=0)
-    //     {
-    //         printf("%d ",AP.tipe[i]);
-    //         printf("%f,",AP.P[i].X);
-    //         printf("%f\n",AP.P[i].Y);
-    //     }           
-    // }
+    
+    //setup & PrintPrep
+    player_money=1000;
+    total_aksi=0;
+    total_waktu=0;
+    total_uang=0;
+    PrintPrep();
 
     // printf("X untuk keluar\n");
     // loop=true;    
@@ -156,81 +207,83 @@ int main()
     // } while (loop);
 
     //cek tipe_point
-    for (i = 0; i <= 9; i++)
-    {
-        for (j = 0; j <= 19; j++)
-        {
-            printf("%d",tipe_point[i][j]);
-        }
-        printf("\n");
-    }
+    // for (i = 0; i <= 9; i++)
+    // {
+    //     for (j = 0; j <= 19; j++)
+    //     {
+    //         printf("%d",tipe_point[i][j]);
+    //     }
+    //     printf("\n");
+    // }
+
     //antrian
-    MakeEmpty(&Q, MaxAntrian);
-    while (!IsFullQueue(Q))
-    {
-        /*Inisialisasi infotype_pq*/
-        srand(crntname); //lebih baik nanti pake ADT time
-        Nama(temp)=Nama[crntname];
-        Prio(temp)=crntname;
-        Kesabaran(temp)=(rand()%3)+1;
-        // Kesabaran(temp)=default_angka;
-        /*Selama tidak full, bisa tambah antrian*/
-        TambahAntrian(&Q,temp);
-        /*Setiap bertambah waktu tambah antrian(not implemented)*/
-        crntname++; /*Nama selanjutnya*/
-        if (crntname==27)
-        {
-            crntname=0;
-        }
-    }
-    printf("Antrian awal\n");
-    PrintAntrian(Q);
+    // MakeEmpty(&Q, MaxAntrian);
+    // while (!IsFullQueue(Q))
+    // {
+    //     /*Inisialisasi infotype_pq*/
+    //     srand(crntname); //lebih baik nanti pake ADT time
+    //     Nama(temp)=Nama[crntname];
+    //     Prio(temp)=crntname;
+    //     Kesabaran(temp)=(rand()%3)+1;
+    //     // Kesabaran(temp)=default_angka;
+    //     /*Selama tidak full, bisa tambah antrian*/
+    //     TambahAntrian(&Q,temp);
+    //     /*Setiap bertambah waktu tambah antrian(not implemented)*/
+    //     crntname++; /*Nama selanjutnya*/
+    //     if (crntname==27)
+    //     {
+    //         crntname=0;
+    //     }
+    // }
 
-    //Cek wahana yang ingin dinaiki
-    int nama=0;
-    char ch; 
-    ch = Wahana(ElmtQ(Q,0),nama);
-    printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,0)));
-    while (ch !='.')
-    {
-        printf("%c",ch);
-        nama++;
-        ch = Wahana(ElmtQ(Q,0),nama);
-    }
-    printf("\n");
+    // printf("Antrian awal\n");
+    // PrintAntrian(Q);
 
-    nama=0;
-    ch = Wahana(ElmtQ(Q,2),nama);
-    printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,2)));
-    while (ch !='.')
-    {
-        printf("%c",ch);
-        nama++;
-        ch = Wahana(ElmtQ(Q,2),nama);
-    }
-    printf("\n");
-    printf("Antrian[%d/%d]",NBElmtQueue(Q),MaxAntrian);
+    // //Cek wahana yang ingin dinaiki
+    // int nama=0;
+    // char ch; 
+    // ch = Wahana(ElmtQ(Q,0),nama);
+    // printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,0)));
+    // while (ch !='.')
+    // {
+    //     printf("%c",ch);
+    //     nama++;
+    //     ch = Wahana(ElmtQ(Q,0),nama);
+    // }
+    // printf("\n");
 
-    //Simulasi antrian habis dari penuh
-    while (!IsEmptyQueue(Q))
-    {
-        KurangAntrian(&Q,&served);
-        printf("Pelanggan %c dilayani\n",Nama(served));
-        printf("Antrian[%d/%d]",NBElmtQueue(Q),MaxAntrian);
-        if (!IsEmptyQueue(Q))
-        {
-            PrintAntrian(Q);
-        }
-    }
-    //stack command
-    Comm(comm1) = 1;
-    Comm(comm2) = 2;
-    Comm(comm3) = 3;
-    Comm(comm4) = 4;
-    Push(&S, comm1);
-    Push(&S, comm2);
-    Push(&S, comm3);
-    Push(&S, comm4);
-    execute(&S);
+    // nama=0;
+    // ch = Wahana(ElmtQ(Q,2),nama);
+    // printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,2)));
+    // while (ch !='.')
+    // {
+    //     printf("%c",ch);
+    //     nama++;
+    //     ch = Wahana(ElmtQ(Q,2),nama);
+    // }
+    // printf("\n");
+    // printf("Antrian[%d/%d]",NBElmtQueue(Q),MaxAntrian);
+
+    // //Simulasi antrian habis dari penuh
+    // while (!IsEmptyQueue(Q))
+    // {
+    //     KurangAntrian(&Q,&served);
+    //     printf("Pelanggan %c dilayani\n",Nama(served));
+    //     printf("Antrian[%d/%d]",NBElmtQueue(Q),MaxAntrian);
+    //     if (!IsEmptyQueue(Q))
+    //     {
+    //         PrintAntrian(Q);
+    //     }
+    // }
+    // //stack command
+    // Comm(comm1) = 1;
+    // Comm(comm2) = 2;
+    // Comm(comm3) = 3;
+    // Comm(comm4) = 4;
+    // Push(&S, comm1);
+    // Push(&S, comm2);
+    // Push(&S, comm3);
+    // Push(&S, comm4);
+    // execute(&S);
     return 0;
 }

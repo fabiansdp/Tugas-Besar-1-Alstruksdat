@@ -192,12 +192,13 @@ void LaporanWahana(ArrayWahana W, int id)
     printf("Penghasilan Hari Ini: %d\n\n", PenghasilanHarian(W,i));
 }
 
-int main() {
-    ArrayWahana W;
-    CreateDataWahana(&W);
-    CreateNamaWahana(&W);
+// Buat Testing
+// int main() {
+//     ArrayWahana W;
+//     CreateDataWahana(&W);
+//     CreateNamaWahana(&W);
 
-    InfoWahana(W, 13);
+//     InfoWahana(W, 13);
 
-    return 0;
-}
+//     return 0;
+// }
