@@ -4,15 +4,15 @@
 #include "../ADT/boolean.h"
 #include "../ADT/jam.h"
 #include "../ADT/command.h"
-#include "../ADT/arraypos.h"
-#include "../ADT/mesinkar.h"
-#include "../ADT/mesinkata.h"
+#include "../ADT/arraypos.c"
+#include "../ADT/mesinkar.c"
+#include "../ADT/mesinkata.c"
 #define MAXCHAR 100
 
 //GLOBAL VARIABLE
 char mat [20][256];
 int banyak;
-TabEl T;
+TabEl T,Resource;
 Kata CKata,Air,Kayu,Batu,Besi;
 
 
@@ -39,7 +39,7 @@ char* RemoveDigits(char* string)
 }
 
 // BACA HARGA
-void BacaHarga(int x,TabEl *T)
+void BacaHarga(int x,TabEl *T,TabEl *Resource)
 {
     FILE *fp;
     char str[MAXCHAR];
@@ -59,6 +59,8 @@ void BacaHarga(int x,TabEl *T)
         k = atoi(str);
         Id(*T,i) = i;
         Value(*T,i) = k;
+        Id(*Resource,i) = i;
+        Value(*Resource,i) = 0;
         i++;
     }
     fclose(fp);
@@ -123,7 +125,7 @@ void BacaInput(){
 }
 
 //CEK UANG CUKUP
-boolean EnoughMoney(int money,int banyak,TabEl T,Kata CKata){
+boolean EnoughMoney(int money,int banyak,TabEl *Resource){
     int i;
     Air.TabKata[0] = 'a';
     Air.TabKata[1] = 'i';
@@ -160,6 +162,7 @@ boolean EnoughMoney(int money,int banyak,TabEl T,Kata CKata){
         return false;
     }
     else{
+        Value(*Resource,i) += banyak;
         return true;
     }
 }
@@ -167,24 +170,24 @@ boolean EnoughMoney(int money,int banyak,TabEl T,Kata CKata){
 int main()
 {
     MakeEmpty(&T);
+    MakeEmpty(&Resource);
     //Jam J;
     //BacaJam(&J);
     printf("Welcome to the shop\n ");
     printf("Material List :\n");
     BacaMaterial(1,mat);
-    BacaHarga(1,&T);
+    BacaHarga(1,&T,&Resource);
     BacaInput();
     boolean x;
-    x =EnoughMoney(1000,banyak,T,CKata);
+    x =EnoughMoney(1000,banyak,&Resource);
     if(x == false){
         printf("Not enought money!\n");
         BacaInput();
-    }else{
+    }//else{
         //masuk ke stack
     //    TambahMenit(&J,10);
     //    TulisJam(J);
-     printf("BENER");
-    }
+    // printf("BENER");
+    //}
     return 0;
 }
-
