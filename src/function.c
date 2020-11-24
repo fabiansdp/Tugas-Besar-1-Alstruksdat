@@ -3,10 +3,12 @@
 #include "../ADT/boolean.h"
 #include "../ADT/command.h"
 #include "../ADT/stackt.h"
+#include "../ADT/wahana.h"
 
 void build()
 {
-    printf("ini BUILD\n");
+    printf("Ingin Bangun Apa?\n");
+    ListWahana();
 }
 
 void upgrade()
