@@ -56,6 +56,18 @@ address Search (List L, infotype X);
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
+boolean FSearch (List L, address P);
+/* Mencari apakah ada elemen list yang beralamat P */
+/* Mengirimkan true jika ada, false jika tidak ada */
+address SearchPrec (List L, infotype X);
+/* Mengirimkan address elemen sebelum elemen yang nilainya=X */
+/* Mencari apakah ada elemen list dengan Info(P)=X */
+/* Jika ada, mengirimkan address Prec, dengan Next(Prec)=P dan Info(P)=X. */
+/* Jika tidak ada, mengirimkan Nil */
+/* Jika P adalah elemen pertama, maka Prec=Nil */
+/* Search dengan spesifikasi seperti ini menghindari */
+/* traversal ulang jika setelah Search akan dilakukan operasi lain */
+
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
 void InsVFirst (List *L, infotype X);
@@ -129,10 +141,14 @@ int NbElmt (List L);
 /*** Prekondisi untuk Min: List tidak kosong ***/
 infotype Min (List L);
 /* Mengirimkan nilai Info(P) yang minimum */
+address AdrMin (List L);
+/* Mengirimkan address P, dengan info(P) yang bernilai minimum */
 
 /*** Prekondisi untuk Max: List tidak kosong ***/
 infotype Max (List L);
 /* Mengirimkan nilai Info(P) yang maksimum */
+address AdrMax (List L);
+/* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
 
 /****************** PROSES TERHADAP LIST ******************/
 void Konkat1 (List *L1, List *L2, List *L3);
@@ -143,4 +159,51 @@ void Konkat1 (List *L1, List *L2, List *L3);
 /* dan L1 serta L2 menjadi list kosong.*/
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
+void DelAll (List *L);
+/* I.S. sembarang. */
+/* F.S. elemen list dibalik : */
+/* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
+/* Membalik elemen list, tanpa melakukan alokasi/dealokasi. */
+
+List FInversList (List L);
+/* Mengirimkan list baru, hasil invers dari L */
+/* dengan menyalin semua elemn list. Alokasi mungkin gagal. */
+/* Jika alokasi gagal, hasilnya list kosong */
+/* dan semua elemen yang terlanjur di-alokasi, harus didealokasi */
+
+void CopyList (List *L1, List *L2);
+/* I.S. L1 sembarang. F.S. L2=L1 */
+/* L1 dan L2 "menunjuk" kepada list yang sama.*/
+/* Tidak ada alokasi/dealokasi elemen */
+
+List FCopyList (List L);
+/* Mengirimkan list yang merupakan salinan L */
+/* dengan melakukan alokasi. */
+/* Jika ada alokasi gagal, hasilnya list kosong dan */
+/* semua elemen yang terlanjur di-alokasi, harus didealokasi */
+
+void CpAlokList (List Lin, List *Lout);
+/* I.S. Lin sembarang. */
+/* F.S. Jika semua alokasi berhasil,maka Lout berisi hasil copy Lin */
+/* Jika ada alokasi yang gagal, maka Lout=Nil dan semua elemen yang terlanjur dialokasi, didealokasi */
+/* dengan melakukan alokasi elemen. */
+/* Lout adalah list kosong jika ada alokasi elemen yang gagal */
+
+void Konkat (List L1, List L2, List * L3);
+/* I.S. L1 dan L2 sembarang */
+/* F.S. L1 dan L2 tetap, L3 adalah hasil konkatenasi L1 & L2 */
+/* Jika semua alokasi berhasil, maka L3 adalah hasil konkatenasi*/
+/* Jika ada alokasi yang gagal, semua elemen yang sudah dialokasi */
+/* harus di-dealokasi dan L3=Nil*/
+/* Konkatenasi dua buah list : L1 & L2 menghasilkan L3 yang "baru" */
+/* Elemen L3 adalah hasil alokasi elemen yang “baru”. */
+/* Jika ada alokasi yang gagal, maka L3 harus bernilai Nil*/
+/* dan semua elemen yang pernah dialokasi didealokasi */
+
+void PecahList (List *L1, List *L2, List L);
+/* I.S. L mungkin kosong */
+/* F.S. Berdasarkan L, dibentuk dua buah list L1 dan L2 */
+/* L tidak berubah: untuk membentuk L1 dan L2 harus alokasi */
+/* L1 berisi separuh elemen L dan L2 berisi sisa elemen L */
+/* Jika elemen L ganjil, maka separuh adalah NbElmt(L) div 2 */
 #endif
