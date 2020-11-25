@@ -209,6 +209,7 @@ void ReadKataStart()
 void PrepPhase()
 {
     //prep phase loop
+    CreateEmptyStack(&S);
     prep_loop=true;
     while (prep_loop)   
     {
@@ -289,18 +290,18 @@ void PrepPhase()
             }
             else if (IsKataSama(ck,com_execute))
             {
-                printf("Input execute\n");
                 execute(&S);
-                prep_loop=false;
+                printf("Input execute\n");
                 crnt_jam=buka;
                 main_loop=true;
+                prep_loop=false;
             }
             else if (IsKataSama(ck,com_main))
             {
                 printf("Input main\n");
-                prep_loop=false;
                 crnt_jam=buka;
                 main_loop=true;
+                prep_loop=false;
             }
             else
             {

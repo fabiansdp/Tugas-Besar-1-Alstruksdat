@@ -76,16 +76,19 @@ void execute(Stack *S)
         {
             build();
             player_money-=Gold(C);
+            printf("Sisa uang setelah build %d\n",player_money);
         }
         else if (Comm(C) == 2)
         {
             upgrade();
             //dikurang material
+            //upgrade ditambah
         }
         else if (Comm(C) == 3)
         {
             buy();
             player_money-=Gold(C);
+            printf("Sisa uang setelah buy %d\n",player_money);
         }
         else if (Comm(C) == 4)
         {
