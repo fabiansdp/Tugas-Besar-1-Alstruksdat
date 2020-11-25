@@ -133,18 +133,16 @@ void CreateNamaWahana(ArrayWahana *W)
         // Gini aja aku bingung banget
         while (fscanf(fh, "%s", c) != EOF) {
             if (count == 2) {
+                (*W).ArrayW[number].nama.Length = mystrlen(c);
                 for (int j = 0; j<mystrlen(c); j++) {
                     (*W).ArrayW[number].nama.TabKata[j] = c[j];
-                    (*W).ArrayW[number].nama.Length = j;
                 }
             }
 
             if (count == 6) {
+                (*W).ArrayW[number].deskripsi.Length = mystrlen(c);
                 for (int j = 0; j<mystrlen(c); j++) {
-                    if (&c[j] != "-") {
-                        (*W).ArrayW[number].deskripsi.TabKata[j] = c[j];
-                        (*W).ArrayW[number].nama.Length = j;
-                    } 
+                    (*W).ArrayW[number].deskripsi.TabKata[j] = c[j];
                 }
             }
 
