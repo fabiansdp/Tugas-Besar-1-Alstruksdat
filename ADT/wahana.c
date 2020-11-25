@@ -165,7 +165,7 @@ int searchID(ArrayWahana W, int id)
     int index = 0;
     boolean found = false;
 
-    while ((index < JumlahWahana(W)) && !found) {
+    while ((index < JumlahWahana(W) + 1) && !found) {
         if (ID(W,index) == id) {
             found = true;
         } else {
