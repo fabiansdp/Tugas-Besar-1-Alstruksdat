@@ -73,6 +73,13 @@ Jam temp_jam;
 Jam total_jam;
 //kamus main,wahana
 ArrayWahana W;
+Kata CandyCrush;
+Kata ChocolateForest;
+Kata BombomCar;
+Kata LemonSplash;
+Kata CandyVillage;
+Kata CandySwing;
+Kata BlackForestTornado;
 //kamus main,int
 int crnt_day;
 int crnt_map;
@@ -176,6 +183,14 @@ void SetupKata()
     com_main.TabKata[2]='i';
     com_main.TabKata[3]='n';
     com_main.Length=4;
+    // Setup Wahana
+    CandyCrush = W.ArrayW[0].nama;
+    ChocolateForest = W.ArrayW[1].nama;
+    BombomCar = W.ArrayW[2].nama;
+    LemonSplash = W.ArrayW[3].nama;
+    CandyVillage = W.ArrayW[4].nama;
+    CandySwing = W.ArrayW[5].nama;
+    BlackForestTornado = W.ArrayW[6].nama;
 }
 
 void ReadKataStart()
@@ -256,18 +271,68 @@ void PrepPhase()
             // COMMAND MakeCOMMAND(int comm, int name, int amount, int gold, int map, POINT coordinate, int time);
             else if (IsKataSama(ck,com_build))
             {
-                // // Minta in
-                // ListWahana();
-                // puts("Mau bangun apa?");
-                // // STARTKATA();
-                // // while (!EndKata) {
-
-                // // }
-                comm1 = MakeCOMMAND(1,0,0,50000,crnt_map,player_loc,3600);
+                // // Minta input
+                int id, harga, durasi;
+                do {
+                    ListWahana();
+                    puts("Mau bangun apa?");
+                    STARTKATA();    
+                    while (!EndKata) {
+                        if (IsKataSama(CKata, CandyCrush)) {
+                            id = 11;
+                            int index = searchID(W,id);
+                            harga = Harga(W,index);
+                            durasi = Durasi(W, index);
+                            puts("\nKamu pilih Candy Crush\n");
+                        } else if (IsKataSama(CKata, ChocolateForest)) {
+                            id = 12;
+                            int index = searchID(W,id);
+                            harga = Harga(W,index);
+                            durasi = Durasi(W, index);
+                            puts("\nKamu pilih Chocolate Forest\n");
+                        } else if (IsKataSama(CKata, BombomCar)) {
+                            id = 13;
+                            int index = searchID(W,id);
+                            harga = Harga(W,index);
+                            durasi = Durasi(W, index);
+                            puts("\nKamu pilih Bombom Car\n");
+                        } else if (IsKataSama(CKata, LemonSplash)) {
+                            id = 14;
+                            int index = searchID(W,id);
+                            harga = Harga(W,index);
+                            durasi = Durasi(W, index);
+                            puts("\nKamu pilih Lemon Splash\n");
+                        } else if (IsKataSama(CKata, CandyVillage)) {
+                            id = 15;
+                            int index = searchID(W,id);
+                            harga = Harga(W,index);
+                            durasi = Durasi(W, index);
+                            puts("\nKamu pilih Candy Village\n");
+                        } else if (IsKataSama(CKata, CandySwing)) {
+                            id = 16;
+                            int index = searchID(W,id);
+                            harga = Harga(W,index);
+                            durasi = Durasi(W, index);
+                            puts("\nKamu pilih Candy Swing\n");
+                        } else if (IsKataSama(CKata, BlackForestTornado)) {
+                            id = 17;
+                            int index = searchID(W,id);
+                            harga = Harga(W,index);
+                            durasi = Durasi(W, index);
+                            puts("\nKamu pilih Black Forest Tornado\n");
+                        } else {
+                            puts("Tidak ada nama wahana seperti itu!");
+                        }
+                        ADVKATA();
+                    }
+                } while (!IsKataSama(CKata, CandyCrush) && !IsKataSama(CKata, ChocolateForest) && !IsKataSama(CKata, BombomCar) && !IsKataSama(CKata, LemonSplash) && !IsKataSama(CKata, CandyVillage) && !IsKataSama(CKata, CandySwing) && !IsKataSama(CKata, BlackForestTornado));
+                
+                // MakeCommand(idComm, idWahana, JmlhMaterial, Gold, Map, Lokasi, Durasi)
+                comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
                 Push(&S, comm1);
                 total_aksi++;
-                total_uang+=50000;
-                total_waktu+=3600;
+                total_uang+=harga;
+                total_waktu+=durasi;
             }
             else if (IsKataSama(ck,com_upgrade))
             {
@@ -331,6 +396,8 @@ void PrepPhase()
 
 int main()
 {
+    CreateDataWahana(&W);
+    CreateNamaWahana(&W);
     //menu awal
     printf("Welcome to Willy wangky's\n");
     printf("New game / load game / exit? \n");
@@ -362,8 +429,8 @@ int main()
     total_jam=MakeJam(0,0);
 
     //setup wahana
-    CreateDataWahana(&W);
-    CreateNamaWahana(&W);
+    // CreateDataWahana(&W);
+    // CreateNamaWahana(&W);
     //cek wahana
     // if (!IsDibangun(W,2)) {
     //     puts("NotBuild");

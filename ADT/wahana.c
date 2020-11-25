@@ -154,7 +154,6 @@ void CreateNamaWahana(ArrayWahana *W)
                 number += 1;
             }
         }
-        printf("%d\n", (*W).ArrayW[4].nama.Length);
         fclose(fh);
     }
 }

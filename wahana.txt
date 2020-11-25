@@ -1,7 +1,7 @@
-11 Candy-Crush 50000 10 5 Wahana-Roller-Coaster 1 2 2 1
-12 Chocolate-Forest 30000 7 3 Wahana-Labirin 1 3 2 0
-13 Bombom-Car 40000 10 4 Wahana-Mobil-Bombom-Car 2 1 2 0
-14 Lemon-Splash 30000 9 3 Wahana-Mandi-Bola 1 1 1 1
-15 Candy-Village 40000 8 4 Wahana-Foto-Foto 1 2 1 2
-16 Candy-Swing 30000 7 3 Wahana-Perahu 1 2 0 1
-17 Blackforest-Tornado 60000 10 6 Wahana-Tornado 2 3 1 2
+11 Candy-Crush 50000 10 7200 Wahana-Roller-Coaster 1 2 2 1
+12 Chocolate-Forest 30000 7 3600 Wahana-Labirin 1 3 2 0
+13 Bombom-Car 40000 10 5400 Wahana-Mobil-Bombom-Car 2 1 2 0
+14 Lemon-Splash 30000 9 3600 Wahana-Mandi-Bola 1 1 1 1
+15 Candy-Village 40000 8 5400 Wahana-Foto-Foto 1 2 1 2
+16 Candy-Swing 30000 7 3600 Wahana-Perahu 1 2 0 1
+17 Blackforest-Tornado 60000 10 9000 Wahana-Tornado 2 3 1 2
