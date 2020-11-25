@@ -115,7 +115,7 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
         {
             for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++)
             {
-                scanf("%d",&ElmtM(*M,i,j));
+                scanf("%c",&ElmtM(*M,i,j));
             }
         }
     }

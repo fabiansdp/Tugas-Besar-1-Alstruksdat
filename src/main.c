@@ -256,14 +256,18 @@ void PrepPhase()
             // COMMAND MakeCOMMAND(int comm, int name, int amount, int gold, int map, POINT coordinate, int time);
             else if (IsKataSama(ck,com_build))
             {
-                //uang sejumlah harga build
+                // // Minta in
+                // ListWahana();
+                // puts("Mau bangun apa?");
+                // // STARTKATA();
+                // // while (!EndKata) {
+
+                // // }
                 comm1 = MakeCOMMAND(1,0,0,50000,crnt_map,player_loc,3600);
                 Push(&S, comm1);
-                printf("Input build\n");
                 total_aksi++;
                 total_uang+=50000;
                 total_waktu+=3600;
-                // build();
             }
             else if (IsKataSama(ck,com_upgrade))
             {
