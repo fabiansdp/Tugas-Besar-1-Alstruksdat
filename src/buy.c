@@ -14,7 +14,8 @@ char mat [20][256];
 int banyak;
 TabEl T,Resource;
 Kata CKata,Air,Kayu,Batu,Besi;
-
+int price;
+int indeks_buy;
 
 // HILANGIN ANGKA DARI FILE
 char* RemoveDigits(char* string)
@@ -162,6 +163,9 @@ boolean EnoughMoney(int money,int banyak,TabEl *Resource){
         return false;
     }
     else{
+        price=banyak*Value(T,i);
+        indeks_buy=i;
+        //ditambah ke resource
         Value(*Resource,i) += banyak;
         return true;
     }

@@ -8,6 +8,7 @@
 #include "../ADT/mesinkar.c"
 #include "../ADT/jam.c"
 #include "../ADT/wahana.c"
+#include "../ADT/arraypos.c"
 //include from src
 #include "peta.c"
 #include "antrian.c"
@@ -43,8 +44,10 @@ extern int total_uang;
 //Kamus di buy
 extern char mat [20][256];
 extern int banyak;
-extern TabEl T;
+extern TabEl T,Resource;
 extern Kata CKata,Air,Kayu,Batu,Besi;
+extern int price;
+extern int indeks_buy;
 //kamus main
 boolean start_loop;
 boolean prep_loop;
@@ -278,12 +281,22 @@ void PrepPhase()
             }
             else if (IsKataSama(ck,com_buy))
             {
-                comm3 = MakeCOMMAND(3,0,0,50000,crnt_map,player_loc,3600);
-                Push(&S, comm3);
-                printf("Input buy\n");
-                total_aksi++;
-                total_uang+=50000;
-                total_waktu+=3600;
+                printf("Welcome to the shop\n ");
+                printf("Material List :\n");
+                BacaMaterial(1,mat);
+                BacaHarga(1,&T,&Resource);
+                BacaInput();
+                if(!EnoughMoney(player_money,banyak,&Resource)){
+                    printf("Not enought money!\n");
+                }
+                else{
+                    comm3 = MakeCOMMAND(3,0,0,price,crnt_map,player_loc,3600);
+                    Push(&S, comm3);
+                    // printf("Input buy\n");
+                    total_aksi++;
+                    total_uang+=price;
+                    total_waktu+=3600;
+                }
                 // buy();
             }
             else if (IsKataSama(ck,com_undo))
@@ -294,7 +307,7 @@ void PrepPhase()
             else if (IsKataSama(ck,com_execute))
             {
                 execute(&S);
-                printf("Input execute\n");
+                printf("Perintah diexecute\n");
                 crnt_jam=buka;
                 main_loop=true;
                 prep_loop=false;
@@ -389,9 +402,34 @@ int main()
     total_waktu=0;
     total_uang=0;
 
+    //setup buy
+    MakeEmptyTabel(&T);
+    MakeEmptyTabel(&Resource);
+
+    // //Jam J;
+    // //BacaJam(&J);
+
+    // printf("Welcome to the shop\n ");
+    // printf("Material List :\n");
+    // BacaMaterial(1,mat);
+    // BacaHarga(1,&T,&Resource);
+    // BacaInput();
+    // boolean x;
+    // x =EnoughMoney(1000,banyak,&Resource);
+    // if(x == false){
+    //     printf("Not enought money!\n");
+    //     BacaInput();
+    // }
+    // else{
+    //     // masuk ke stack
+    //     // TambahMenit(&J,10);
+    //     // TulisJam(J);
+    // printf("BENER");
+    // }
+
     /*prep phase loop*/
     PrepPhase();
-    
+
 
     // printf("X untuk keluar\n");
     // loop=true;    

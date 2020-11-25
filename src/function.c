@@ -5,6 +5,9 @@
 #include "../ADT/stackt.h"
 // #include "../ADT/wahana.h"
 extern int player_money;
+extern TabEl Resource;
+extern int banyak;
+extern int indeks_buy;
 
 void build()
 {
@@ -19,6 +22,22 @@ void upgrade()
 
 void buy()
 {
+    // printf("Welcome to the shop\n ");
+    // printf("Material List :\n");
+    // BacaMaterial(1,mat);
+    // BacaHarga(1,&T,&Resource);
+    // BacaInput();
+    // boolean x;
+    // x =EnoughMoney(1000,banyak,&Resource);
+    // if(x == false){
+    //     printf("Not enought money!\n");
+    //     BacaInput();
+    // }
+    // else{
+    //     // masuk ke stack
+    //     // TambahMenit(&J,10);
+    //     // TulisJam(J);
+    // printf("BENER");
     printf("ini BUY\n");
 }
 
@@ -45,6 +64,9 @@ void undo(Stack *S)
             break;
         case 3:
             printf("Undo Buy\n");
+            //belum ada undo material
+            printf("Id %d sebanyak %d batal dibayar\n",indeks_buy,banyak);
+            Value(Resource,indeks_buy) -= banyak;
             total_aksi--;
             total_uang-=Gold(C);
             total_waktu-=Time(C);
