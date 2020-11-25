@@ -9,10 +9,19 @@ extern TabEl Resource;
 extern int banyak;
 extern int indeks_buy;
 
-void build()
+int player_money;
+ArrayWahana W;
+
+void build(ArrayWahana *W, int ID, int Gold)
 {
-    printf("Ingin Bangun Apa?\n");
-    // ListWahana();
+    if (player_money < Gold) {
+        printf("Uang tidak cukup untuk membangun wahana ini!\n");
+    } else {
+        int index = searchID(*W, ID);
+        player_money -= Gold;
+        IsDibangun(*W,index) = true;
+        printf("Wahana berhasil dibangun\n");
+    }
 }
 
 void upgrade()
@@ -96,9 +105,7 @@ void execute(Stack *S)
         Pop(&exeStack, &C);
         if (Comm(C) == 1)
         {
-            build();
-            player_money-=Gold(C);
-            printf("Sisa uang setelah build %d\n",player_money);
+            build(&W, Name(C), Gold(C));
         }
         else if (Comm(C) == 2)
         {
@@ -109,8 +116,8 @@ void execute(Stack *S)
         else if (Comm(C) == 3)
         {
             buy();
-            player_money-=Gold(C);
-            printf("Sisa uang setelah buy %d\n",player_money);
+            // player_money-=Gold(C);
+            // printf("Sisa uang setelah buy %d\n",player_money);
         }
         else if (Comm(C) == 4)
         {
@@ -118,3 +125,9 @@ void execute(Stack *S)
         }
     }
 }
+
+// int main() {
+//     build(&W, 11, 10000);
+
+//     return 0;
+// }

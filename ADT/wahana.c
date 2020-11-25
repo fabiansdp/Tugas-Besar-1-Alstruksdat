@@ -198,6 +198,12 @@ void InfoWahana(ArrayWahana W, int id)
     } else {
         printf("Normal\n");
     }
+    printf("Keadaan: ");
+    if (IsDibangun(W,i)) {
+        printf("Sudah dibangun\n");
+    } else {
+        printf("Belum dibangun\n");
+    }
     printf("\n");
 }
 
