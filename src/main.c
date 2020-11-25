@@ -11,6 +11,7 @@
 #include "peta.c"
 #include "antrian.c"
 #include "function.c"
+// #include "buy.c"
 
 //kamus peta
 extern MATRIKS L;
@@ -34,6 +35,15 @@ int adjacent;
 //kamus stack
 Stack S;
 COMMAND comm1, comm2, comm3, comm4;
+//kamus di command
+extern int total_aksi;
+extern int total_waktu;
+extern int total_uang;
+//Kamus di buy
+// extern char mat [20][256];
+// extern int banyak;
+// extern TabEl T;
+// extern Kata CKata,Air,Kayu,Batu,Besi;
 //kamus main
 boolean start_loop;
 boolean prep_loop;
@@ -59,13 +69,11 @@ Jam crnt_jam;
 Jam buka;
 Jam tutup;
 Jam temp_jam;
+Jam total_jam;
 //kamus main,int
 int crnt_day;
 int crnt_map;
 int player_money;
-int total_aksi;
-int total_waktu;
-int total_uang;
 
 void PrintLegend()
 {
@@ -93,11 +101,16 @@ void PrintPrep()
     printf("\n");
     printf("Current time: %d.%d\n",Hour(crnt_jam),Minute(crnt_jam));
     printf("Current time: %d.%d\n",Hour(buka),Minute(buka));
-    if(Hour(temp_jam)>0) printf("Time Remaining: %d hour(s)",Hour(temp_jam));
+    printf("Time Remaining: ");
+    if(Hour(temp_jam)>0) printf(" %d hour(s)",Hour(temp_jam));
     if(Minute(temp_jam)>0) printf(" %d minute(s)",Minute(temp_jam));
     printf("\n");
     printf("Total aksi yang akan dilakukan: %d\n",total_aksi);
-    printf("Total waktu yang dibutuhkan: %d\n",total_waktu);
+    total_jam=DetikToJam(total_waktu);
+    printf("Total waktu yang dibutuhkan: ");
+    if(Hour(total_jam)>0) printf(" %d hour(s)",Hour(total_jam));
+    printf(" %d minute(s)",Minute(total_jam));
+    printf("\n");
     printf("Total uang yang dibutuhkan: %d\n",total_uang);
     printf("\n");
     printf("Masukkan Perintah: ");
@@ -236,28 +249,42 @@ void PrepPhase()
                 TambahMenit(&crnt_jam,5);
                 temp_jam=DetikToJam(JamToDetik(temp_jam)-300);
             }
-            // COMMAND MakeCOMMAND(int comm, int name, int amount, int map, POINT coordinate, int time);
+            // COMMAND MakeCOMMAND(int comm, int name, int amount, int gold, int map, POINT coordinate, int time);
             else if (IsKataSama(ck,com_build))
             {
-                comm1 = MakeCOMMAND(1,0,0,crnt_map,player_loc,5);
-                // printf("Input build\n");
-                build();
+                //uang sejumlah harga build
+                comm1 = MakeCOMMAND(1,0,0,50000,crnt_map,player_loc,3600);
+                Push(&S, comm1);
+                printf("Input build\n");
+                total_aksi++;
+                total_uang+=50000;
+                total_waktu+=3600;
+                // build();
             }
             else if (IsKataSama(ck,com_upgrade))
             {
-                comm2 = MakeCOMMAND(2,0,0,crnt_map,player_loc,5);
-                // printf("Input upgrade\n");
-                upgrade();
+                //uang sejumlah harga upgrade
+                comm2 = MakeCOMMAND(2,0,20,0,crnt_map,player_loc,3600);
+                Push(&S, comm2);
+                printf("Input upgrade\n");
+                total_aksi++;
+                // total_uang+=50000;
+                total_waktu+=3600;
+                // upgrade();
             }
             else if (IsKataSama(ck,com_buy))
             {
-                comm3 = MakeCOMMAND(3,0,0,crnt_map,player_loc,5);
-                // printf("Input buy\n");
-                buy();
+                comm3 = MakeCOMMAND(3,0,0,50000,crnt_map,player_loc,3600);
+                Push(&S, comm3);
+                printf("Input buy\n");
+                total_aksi++;
+                total_uang+=50000;
+                total_waktu+=3600;
+                // buy();
             }
             else if (IsKataSama(ck,com_undo))
             {
-                // printf("Input undo\n");
+                printf("Input undo\n");
                 undo(&S);
             }
             else if (IsKataSama(ck,com_execute))
@@ -324,8 +351,9 @@ int main()
     tutup=MakeJam(21,0);
     crnt_day=1;
     temp_jam=DetikToJam(abs(JamToDetik(buka)-JamToDetik(crnt_jam)));
+    total_jam=MakeJam(0,0);
 
-    //peta
+    /*peta*/
     //setup matriks tipe
     for (i = 0; i <= 9; i++)
     {
@@ -341,13 +369,13 @@ int main()
     TitikPeta(L,AP); //set titik pada peta
     
     //setup & PrintPrep
-    player_money=1000;
+    PrintPrep();
+    player_money=100000;
     total_aksi=0;
     total_waktu=0;
     total_uang=0;
-    PrintPrep();
 
-    //prep phase loop
+    /*prep phase loop*/
     PrepPhase();
 
     // printf("X untuk keluar\n");
@@ -387,7 +415,7 @@ int main()
     //     printf("\n");
     // }
 
-    //antrian
+    /*antrian*/
     // MakeEmpty(&Q, MaxAntrian);
     // while (!IsFullQueue(Q))
     // {
@@ -446,6 +474,7 @@ int main()
     //         PrintAntrian(Q);
     //     }
     // }
+
     // //stack command
     // Comm(comm1) = 1;
     // Comm(comm2) = 2;
