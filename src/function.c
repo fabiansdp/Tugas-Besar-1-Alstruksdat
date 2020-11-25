@@ -69,19 +69,28 @@ void undo(Stack *S)
     COMMAND C;
 
     Pop(S, &C);
-
+    // COMMAND MakeCOMMAND(int comm, int name, int amount, int map, POINT coordinate, int time);
     switch (Comm(C)) {
         case 1:
-            printf("Undo Build");
+            printf("Undo Build\n");
+            total_aksi--;
+            total_uang-=Gold(C);
+            total_waktu-=Time(C);
             break;
         case 2:
-            printf("Undo Upgrade");
+            printf("Undo Upgrade\n");
+            total_aksi--;
+            // total_uang-=Gold(C); harusnya ga jadi kurang material
+            total_waktu-=Time(C);
             break;
         case 3:
-            printf("Undo Buy");
+            printf("Undo Buy\n");
+            total_aksi--;
+            total_uang-=Gold(C);
+            total_waktu-=Time(C);
             break;
         case 4:
-            printf("Undo Undo");
+            printf("Undo Undo\n");
             break;
         default:
             break;
@@ -105,15 +114,21 @@ void execute(Stack *S)
         Pop(&exeStack, &C);
         if (Comm(C) == 1)
         {
-            build(&exeStack);
+            build();
+            player_money-=Gold(C);
+            printf("Sisa uang setelah build %d\n",player_money);
         }
         else if (Comm(C) == 2)
         {
             upgrade();
+            //dikurang material
+            //upgrade ditambah
         }
         else if (Comm(C) == 3)
         {
             buy();
+            player_money-=Gold(C);
+            printf("Sisa uang setelah buy %d\n",player_money);
         }
         else if (Comm(C) == 4)
         {

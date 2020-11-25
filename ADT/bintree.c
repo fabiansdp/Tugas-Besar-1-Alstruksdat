@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include"boolean.h"
 #include"listrek.h"
-#include"pohon.h"
+#include"bintree.h"
 
 /* *** Konstruktor *** */
 BinTree Tree(infotype Akar, BinTree L, BinTree R){
@@ -210,7 +210,7 @@ boolean SearchTree(BinTree P, infotype X){
    }else if(Akar(P)==X){
       return true;
    }else{
-      return SearchTree(Left(P),X)||SearchTree(Right(P),X);
+      return SearchTree(Left(P),X)|SearchTree(Right(P),X);
    }
 }
 /* Mengirimkan true jika ada node dari P yang bernilai X */
@@ -408,7 +408,7 @@ List MakeListPreorder(BinTree P){
       return Alokasi(Akar(P));
    }else{
       //return Concat(MakeListDaun(Left(P)),MakeListDaun(Right(P)));
-      return Concat(Konso(Akar(P),MakeListDaun(Left(P))),Konso(Akar(P),MakeListDaun(Right(P))));
+      return Concat(Konso(Akar(P),MakeListDaun(Left(P))),MakeListPreorder(Right(P)));
    }
 }
 /* Jika P adalah pohon kosong, maka menghasilkan list kosong. */
@@ -447,12 +447,94 @@ boolean BSearch(BinTree P, infotype X){
 /* Mengirimkan true jika ada node dari P yang bernilai X */
 
 void InsSearch(BinTree *P, infotype X){
-   
+   BinTree btr = Tree(X,Nil,Nil);
+
+   if (IsTreeEmpty(*P)){
+      (*P) = btr;
+   }else if (IsTreeOneElmt(*P)){
+      Left(*P) = btr;
+   }else if(Left(*P)==Nil){
+      if(Akar(Right(*P))<X){
+         infotype asd = Akar(Right(*P));
+         Akar(btr) = asd;
+         Left(*P) = btr;
+         Akar(Right(*P)) = X;
+      }else{
+         Left(*P) = btr;
+      }
+   }else if(Right(*P)==Nil){
+      if(Akar(Left(*P))>X){
+         infotype asd = Akar(Left(*P));
+         Akar(btr) = asd;
+         Right(*P) = btr;
+         Akar(Left(*P)) = X;
+      }else{
+         Right(*P) = btr;
+      }
+   }else{
+      if(X>Akar(*P)){
+         InsSearch(&Right(*P),X);
+      }else{
+          InsSearch(&Left(*P),X);
+      }
+   }
 }
 /* Menghasilkan sebuah pohon Binary Search Tree P dengan tambahan simpul X. Belum ada simpul P yang bernilai X. */
 
+BinTree SearchDaun(BinTree P,infotype X){
+   if(IsTreeOneElmt(P) && Akar(P)==X){
+      return P;
+   }else if(IsTreeEmpty(P)){
+      return Nil;
+   }else{
+      if(SearchTree(Left(P),X)){
+         return SearchDaun(Left(P),X);
+      }else{
+         return SearchDaun(Right(P),X);
+      }
+   }
+}
+
+infotype MaxList (List L){
+    infotype maks;
+    maks = FirstElmt(L);
+    L = Tail(L);
+    while (L!=Nil)
+    {
+      if(FirstElmt(L)>maks){
+        maks = FirstElmt(L);
+      }
+      L = Tail(L);
+    }
+    return maks;
+}
+
 void DelBtree(BinTree *P, infotype X){
-   
+   if(Akar(*P)>X){
+      DelBtree(&Left(*P),X);
+   }else if(Akar(*P)<X){
+      DelBtree(&Right(*P),X);
+   }else{
+      BinTree btr = (*P);
+      if(IsTreeOneElmt(*P)){
+         (*P) = Nil;
+      }else if(IsUnerLeft(*P)){
+         (*P) = Left(*P);
+      }else if(IsUnerRight(*P)){
+         (*P) = Right(*P);
+      }else{
+         if(IsTreeOneElmt(Left(*P)) && IsTreeOneElmt(Right(*P))){
+            Akar(*P) = Akar(Left(*P));
+            Left(*P) = Nil;
+         }else{
+            List dedaunan = MakeListDaun(*P);
+            infotype a = MaxList(dedaunan);
+            BinTree temp = SearchDaun(*P,a);
+            Akar(btr) = Akar(temp);
+            temp = Nil;
+         }
+      }
+   }
 }
 /* I.S. Pohon P tidak  kosong */
 /* F.S. Nilai X yang dihapus pasti ada */

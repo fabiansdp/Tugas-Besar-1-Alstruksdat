@@ -27,7 +27,7 @@ void ListWahana()
 
             count += 1;
 
-            if (count == 7) {
+            if (count == 11) {
                 count = 1;
             }
         }
@@ -54,6 +54,7 @@ void CreateDataWahana(ArrayWahana *W)
             if (count == 1) {
                 int id = atoi(c);
                 ID(*W, number) = id;
+                IsDibangun(*W,number) = false;
                 NaikTotal(*W,number) = 0;
                 TotalPenghasilan(*W,number) = 0;
                 NaikHarian(*W,number) = 0;
@@ -75,9 +76,29 @@ void CreateDataWahana(ArrayWahana *W)
                 Durasi(*W, number) = durasi;
             }
 
+            if (count == 7) {
+                int air = atoi(c);
+                Air(*W,number) = air; 
+            }
+
+            if (count == 8) {
+                int kayu = atoi(c);
+                Kayu(*W, number) = kayu;
+            }
+
+            if (count == 9) {
+                int batu = atoi(c);
+                Batu(*W, number) = batu;
+            }
+
+            if (count == 10) {
+                int besi = atoi(c);
+                Besi(*W, number) = besi;
+            }
+
             count += 1;
 
-            if (count == 7) {
+            if (count == 11) {
                 Status(*W, number) = 1;
                 count = 1;
                 number += 1;
@@ -127,7 +148,7 @@ void CreateNamaWahana(ArrayWahana *W)
 
             count += 1;
 
-            if (count == 7) {
+            if (count == 11) {
                 Status(*W, number) = 1;
                 count = 1;
                 number += 1;
@@ -190,3 +211,18 @@ void LaporanWahana(ArrayWahana W, int id)
     printf("Penghasilan Total: %d\n", TotalPenghasilan(W,i));
     printf("Penghasilan Hari Ini: %d\n\n", PenghasilanHarian(W,i));
 }
+
+// Buat Testing
+// int main() {
+//     ArrayWahana W;
+//     CreateDataWahana(&W);
+//     CreateNamaWahana(&W);
+
+//     if (!IsDibangun(W,2)) {
+//         puts("Jancok");
+//     }
+//     printf("%d\n", Air(W,1));
+//     InfoWahana(W, 13);
+
+//     return 0;
+// }

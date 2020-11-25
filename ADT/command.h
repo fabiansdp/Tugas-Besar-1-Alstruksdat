@@ -34,6 +34,7 @@ typedef struct
     int comm;         /* ID Command */
     int name;         /* ID Wahana */
     int amount;       /* Diisi jumlah material yang dibutuhkan, isi Nil jika tidak membutuhkan komponen ini */
+    int gold;         /* Uang yang dibutuhkan */
     int map;          /* Diisi peta 1/2/3/4, isi Nil jika tidak membutuhkan komponen ini */
     POINT coordinate; /* Diisi koordinat dalam peta dengan selektor di adt point, isi Nil jika tidak membutuhkan komponen ini */
     int time;         /* Diisi waktu yang dibutuhkan dalam command yang digunakan, isi Nil jika tidak membutuhkan komponen ini */
@@ -43,13 +44,14 @@ typedef struct
 #define Comm(C) (C).comm
 #define Name(C) (C).name
 #define Amount(C) (C).amount
+#define Gold(C) (C).gold
 #define Map(C) (C).map
 #define Coordinate(C) (C).coordinate
 #define Time(C) (C).time
 
 /* *** DEFINISI PROTOTIPE PRIMITIF *** */
 /* *** Konstruktor membentuk COMMAND *** */
-COMMAND MakeCOMMAND(int comm, int name, int amount, int map, POINT coordinate, int time);
+COMMAND MakeCOMMAND(int comm, int name, int amount, int gold, int map, POINT coordinate, int time);
 /* Membentuk sebuah COMMAND dari komponen-komponennya */
 
 void MakeEmptyCOMMAND(COMMAND *C);
