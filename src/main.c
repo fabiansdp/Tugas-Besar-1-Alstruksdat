@@ -105,6 +105,7 @@ void PrintPrep()
         printf("%c",player_name.TabKata[i]);
     }
     printf("\n");
+    printf("Money: %d\n",player_money);
     printf("Current time: %d.%d\n",Hour(crnt_jam),Minute(crnt_jam));
     printf("Current time: %d.%d\n",Hour(buka),Minute(buka));
     printf("Time Remaining: ");
@@ -396,12 +397,11 @@ int main()
     TitikPeta(L,AP); //set titik pada peta
     
     //setup & PrintPrep
-    PrintPrep();
     player_money=100000;
     total_aksi=0;
     total_waktu=0;
     total_uang=0;
-
+    PrintPrep();
     //setup buy
     MakeEmptyTabel(&T);
     MakeEmptyTabel(&Resource);
