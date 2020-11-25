@@ -4,7 +4,7 @@
 #include "mesinkata.h"
 
 
-void MakeEmpty (TabEl * T)
+void MakeEmptyTabel (TabEl * T) 
 {
     IdxType i;
     for (i = IdxMin; i < IdxMax+1; i++)
@@ -15,7 +15,7 @@ void MakeEmpty (TabEl * T)
     
 }
 
-int NbElmt (TabEl T)
+int NbElmtTabel (TabEl T)
 {
     IdxType i = IdxMin;
     int Neff = 0;
@@ -36,7 +36,7 @@ IdxType GetFirstIdx (TabEl T)
 
 IdxType GetLastIdx (TabEl T)
 {
-    return (NbElmt(T)-1);
+    return (NbElmtTabel(T)-1);
 }
 
 int MaxNbEl (TabEl T)
@@ -44,31 +44,31 @@ int MaxNbEl (TabEl T)
     return (IdxMax - IdxMin + 1);
 }
 
-boolean IsIdxValid (TabEl T, IdxType i)
+boolean IsIdxValidTabel (TabEl T, IdxType i)
 {
     return ((i>=IdxMin) && (i<=IdxMax));
 }
 
-boolean IsIdxEff (TabEl T, IdxType i)
+boolean IsIdxEffTabel (TabEl T, IdxType i)
 {
     return ((i>=GetFirstIdx(T))&&(i<=GetLastIdx(T)));
 }
 
 boolean IsEmpty (TabEl T)
 {
-    return (NbElmt(T) == 0);
+    return (NbElmtTabel(T) == 0);
 }
 
 boolean IsFull (TabEl T)
 {
-    return (NbElmt(T) == MaxNbEl(T));
+    return (NbElmtTabel(T) == MaxNbEl(T));
 }
 
 void BacaIsi (TabEl * T)
 {
     IdxType i;
     int N;
-    MakeEmpty(T);
+    MakeEmptyTabel(T);
 
     do {
         printf("Berapa banyak elemen yang ingin diinput?\n");
