@@ -20,6 +20,13 @@
 
 /* Struktur buat Laporan Wahana*/
 typedef struct {
+    int air;
+    int kayu;
+    int batu;
+    int besi;
+} UpgradeMaterial;
+
+typedef struct {
     int naiktotal;
     int penghasilantotal;
     int naikharian;
@@ -29,10 +36,12 @@ typedef struct {
 /* Struktur Data Khusus buat Detail Wahana */
 typedef struct {
     int id, harga, kapasitas, durasi, status;
+    boolean isDibangun;
     POINT lokasi;
     Kata nama;
     Kata deskripsi;
     Laporan laporan;
+    UpgradeMaterial material;
 } Wahana;
 
 typedef struct {
@@ -49,7 +58,13 @@ typedef struct {
 #define TotalPenghasilan(W,i) (W).ArrayW[(i)].laporan.penghasilantotal
 #define NaikHarian(W,i) (W).ArrayW[(i)].laporan.naikharian
 #define PenghasilanHarian(W,i) (W).ArrayW[(i)].laporan.penghasilanharian
+#define IsDibangun(W,i) (W).ArrayW[(i)].isDibangun
+#define Air(W,i) (W).ArrayW[(i)].material.air
+#define Kayu(W,i) (W).ArrayW[(i)].material.kayu
+#define Batu(W,i) (W).ArrayW[(i)].material.batu
+#define Besi(W,i) (W).ArrayW[(i)].material.besi
 #define JumlahWahana(W) (W).jumlahWahana
+
 
 // Baca dari teks file
 void ListWahana();
