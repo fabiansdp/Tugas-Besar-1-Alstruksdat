@@ -7,11 +7,12 @@
 #include "../ADT/mesinkata.c"
 #include "../ADT/mesinkar.c"
 #include "../ADT/jam.c"
+#include "../ADT/wahana.c"
 //include from src
 #include "peta.c"
 #include "antrian.c"
 #include "function.c"
-// #include "buy.c"
+#include "buy.c"
 
 //kamus peta
 extern MATRIKS L;
@@ -40,10 +41,10 @@ extern int total_aksi;
 extern int total_waktu;
 extern int total_uang;
 //Kamus di buy
-// extern char mat [20][256];
-// extern int banyak;
-// extern TabEl T;
-// extern Kata CKata,Air,Kayu,Batu,Besi;
+extern char mat [20][256];
+extern int banyak;
+extern TabEl T;
+extern Kata CKata,Air,Kayu,Batu,Besi;
 //kamus main
 boolean start_loop;
 boolean prep_loop;
@@ -70,6 +71,8 @@ Jam buka;
 Jam tutup;
 Jam temp_jam;
 Jam total_jam;
+//kamus main,wahana
+ArrayWahana W;
 //kamus main,int
 int crnt_day;
 int crnt_map;
@@ -354,6 +357,16 @@ int main()
     temp_jam=DetikToJam(abs(JamToDetik(buka)-JamToDetik(crnt_jam)));
     total_jam=MakeJam(0,0);
 
+    //setup wahana
+    CreateDataWahana(&W);
+    CreateNamaWahana(&W);
+    //cek wahana
+    // if (!IsDibangun(W,2)) {
+    //     puts("NotBuild");
+    // }
+    // printf("%d\n", Air(W,1));
+    // InfoWahana(W, 13);
+
     /*peta*/
     //setup matriks tipe
     for (i = 0; i <= 9; i++)
@@ -378,6 +391,7 @@ int main()
 
     /*prep phase loop*/
     PrepPhase();
+    
 
     // printf("X untuk keluar\n");
     // loop=true;    
