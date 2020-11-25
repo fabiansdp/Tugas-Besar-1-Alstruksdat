@@ -216,9 +216,8 @@ void LaporanWahana(ArrayWahana W, int id)
 //     ArrayWahana W;
 //     CreateDataWahana(&W);
 //     CreateNamaWahana(&W);
-
 //     if (!IsDibangun(W,2)) {
-//         puts("Jancok");
+//         puts("NotBuild");
 //     }
 //     printf("%d\n", Air(W,1));
 //     InfoWahana(W, 13);

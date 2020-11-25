@@ -4,9 +4,9 @@
 #include "../ADT/boolean.h"
 #include "../ADT/jam.h"
 #include "../ADT/command.h"
-#include "../ADT/arraypos.c"
-#include "../ADT/mesinkar.c"
-#include "../ADT/mesinkata.c"
+#include "../ADT/arraypos.h"
+#include "../ADT/mesinkar.h"
+#include "../ADT/mesinkata.h"
 #define MAXCHAR 100
 
 //GLOBAL VARIABLE
@@ -167,27 +167,27 @@ boolean EnoughMoney(int money,int banyak,TabEl *Resource){
     }
 }
 
-int main()
-{
-    MakeEmpty(&T);
-    MakeEmpty(&Resource);
-    //Jam J;
-    //BacaJam(&J);
-    printf("Welcome to the shop\n ");
-    printf("Material List :\n");
-    BacaMaterial(1,mat);
-    BacaHarga(1,&T,&Resource);
-    BacaInput();
-    boolean x;
-    x =EnoughMoney(1000,banyak,&Resource);
-    if(x == false){
-        printf("Not enought money!\n");
-        BacaInput();
-    }//else{
-        //masuk ke stack
-    //    TambahMenit(&J,10);
-    //    TulisJam(J);
-    // printf("BENER");
-    //}
-    return 0;
-}
+// int main()
+// {
+//     MakeEmpty(&T);
+//     MakeEmpty(&Resource);
+//     //Jam J;
+//     //BacaJam(&J);
+//     printf("Welcome to the shop\n ");
+//     printf("Material List :\n");
+//     BacaMaterial(1,mat);
+//     BacaHarga(1,&T,&Resource);
+//     BacaInput();
+//     boolean x;
+//     x =EnoughMoney(1000,banyak,&Resource);
+//     if(x == false){
+//         printf("Not enought money!\n");
+//         BacaInput();
+//     }//else{
+//         //masuk ke stack
+//     //    TambahMenit(&J,10);
+//     //    TulisJam(J);
+//     // printf("BENER");
+//     //}
+//     return 0;
+// }

@@ -25,10 +25,10 @@ typedef int IdxType;  /* type indeks */
 typedef struct {
    int id;
    int value;
-} ElType;
+} ElTypeApos;
 
 typedef struct { 
-  ElType TI[IdxMax+1]; /* memori tempat penyimpan elemen (container) */
+  ElTypeApos TI[IdxMax+1]; /* memori tempat penyimpan elemen (container) */
 } TabEl;
 /* Indeks yang digunakan [IdxMin..IdxMax] */
 /* ********** SELEKTOR ********** */
@@ -39,14 +39,14 @@ typedef struct {
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
-void MakeEmpty (TabEl * T);
+void MakeEmptyTabel (TabEl * T);
 /* I.S. T sembarang */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
 /* Proses: Inisialisasi semua elemen tabel T dengan ValUndef */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int NbElmt (TabEl T);
+int NbElmtTabel (TabEl T);
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 /* *** Daya tampung container *** */
@@ -61,10 +61,10 @@ IdxType GetLastIdx (TabEl T);
 /* Mengirimkan indeks elemen T terakhir */
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid (TabEl T, IdxType i);
+boolean IsIdxValidTabel (TabEl T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean IsIdxEff (TabEl T, IdxType i);
+boolean IsIdxEffTabel (TabEl T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 
@@ -115,12 +115,12 @@ int ValueOfId (TabEl T, int X);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void AddAsLastEl (TabEl * T, ElType X);
+void AddAsLastEl (TabEl * T, ElTypeApos X);
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void DelLastEl (TabEl * T, ElType * X);
+void DelLastEl (TabEl * T, ElTypeApos * X);
 /* Proses : Menghapus elemen terakhir tabel */
 /* I.S. Tabel tidak kosong */
 /* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */

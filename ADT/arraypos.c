@@ -143,14 +143,14 @@ int ValueOfId (TabEl T, int X)
     return Value(T,i);
 }
 
-void AddAsLastEl (TabEl * T, ElType X)
+void AddAsLastEl (TabEl * T, ElTypeApos X)
 {
     if (!IsFull(*T)) {
         Elmt(*T,GetLastIdx(*T) + 1) = X;
     }
 }
 
-void DelLastEl (TabEl * T, ElType * X)
+void DelLastEl (TabEl * T, ElTypeApos * X)
 {
     if (!IsEmpty(*T)) {
         *X = Elmt(*T,GetLastIdx(*T));
