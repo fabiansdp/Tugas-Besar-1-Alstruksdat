@@ -18,6 +18,16 @@ typedef struct tNode *addrNode;
 typedef struct tNode
 {
     infotype info;
+    boolean isApplied;
+    char detail[50];
+    infotype detailLEN;
+    infotype harga;
+    infotype Kapasitas;
+    infotype durasi;
+    infotype air;
+    infotype kayu;
+    infotype batu;
+    infotype besi;
     addrNode left;
     addrNode right;
 } Node;

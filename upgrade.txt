@@ -1,0 +1,9 @@
+11 111 0 Upgrade-Kapasitas 5 0 2 3 3 2
+11 112 0 Upgrade-Kapasitas-2 15 0 2 3 3 2
+11 113 1 Upgrade-Keselamatan 0 12000 0 1 1 0
+11 114 1 Upgrade-Kenyamanan 0 13000 0 2 1 2
+12 121 0 Upgrade-Kapasitas 5 0 2 3 3 2
+12 122 0 Upgrade-Kapasitas-2 15 0 2 3 3 2
+12 123 1 Upgrade-Keselamatan 0 12000 0 1 1 0
+12 124 1 Upgrade-Kenyamanan 0 13000 0 2 1 2
+ 

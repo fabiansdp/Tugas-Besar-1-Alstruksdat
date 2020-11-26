@@ -447,8 +447,8 @@ void DelAll (List *L){
 
 void InversList (List *L){
     List newlist;
-    CreateEmpty(&newlist);
-    newlist = FInversList(*L);
+    newlist = (*L);
+    newlist = FInversList(newlist);
     First(*L) = First(newlist);
 }
 /* I.S. sembarang. */
