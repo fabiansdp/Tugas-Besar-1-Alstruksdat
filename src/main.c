@@ -9,7 +9,7 @@
 #include "../ADT/jam.c"
 #include "../ADT/wahana.c"
 #include "../ADT/arraypos.c"
-#include "../ADT/listlinier.c"
+// #include "../ADT/listlinier.c"
 //include from src
 #include "peta.c"
 #include "antrian.c"
@@ -84,10 +84,10 @@ Kata LemonSplash;
 Kata CandyVillage;
 Kata CandySwing;
 Kata BlackForestTornado;
-List listWahanaMap1;
-List listWahanaMap2;
-List listWahanaMap3;
-List listWahanaMap4;
+// List listWahanaMap1;
+// List listWahanaMap2;
+// List listWahanaMap3;
+// List listWahanaMap4;
 //kamus main,int
 int crnt_day;
 int crnt_map;
