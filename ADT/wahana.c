@@ -65,7 +65,6 @@ void CreateDataWahana(ArrayWahana *W)
             {
                 int id = atoi(c);
                 ID(*W, number) = id;
-                IsDibangun(*W, number) = false;
                 NaikTotal(*W, number) = 0;
                 TotalPenghasilan(*W, number) = 0;
                 NaikHarian(*W, number) = 0;
@@ -236,16 +235,6 @@ void InfoWahana(ArrayWahana W, int id)
     {
         printf("Normal\n");
     }
-    printf("Keadaan: ");
-    if (IsDibangun(W, i))
-    {
-        printf("Sudah dibangun\n");
-    }
-    else
-    {
-        printf("Belum dibangun\n");
-    }
-    printf("\n");
 }
 
 void LaporanWahana(ArrayWahana W, int id)
