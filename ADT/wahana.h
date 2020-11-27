@@ -39,7 +39,6 @@ typedef struct
 typedef struct
 {
     int id, harga, kapasitas, durasi, status;
-    boolean isDibangun;
     POINT lokasi;
     Kata nama;
     Kata deskripsi;
@@ -62,7 +61,6 @@ typedef struct
 #define TotalPenghasilan(W, i) (W).ArrayW[(i)].laporan.penghasilantotal
 #define NaikHarian(W, i) (W).ArrayW[(i)].laporan.naikharian
 #define PenghasilanHarian(W, i) (W).ArrayW[(i)].laporan.penghasilanharian
-#define IsDibangun(W, i) (W).ArrayW[(i)].isDibangun
 #define Air(W, i) (W).ArrayW[(i)].material.air
 #define Kayu(W, i) (W).ArrayW[(i)].material.kayu
 #define Batu(W, i) (W).ArrayW[(i)].material.batu
