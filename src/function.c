@@ -8,9 +8,7 @@ extern int player_money;
 extern TabEl Resource;
 extern int banyak;
 extern int indeks_buy;
-
-int player_money;
-ArrayWahana W;
+extern ArrayWahana W;
 
 void build(ArrayWahana *W, int ID, int Gold)
 {
@@ -47,7 +45,7 @@ void buy()
     //     // TambahMenit(&J,10);
     //     // TulisJam(J);
     // printf("BENER");
-    printf("ini BUY\n");
+    printf("Buy berhasil dilakukan\n");
 }
 
 void undo(Stack *S)
@@ -116,7 +114,7 @@ void execute(Stack *S)
         else if (Comm(C) == 3)
         {
             buy();
-            // player_money-=Gold(C);
+            player_money-=Gold(C);
             // printf("Sisa uang setelah buy %d\n",player_money);
         }
         else if (Comm(C) == 4)
@@ -124,6 +122,7 @@ void execute(Stack *S)
             undo(&exeStack);
         }
     }
+    printf("Sisa uang setelah execute %d\n",player_money);
 }
 
 // int main() {
