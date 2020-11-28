@@ -590,9 +590,8 @@ void MainPhase()
             {
                 printf("Input repair\n");
                 if(Adjacency() == 5){ // cek player disebelah wahana
-                    if(Status(W,0) == 1){ // cek wahana rusak, MASIH BELUM BENER i nya
-                        Repair(&W,0);
-                        printf("Status dari wahana : %d\n", Status(W,0));
+                    if(Status(W,i) == 0){ // cek wahana rusak, MASIH BELUM BENER i nya
+                        Repair(&W,i);
                         TambahMenit(&crnt_jam,20);
                         temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
                     }else printf("ID Wahana : %d\n",ID(W,0));

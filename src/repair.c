@@ -18,5 +18,5 @@ void Broken(ArrayWahana W){
 }
 void Repair(ArrayWahana *W, int broken_number){
     //ubah status wahana menjadi bisa dipakai
-    Status(*W,broken_number) = 0;
+    Status(*W,broken_number) = 1;
 }
