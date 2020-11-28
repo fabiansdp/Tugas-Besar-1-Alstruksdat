@@ -18,6 +18,8 @@
 #include "buy.c"
 #include "repair.c"
 //kamus peta
+extern ArrayWahana Map1, Map2, Map3, Map4;
+extern BasisListWahana B;
 extern MATRIKS L;
 extern Arr_POINT AP;
 // extern int tipe_point;
@@ -83,7 +85,8 @@ Jam tutup;
 Jam temp_jam;
 Jam total_jam;
 //kamus main,wahana
-ArrayWahana W;
+BasisListWahana B;
+ArrayWahana Map1, Map2, Map3, Map4;
 Kata CandyCrush;
 Kata ChocolateForest;
 Kata BombomCar;
@@ -91,10 +94,6 @@ Kata LemonSplash;
 Kata CandyVillage;
 Kata CandySwing;
 Kata BlackForestTornado;
-// List listWahanaMap1;
-// List listWahanaMap2;
-// List listWahanaMap3;
-// List listWahanaMap4;
 //kamus main,int
 int crnt_day;
 int crnt_map;
@@ -267,13 +266,111 @@ void SetupKata()
     com_prepare.TabKata[6] = 'e';
     com_prepare.Length = 7;
     // Setup Wahana
-    CandyCrush = W.ArrayW[0].nama;
-    ChocolateForest = W.ArrayW[1].nama;
-    BombomCar = W.ArrayW[2].nama;
-    LemonSplash = W.ArrayW[3].nama;
-    CandyVillage = W.ArrayW[4].nama;
-    CandySwing = W.ArrayW[5].nama;
-    BlackForestTornado = W.ArrayW[6].nama;
+    CandyCrush.TabKata[0] = 'C';
+    CandyCrush.TabKata[1] = 'a';
+    CandyCrush.TabKata[2] = 'n';
+    CandyCrush.TabKata[3] = 'd';
+    CandyCrush.TabKata[4] = 'y';
+    CandyCrush.TabKata[5] = '-';
+    CandyCrush.TabKata[6] = 'C';
+    CandyCrush.TabKata[7] = 'r';
+    CandyCrush.TabKata[8] = 'u';
+    CandyCrush.TabKata[9] = 's';
+    CandyCrush.TabKata[10] = 'h';
+    CandyCrush.Length  = 11;
+
+    ChocolateForest.TabKata[0] = 'C';
+    ChocolateForest.TabKata[1] = 'h';
+    ChocolateForest.TabKata[2] = 'o';
+    ChocolateForest.TabKata[3] = 'c';
+    ChocolateForest.TabKata[4] = 'o';
+    ChocolateForest.TabKata[5] = 'l';
+    ChocolateForest.TabKata[6] = 'a';
+    ChocolateForest.TabKata[7] = 't';
+    ChocolateForest.TabKata[8] = 'e';
+    ChocolateForest.TabKata[9] = '-';
+    ChocolateForest.TabKata[10] = 'F';
+    ChocolateForest.TabKata[11] = 'o';
+    ChocolateForest.TabKata[12] = 'r';
+    ChocolateForest.TabKata[13] = 'e';
+    ChocolateForest.TabKata[14] = 's';
+    ChocolateForest.TabKata[15] = 't';
+    ChocolateForest.Length = 16;
+    
+    BombomCar.TabKata[0] = 'B';
+    BombomCar.TabKata[1] = 'o';
+    BombomCar.TabKata[2] = 'm';
+    BombomCar.TabKata[3] = 'b';
+    BombomCar.TabKata[4] = 'o';
+    BombomCar.TabKata[5] = 'm';
+    BombomCar.TabKata[6] = '-';
+    BombomCar.TabKata[7] = 'C';
+    BombomCar.TabKata[8] = 'a';
+    BombomCar.TabKata[9] = 'r';
+    BombomCar.Length = 10;
+
+    LemonSplash.TabKata[0] = 'L';
+    LemonSplash.TabKata[1] = 'e';
+    LemonSplash.TabKata[2] = 'm';
+    LemonSplash.TabKata[3] = 'o';
+    LemonSplash.TabKata[4] = 'n';
+    LemonSplash.TabKata[5] = '-';
+    LemonSplash.TabKata[6] = 'S';
+    LemonSplash.TabKata[7] = 'p';
+    LemonSplash.TabKata[8] = 'l';
+    LemonSplash.TabKata[9] = 'a';
+    LemonSplash.TabKata[10] = 's';
+    LemonSplash.TabKata[11] = 'h';
+    LemonSplash.Length = 12;
+
+    CandyVillage.TabKata[0] = 'C';
+    CandyVillage.TabKata[1] = 'a';
+    CandyVillage.TabKata[2] = 'n';
+    CandyVillage.TabKata[3] = 'd';
+    CandyVillage.TabKata[4] = 'y';
+    CandyVillage.TabKata[5] = '-';
+    CandyVillage.TabKata[6] = 'V';
+    CandyVillage.TabKata[7] = 'i';
+    CandyVillage.TabKata[8] = 'l';
+    CandyVillage.TabKata[9] = 'l';
+    CandyVillage.TabKata[10] = 'a';
+    CandyVillage.TabKata[11] = 'g';
+    CandyVillage.TabKata[12] = 'e';
+    CandyVillage.Length = 13;
+
+    CandySwing.TabKata[0] = 'C';
+    CandySwing.TabKata[1] = 'a';
+    CandySwing.TabKata[2] = 'n';
+    CandySwing.TabKata[3] = 'd';
+    CandySwing.TabKata[4] = 'y';
+    CandySwing.TabKata[5] = '-';
+    CandySwing.TabKata[6] = 'S';
+    CandySwing.TabKata[7] = 'w';
+    CandySwing.TabKata[8] = 'i';
+    CandySwing.TabKata[9] = 'n';
+    CandySwing.TabKata[10] = 'g';
+    CandySwing.Length = 11;
+
+    BlackForestTornado.TabKata[0] = 'B';
+    BlackForestTornado.TabKata[1] = 'l';
+    BlackForestTornado.TabKata[2] = 'a';
+    BlackForestTornado.TabKata[3] = 'c';
+    BlackForestTornado.TabKata[4] = 'k';
+    BlackForestTornado.TabKata[5] = 'f';
+    BlackForestTornado.TabKata[6] = 'o';
+    BlackForestTornado.TabKata[7] = 'r';
+    BlackForestTornado.TabKata[8] = 'e';
+    BlackForestTornado.TabKata[9] = 's';
+    BlackForestTornado.TabKata[10] = 't';
+    BlackForestTornado.TabKata[11] = '-';
+    BlackForestTornado.TabKata[12] = 'T';
+    BlackForestTornado.TabKata[13] = 'o';
+    BlackForestTornado.TabKata[14] = 'r';
+    BlackForestTornado.TabKata[15] = 'n';
+    BlackForestTornado.TabKata[16] = 'a';
+    BlackForestTornado.TabKata[17] = 'd';
+    BlackForestTornado.TabKata[18] = '0';
+    BlackForestTornado.Length = 19;
 }
 
 void ReadKataStart()
@@ -354,6 +451,7 @@ void PrepPhase()
             {
                 // // Minta input
                 int id, harga, durasi;
+                Wahana W;
                 if(Adjacency()!=5 && Adjacency()!=6)
                 {
                     do
@@ -366,57 +464,36 @@ void PrepPhase()
                             if (IsKataSama(CKata, CandyCrush))
                             {
                                 id = 11;
-                                int index = searchID(W, id);
-                                harga = Harga(W, index);
-                                durasi = Durasi(W, index);
                                 puts("\nKamu pilih Candy Crush\n");
                             }
                             else if (IsKataSama(CKata, ChocolateForest))
                             {
                                 id = 12;
-                                int index = searchID(W, id);
-                                harga = Harga(W, index);
-                                durasi = Durasi(W, index);
                                 puts("\nKamu pilih Chocolate Forest\n");
                             }
                             else if (IsKataSama(CKata, BombomCar))
                             {
                                 id = 13;
-                                int index = searchID(W, id);
-                                harga = Harga(W, index);
-                                durasi = Durasi(W, index);
                                 puts("\nKamu pilih Bombom Car\n");
                             }
                             else if (IsKataSama(CKata, LemonSplash))
                             {
                                 id = 14;
-                                int index = searchID(W, id);
-                                harga = Harga(W, index);
-                                durasi = Durasi(W, index);
                                 puts("\nKamu pilih Lemon Splash\n");
                             }
                             else if (IsKataSama(CKata, CandyVillage))
                             {
                                 id = 15;
-                                int index = searchID(W, id);
-                                harga = Harga(W, index);
-                                durasi = Durasi(W, index);
                                 puts("\nKamu pilih Candy Village\n");
                             }
                             else if (IsKataSama(CKata, CandySwing))
                             {
                                 id = 16;
-                                int index = searchID(W, id);
-                                harga = Harga(W, index);
-                                durasi = Durasi(W, index);
                                 puts("\nKamu pilih Candy Swing\n");
                             }
                             else if (IsKataSama(CKata, BlackForestTornado))
                             {
                                 id = 17;
-                                int index = searchID(W, id);
-                                harga = Harga(W, index);
-                                durasi = Durasi(W, index);
                                 puts("\nKamu pilih Black Forest Tornado\n");
                             }
                             else
@@ -427,7 +504,12 @@ void PrepPhase()
                         }
                     } while (!IsKataSama(CKata, CandyCrush) && !IsKataSama(CKata, ChocolateForest) && !IsKataSama(CKata, BombomCar) && !IsKataSama(CKata, LemonSplash) && !IsKataSama(CKata, CandyVillage) && !IsKataSama(CKata, CandySwing) && !IsKataSama(CKata, BlackForestTornado));
                     // MakeCommand(idComm, idWahana, JmlhMaterial, Gold, Map, Lokasi, Durasi)
+                    W = SearchWahanaBase(B, id);
+                    harga = W.harga;
+                    durasi = W.durasi;
+
                     comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
+                    
                     Push(&S, comm1);
                     // edit peta
                     x=Absis(player_loc);
@@ -643,8 +725,13 @@ void MainPhase()
 
 int main()
 {
-    CreateDataWahana(&W);
-    CreateNamaWahana(&W);
+    // Inisialisasi List Wahana
+    B = MakeUpgradeList();
+    makeArrayWahana(&Map1);
+    makeArrayWahana(&Map2);
+    makeArrayWahana(&Map3);
+    makeArrayWahana(&Map4);
+
     //menu awal
     printf("Welcome to Willy wangky's\n");
     printf("New game / load game / exit? \n");

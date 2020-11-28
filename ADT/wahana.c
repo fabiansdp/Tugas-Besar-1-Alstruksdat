@@ -7,7 +7,7 @@
 #include "listrek.h"
 #include "bintree.h" 
 #include "jam.h"
-#include "wahana2.h"
+#include "wahana.h"
 
 int mystrlen2(char *str) {
     int len = 0;
@@ -239,10 +239,6 @@ BasisListWahana MakeUpgradeList(){
     }
 }
 
-void getUpgradeListTree(BasisListWahana * L){
-
-}
-
 /*skema ngeprint buat debug*/
 void PrintUpList(BasisListWahana L){
     if(L==NULL){
@@ -336,6 +332,7 @@ void PushNewWahana (ArrayWahana * A, DetilWahana DW){
     }else{
         printf("Array Wahana Sudah Penuh boss !!! \n");
     }
+    (*A).jumlahWahana = 0;
 }
 
 DetilWahana CariWahanaByID (ArrayWahana A, int ID){
