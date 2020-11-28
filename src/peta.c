@@ -187,7 +187,7 @@ void Movement(char ch, MATRIKS *L)
     {
     case 'W':
         // printf("Test atas\n");
-        if (tipe_point[x-1][y]==0)
+        if (tipe_point[x-1][y]==0 || tipe_point[x-1][y]==3)
         {
             //ubah tipe
             tipe_point[x-1][y]=2;
@@ -195,13 +195,21 @@ void Movement(char ch, MATRIKS *L)
             Absis(player_loc)-=1;
             tipe_point[x][y]=0;
             //ubah matriks peta
-            ElmtM(*L,x-1,y)='P';
+            ElmtM(*L,x-1,y)=ElmtM(*L,x,y);
             ElmtM(*L,x,y)='-';
+            if (x==7&&y==15)
+            {
+                ElmtM(*L,x,y)='O';
+            }
+            else
+            {
+                ElmtM(*L,x,y)='-';
+            }
         }
         break;
     case 'A':
         // printf("Test kiri\n");
-        if (tipe_point[x][y-1]==0)
+        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
         {
             //ubah tipe
             tipe_point[x][y-1]=2;
@@ -209,13 +217,20 @@ void Movement(char ch, MATRIKS *L)
             Ordinat(player_loc)-=1;
             tipe_point[x][y]=0;
             //ubah matriks peta
-            ElmtM(*L,x,y-1)='P';
-            ElmtM(*L,x,y)='-';
+            ElmtM(*L,x,y-1)=ElmtM(*L,x,y);
+            if (x==7&&y==15)
+            {
+                ElmtM(*L,x,y)='O';
+            }
+            else
+            {
+                ElmtM(*L,x,y)='-';
+            }
         }
         break;
     case 'S':
         // printf("Test bawah\n");
-        if (tipe_point[x+1][y]==0)
+        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
         {
             //ubah tipe
             tipe_point[x+1][y]=2;
@@ -223,13 +238,20 @@ void Movement(char ch, MATRIKS *L)
             Absis(player_loc)+=1;
             tipe_point[x][y]=0;
             //ubah matriks peta
-            ElmtM(*L,x+1,y)='P';
-            ElmtM(*L,x,y)='-';
+            ElmtM(*L,x+1,y)=ElmtM(*L,x,y);
+            if (x==7&&y==15)
+            {
+                ElmtM(*L,x,y)='O';
+            }
+            else
+            {
+                ElmtM(*L,x,y)='-';
+            }
         }
         break;
     case 'D':
         // printf("Test kanan\n");
-        if (tipe_point[x][y+1]==0)
+        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
         {
             //ubah tipe
             tipe_point[x][y+1]=2;
@@ -237,8 +259,15 @@ void Movement(char ch, MATRIKS *L)
             Ordinat(player_loc)+=1;
             tipe_point[x][y]=0;
             //ubah matriks peta
-            ElmtM(*L,x,y+1)='P';
-            ElmtM(*L,x,y)='-';
+            ElmtM(*L,x,y+1)=ElmtM(*L,x,y);
+            if (x==7&&y==15)
+            {
+                ElmtM(*L,x,y)='O';
+            }
+            else
+            {
+                ElmtM(*L,x,y)='-';
+            }
         }
         break;
     default:
