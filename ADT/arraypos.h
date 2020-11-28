@@ -70,7 +70,7 @@ boolean IsIdxEffTabel (TabEl T, IdxType i);
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
-boolean IsEmpty (TabEl T);
+boolean IsKosong (TabEl T);
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
 /* *** Test tabel penuh *** */
 boolean IsFull (TabEl T);
