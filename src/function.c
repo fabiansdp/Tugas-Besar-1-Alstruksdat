@@ -3,10 +3,12 @@
 #include "../ADT/boolean.h"
 #include "../ADT/command.h"
 #include "../ADT/stackt.h"
-// #include "../ADT/mesinkata.h"
-// #include "../ADT/mesinkar.h"
+#include "../ADT/mesinkata.h"
+#include "../ADT/mesinkar.h"
 // #include "../ADT/listlinier.h"
-// #include "../ADT/wahana.h"
+#include "../ADT/wahana2.h"
+#include "../ADT/bintree.h"
+#include "../ADT/listrek.h"
 // #include "../ADT/arraypos.h"
 
 // extern List listWahanaMap1, listWahanaMap2, listWahanaMap3, listWahanaMap4;
