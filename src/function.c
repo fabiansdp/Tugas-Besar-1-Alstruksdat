@@ -3,34 +3,40 @@
 #include "../ADT/boolean.h"
 #include "../ADT/command.h"
 #include "../ADT/stackt.h"
-// #include "../ADT/mesinkata.h"
-// #include "../ADT/mesinkar.h"
-// #include "../ADT/listlinier.h"
-// #include "../ADT/wahana.h"
-// #include "../ADT/arraypos.h"
+#include "../ADT/mesinkata.h"
+#include "../ADT/mesinkar.h"
+#include "../ADT/listlinier.h"
+#include "../ADT/wahana.h"
+#include "../ADT/arraypos.h"
 
-// extern List listWahanaMap1, listWahanaMap2, listWahanaMap3, listWahanaMap4;
-// extern int crnt_map;
 extern int player_money;
 extern TabEl Resource;
 extern int banyak;
 extern int indeks_buy;
-extern ArrayWahana W;
 extern int x,y;
-
+extern ArrayWahana Map1, Map2, Map3, Map4;
+BasisListWahana B;
 // ===================================================PREPARATION PHASE========================================================
 
-void build(ArrayWahana *W, int ID, int Gold)
+void build(ArrayWahana *W, COMMAND C)
 {
-    if (player_money < Gold)
-    {
-        printf("Uang tidak cukup untuk membangun wahana ini!\n");
-    }
-    else
-    {
-        int index = searchID(*W, ID);
-        player_money -= Gold;
-        printf("Wahana berhasil dibangun\n");
+    int x = Absis(Coordinate(C));
+    int y = Ordinat(Coordinate(C))+1;
+
+    // Cek wahana di lokasi atasnya ada wahana atau tidak
+    POINT LokasiAtas = MakePOINT(x, y);
+    DetilWahana CekWahana = CariWahanaByLoc(*W, LokasiAtas);
+
+    // Cek ada wahana, border, office, atau gerbang
+    if ((CekWahana.id != ValUndef) && (tipe_point[x][y+1] != 6) && (tipe_point[x][y+1] != 3) && (tipe_point[x][y+1] != 4)) {
+        Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
+        BinTree TreeBaru = SearchUList(B, Name(C));
+        DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
+        PushNewWahana(W, DetilBaru);
+        player_money -= Gold(C);
+
+    } else {
+        puts("Tidak bisa membangun di lokasi ini!");
     }
 }
 
@@ -104,7 +110,23 @@ void execute(Stack *S)
         Pop(&exeStack, &C);
         if (Comm(C) == 1)
         {
-            build(&W, Name(C), Gold(C));
+            switch (Map(C))
+            {
+                case 1:
+                    build(&Map1, C);
+                    break;
+                case 2:
+                    build(&Map2, C);
+                    break;
+                case 3:
+                    build(&Map3, C);
+                    break;
+                case 4:
+                    build(&Map4, C);
+                    break;
+                default:
+                    break;
+            }
         }
         else if (Comm(C) == 2)
         {
@@ -317,9 +339,3 @@ void execute(Stack *S)
 //     printf("================-----------================\n");
 // }
 // ========================================================================
-
-// int main() {
-//     build(&W, 11, 10000);
-
-//     return 0;
-// }

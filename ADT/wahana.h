@@ -112,8 +112,6 @@ BasisListWahana UKonsB(BasisListWahana L, infotype e,Wahana W,BinTree B);
 /*skema read file from file txt*/
 BasisListWahana MakeUpgradeList();
 
-void getUpgradeListTree(BasisListWahana * L);
-
 /*skema ngeprint buat debug*/
 void PrintUpList(BasisListWahana L);
 
