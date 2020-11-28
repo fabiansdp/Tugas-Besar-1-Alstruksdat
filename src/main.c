@@ -15,7 +15,7 @@
 #include "antrian.c"
 #include "function.c"
 #include "buy.c"
-
+#include "repair.c"
 //kamus peta
 extern MATRIKS L;
 extern Arr_POINT AP;
@@ -589,14 +589,22 @@ void MainPhase()
             else if (IsKataSama(ck, com_repair))
             {
                 printf("Input repair\n");
-            }
+                if(Adjacency() == 5){ // cek player disebelah wahana
+                    if(Status(W,0) == 1){ // cek wahana rusak, MASIH BELUM BENER i nya
+                        Repair(&W,0);
+                        printf("Status dari wahana : %d\n", Status(W,0));
+                        TambahMenit(&crnt_jam,20);
+                        temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                    }else printf("ID Wahana : %d\n",ID(W,0));
+                }else printf("You need to go beside Wahana\n");//kalau palyer ga disebelah wahana ga akan bisa repair
+            }  
             else if (IsKataSama(ck, com_detail))
             {
-                printf("Input repair\n");
+                printf("Input detail\n");
             }
             else if (IsKataSama(ck, com_office))
             {
-                printf("Input repair\n");
+                printf("Input office\n");
             }
             else if (IsKataSama(ck, com_prepare))
             {
