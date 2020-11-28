@@ -200,8 +200,8 @@ void HelpPT(BinTree P, int h, int c){
          printf(" NOT-ACT ");
       }
       int aha;
-      for(aha=0;aha<P->detailLEN;aha++){
-         printf("%c",P->detail[aha]);
+      for(aha=0;aha<P->detail.Length;aha++){
+         printf("%c",P->detail.TabKata[aha]);
       }
       printf("\n");
       

@@ -42,7 +42,6 @@ typedef struct
     POINT lokasi;
     Kata nama;
     Kata deskripsi;
-    Laporan laporan;
     UpgradeMaterial material;
 } Wahana;
 
