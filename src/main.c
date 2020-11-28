@@ -92,6 +92,7 @@ Kata BlackForestTornado;
 int crnt_day;
 int crnt_map;
 int player_money;
+int x,y;
 
 void PrintLegend()
 {
@@ -285,83 +286,98 @@ void PrepPhase()
             {
                 // // Minta input
                 int id, harga, durasi;
-                do
+                if(Adjacency()!=5)
                 {
-                    ListWahana();
-                    puts("Mau bangun apa?");
-                    STARTKATA();
-                    while (!EndKata)
+                    do
                     {
-                        if (IsKataSama(CKata, CandyCrush))
+                        ListWahana();
+                        puts("Mau bangun apa?");
+                        STARTKATA();
+                        while (!EndKata)
                         {
-                            id = 11;
-                            int index = searchID(W, id);
-                            harga = Harga(W, index);
-                            durasi = Durasi(W, index);
-                            puts("\nKamu pilih Candy Crush\n");
+                            if (IsKataSama(CKata, CandyCrush))
+                            {
+                                id = 11;
+                                int index = searchID(W, id);
+                                harga = Harga(W, index);
+                                durasi = Durasi(W, index);
+                                puts("\nKamu pilih Candy Crush\n");
+                            }
+                            else if (IsKataSama(CKata, ChocolateForest))
+                            {
+                                id = 12;
+                                int index = searchID(W, id);
+                                harga = Harga(W, index);
+                                durasi = Durasi(W, index);
+                                puts("\nKamu pilih Chocolate Forest\n");
+                            }
+                            else if (IsKataSama(CKata, BombomCar))
+                            {
+                                id = 13;
+                                int index = searchID(W, id);
+                                harga = Harga(W, index);
+                                durasi = Durasi(W, index);
+                                puts("\nKamu pilih Bombom Car\n");
+                            }
+                            else if (IsKataSama(CKata, LemonSplash))
+                            {
+                                id = 14;
+                                int index = searchID(W, id);
+                                harga = Harga(W, index);
+                                durasi = Durasi(W, index);
+                                puts("\nKamu pilih Lemon Splash\n");
+                            }
+                            else if (IsKataSama(CKata, CandyVillage))
+                            {
+                                id = 15;
+                                int index = searchID(W, id);
+                                harga = Harga(W, index);
+                                durasi = Durasi(W, index);
+                                puts("\nKamu pilih Candy Village\n");
+                            }
+                            else if (IsKataSama(CKata, CandySwing))
+                            {
+                                id = 16;
+                                int index = searchID(W, id);
+                                harga = Harga(W, index);
+                                durasi = Durasi(W, index);
+                                puts("\nKamu pilih Candy Swing\n");
+                            }
+                            else if (IsKataSama(CKata, BlackForestTornado))
+                            {
+                                id = 17;
+                                int index = searchID(W, id);
+                                harga = Harga(W, index);
+                                durasi = Durasi(W, index);
+                                puts("\nKamu pilih Black Forest Tornado\n");
+                            }
+                            else
+                            {
+                                puts("Tidak ada nama wahana seperti itu!");
+                            }
+                            ADVKATA();
                         }
-                        else if (IsKataSama(CKata, ChocolateForest))
-                        {
-                            id = 12;
-                            int index = searchID(W, id);
-                            harga = Harga(W, index);
-                            durasi = Durasi(W, index);
-                            puts("\nKamu pilih Chocolate Forest\n");
-                        }
-                        else if (IsKataSama(CKata, BombomCar))
-                        {
-                            id = 13;
-                            int index = searchID(W, id);
-                            harga = Harga(W, index);
-                            durasi = Durasi(W, index);
-                            puts("\nKamu pilih Bombom Car\n");
-                        }
-                        else if (IsKataSama(CKata, LemonSplash))
-                        {
-                            id = 14;
-                            int index = searchID(W, id);
-                            harga = Harga(W, index);
-                            durasi = Durasi(W, index);
-                            puts("\nKamu pilih Lemon Splash\n");
-                        }
-                        else if (IsKataSama(CKata, CandyVillage))
-                        {
-                            id = 15;
-                            int index = searchID(W, id);
-                            harga = Harga(W, index);
-                            durasi = Durasi(W, index);
-                            puts("\nKamu pilih Candy Village\n");
-                        }
-                        else if (IsKataSama(CKata, CandySwing))
-                        {
-                            id = 16;
-                            int index = searchID(W, id);
-                            harga = Harga(W, index);
-                            durasi = Durasi(W, index);
-                            puts("\nKamu pilih Candy Swing\n");
-                        }
-                        else if (IsKataSama(CKata, BlackForestTornado))
-                        {
-                            id = 17;
-                            int index = searchID(W, id);
-                            harga = Harga(W, index);
-                            durasi = Durasi(W, index);
-                            puts("\nKamu pilih Black Forest Tornado\n");
-                        }
-                        else
-                        {
-                            puts("Tidak ada nama wahana seperti itu!");
-                        }
-                        ADVKATA();
-                    }
-                } while (!IsKataSama(CKata, CandyCrush) && !IsKataSama(CKata, ChocolateForest) && !IsKataSama(CKata, BombomCar) && !IsKataSama(CKata, LemonSplash) && !IsKataSama(CKata, CandyVillage) && !IsKataSama(CKata, CandySwing) && !IsKataSama(CKata, BlackForestTornado));
-
-                // MakeCommand(idComm, idWahana, JmlhMaterial, Gold, Map, Lokasi, Durasi)
-                comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
-                Push(&S, comm1);
-                total_aksi++;
-                total_uang += harga;
-                total_waktu += durasi;
+                    } while (!IsKataSama(CKata, CandyCrush) && !IsKataSama(CKata, ChocolateForest) && !IsKataSama(CKata, BombomCar) && !IsKataSama(CKata, LemonSplash) && !IsKataSama(CKata, CandyVillage) && !IsKataSama(CKata, CandySwing) && !IsKataSama(CKata, BlackForestTornado));
+                    // MakeCommand(idComm, idWahana, JmlhMaterial, Gold, Map, Lokasi, Durasi)
+                    comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
+                    Push(&S, comm1);
+                    // edit peta
+                    x=Absis(player_loc);
+                    y=Ordinat(player_loc);
+                    //ubah tipe
+                    tipe_point[x-1][y]=5;
+                    printf("Cek tipe_point di atas player: %d",tipe_point[x-1][y]);
+                    //ubah matriks peta
+                    ElmtM(L,x-1,y)='W';
+                    PrintPeta(L);
+                    total_aksi++;
+                    total_uang += harga;
+                    total_waktu += durasi;
+                }
+                else
+                {
+                    puts("Jangan membangun di sebelah wahana");
+                }
             }
             else if (IsKataSama(ck, com_upgrade))
             {

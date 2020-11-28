@@ -16,6 +16,7 @@ extern TabEl Resource;
 extern int banyak;
 extern int indeks_buy;
 extern ArrayWahana W;
+extern int x,y;
 
 // ===================================================PREPARATION PHASE========================================================
 
@@ -40,22 +41,6 @@ void upgrade()
 
 void buy()
 {
-    // printf("Welcome to the shop\n ");
-    // printf("Material List :\n");
-    // BacaMaterial(1,mat);
-    // BacaHarga(1,&T,&Resource);
-    // BacaInput();
-    // boolean x;
-    // x =EnoughMoney(1000,banyak,&Resource);
-    // if(x == false){
-    //     printf("Not enought money!\n");
-    //     BacaInput();
-    // }
-    // else{
-    //     // masuk ke stack
-    //     // TambahMenit(&J,10);
-    //     // TulisJam(J);
-    // printf("BENER");
     printf("Buy berhasil dilakukan\n");
 }
 
@@ -74,6 +59,10 @@ void undo(Stack *S)
         total_aksi--;
         total_uang -= Gold(C);
         total_waktu -= Time(C);
+        //ubah tipe
+        tipe_point[x-1][y]=0;
+        //ubah matriks peta
+        ElmtM(L,x-1,y)='-';
         break;
     case 2:
         printf("Undo Upgrade\n");
