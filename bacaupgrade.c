@@ -7,8 +7,8 @@
 #include "ADT/listrek.h"
 #include "ADT/bintree.h" 
 #include "ADT/jam.h"
-#include "ADT/wahana2.h"
-#include<math.h>
+#include "ADT/wahana.h"
+#include <math.h>
 
 int konvertKata(Kata K){
     int a = K.Length;
@@ -31,14 +31,14 @@ void Detail()
     
 }
 int main(){
-     BasisListWahana B;
-     B = MakeUpgradeList();
-     PrintUpList(B);
+    BasisListWahana B;
+    B = MakeUpgradeList();
+    PrintUpList(B);
 
-     POINT p1,p2,p3;
-     p1.X =2;p1.Y=5;
-     p2.X =11;p2.Y=6;
-     p3.X =12;p3.Y=9;
+    POINT p1,p2,p3;
+    p1.X =2;p1.Y=5;
+    p2.X =11;p2.Y=6;
+    p3.X =12;p3.Y=9;
 
     ArrayWahana ArrW;
     makeArrayWahana(&ArrW);
