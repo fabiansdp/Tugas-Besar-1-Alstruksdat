@@ -209,7 +209,7 @@ void Movement(char ch, MATRIKS *L)
         break;
     case 'A':
         // printf("Test kiri\n");
-        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
+        if (tipe_point[x][y-1]==0 || tipe_point[x][y-1]==3)
         {
             //ubah tipe
             tipe_point[x][y-1]=2;
@@ -230,7 +230,7 @@ void Movement(char ch, MATRIKS *L)
         break;
     case 'S':
         // printf("Test bawah\n");
-        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
+        if (tipe_point[x+1][y]==0 || tipe_point[x+1][y]==3)
         {
             //ubah tipe
             tipe_point[x+1][y]=2;
@@ -251,7 +251,7 @@ void Movement(char ch, MATRIKS *L)
         break;
     case 'D':
         // printf("Test kanan\n");
-        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
+        if (tipe_point[x][y+1]==0 || tipe_point[x][y+1]==3)
         {
             //ubah tipe
             tipe_point[x][y+1]=2;

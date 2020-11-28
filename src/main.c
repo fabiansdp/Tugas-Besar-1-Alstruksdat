@@ -441,7 +441,7 @@ void PrepPhase()
                 }
                 else
                 {
-                    puts("Jangan membangun di sebelah wahana");
+                    puts("Jangan membangun di sebelah wahana/tembok");
                 }
             }
             else if (IsKataSama(ck, com_upgrade))
@@ -488,7 +488,10 @@ void PrepPhase()
                 temp_jam = DetikToJam(43200);
                 main_loop = true;
                 prep_loop = false;
-                execute(&S);
+                if (!IsEmptyStack(S))
+                {
+                    execute(&S);
+                }
                 printf("Perintah diexecute\n");
             }
             else if (IsKataSama(ck, com_main))
@@ -592,11 +595,11 @@ void MainPhase()
             }
             else if (IsKataSama(ck, com_detail))
             {
-                printf("Input repair\n");
+                printf("Input detail\n");
             }
             else if (IsKataSama(ck, com_office))
             {
-                printf("Input repair\n");
+                printf("Input office\n");
             }
             else if (IsKataSama(ck, com_prepare))
             {
