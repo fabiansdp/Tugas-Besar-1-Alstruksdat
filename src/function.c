@@ -8,6 +8,10 @@
 #include "../ADT/listlinier.h"
 #include "../ADT/wahana.h"
 #include "../ADT/arraypos.h"
+// #include "../ADT/listlinier.h"
+#include "../ADT/bintree.h"
+#include "../ADT/listrek.h"
+// #include "../ADT/arraypos.h"
 
 extern int player_money;
 extern TabEl Resource;
@@ -15,6 +19,7 @@ extern int banyak;
 extern int indeks_buy;
 extern int x,y;
 extern ArrayWahana Map1, Map2, Map3, Map4;
+extern int tipe_point[10][20];
 BasisListWahana B;
 // ===================================================PREPARATION PHASE========================================================
 

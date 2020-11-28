@@ -93,7 +93,7 @@ void Enqueue (PrioQueueChar * Q, infotype_pq X)
         TAIL "maju" dengan mekanisme circular buffer; */
 {
     /* Kamus Lokal */
-    address i,j;
+    addr i,j;
     /* Algoritma */
     //kasus kosong
     if (Head(*Q)==Nil)

@@ -9,7 +9,6 @@
 #include "listrek.h"
 #include "bintree.h" 
 #include "jam.h"
-
 #define IdxMax 99
 /* Indeks maksimum array */
 #define IdxMin 0
@@ -61,7 +60,6 @@ typedef struct
 typedef int infotype;
 typedef struct tBaseWahanalist *Uaddress;
 typedef struct tHistoryUpgrade *Haddress;
-
 typedef struct tBaseWahanalist { 
 	infotype idWahana;
     Wahana wahana;

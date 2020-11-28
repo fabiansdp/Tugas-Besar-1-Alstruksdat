@@ -54,7 +54,7 @@ boolean IsIdxEffTabel (TabEl T, IdxType i)
     return ((i>=GetFirstIdx(T))&&(i<=GetLastIdx(T)));
 }
 
-boolean IsEmpty (TabEl T)
+boolean IsKosong (TabEl T)
 {
     return (NbElmtTabel(T) == 0);
 }
@@ -93,7 +93,7 @@ void TulisIsiTab (TabEl T)
 {
     IdxType i;
 
-    if (IsEmpty(T)) {
+    if (IsKosong(T)) {
         printf("[]");
     } else
     {
@@ -152,7 +152,7 @@ void AddAsLastEl (TabEl * T, ElTypeApos X)
 
 void DelLastEl (TabEl * T, ElTypeApos * X)
 {
-    if (!IsEmpty(*T)) {
+    if (!IsKosong(*T)) {
         *X = Elmt(*T,GetLastIdx(*T));
         Id(*T,GetLastIdx(*T)) = ValUndef;
         Value(*T,GetLastIdx(*T)) = ValUndef;

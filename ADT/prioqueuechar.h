@@ -9,22 +9,22 @@
 #include "boolean.h"
 
 #define Nil -1
-/* Konstanta untuk mendefinisikan address tak terdefinisi */
+/* Konstanta untuk mendefinisikan addr tak terdefinisi */
 
-/* Definisi elemen dan address */
+/* Definisi elemen dan addr */
 typedef struct {
     int prio;  /* [1..100], prioritas dengan nilai 1..100 (1 adalah prioritas tertinggi) */
     char nama;  /* nama pengunjung */
     char wahana[100]; /* nama wahana */ 
     int kesabaran; /* tingkatan kesabaran */ 
 }infotype_pq;
-typedef int address;   /* indeks tabel */
+typedef int addr;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype PrioQueueChar : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
 typedef struct {
     infotype_pq * T;   /* tabel penyimpan elemen */
-    address HEAD;  /* alamat penghapusan */
-    address TAIL;  /* alamat penambahan */
+    addr HEAD;  /* alamat penghapusan */
+    addr TAIL;  /* alamat penambahan */
     int MaxElQ;     /* Max elemen queue */
 }PrioQueueChar;
 /* Definisi PrioQueueChar kosong: HEAD=Nil; TAIL=Nil. */

@@ -105,7 +105,7 @@ BasisListWahana UKonsB(BasisListWahana L, infotype e,Wahana W,BinTree B){
 
 /*skema read file from file txt*/
 BasisListWahana MakeUpgradeList(){
-    FILE * FL = fopen("wahana.txt","r");
+    FILE * FL = fopen("../wahana.txt","r");
     if(FL==NULL){
         printf("err while read file wahana\n");
         return NULL;
@@ -245,7 +245,7 @@ void PrintUpList(BasisListWahana L){
 
     }else{
         printf("ID Wahana = %d\n",L->idWahana);
-        printf("nama wahana = c   ");printkata(L->wahana.nama);printf("\n");
+        printf("nama wahana = ");printkata(L->wahana.nama);printf("\n");
         printf("desc wahana = ");printkata(L->wahana.deskripsi);printf("\n");
         printf("harga wahana = %d\n",L->wahana.harga);
         printf("pohon Upgrading\n");
@@ -265,7 +265,6 @@ BinTree SearchUList(BasisListWahana L, infotype ID){
         return SearchUList(UTail(L),ID);
     }
 }
-
 Wahana SearchWahanaBase(BasisListWahana L,infotype ID){
     if(L==NULL){
         Wahana w;
@@ -333,6 +332,7 @@ void PushNewWahana (ArrayWahana * A, DetilWahana DW){
     }else{
         printf("Array Wahana Sudah Penuh boss !!! \n");
     }
+    (*A).jumlahWahana = 0;
 }
 
 DetilWahana CariWahanaByID (ArrayWahana A, int ID){

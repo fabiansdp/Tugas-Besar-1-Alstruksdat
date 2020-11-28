@@ -7,7 +7,8 @@
 #include "../ADT/mesinkata.c"
 #include "../ADT/mesinkar.c"
 #include "../ADT/jam.c"
-#include "../ADT/wahana.c"
+#include "../ADT/wahana2.c"
+
 #include "../ADT/arraypos.c"
 // #include "../ADT/listlinier.c"
 //include from src
@@ -572,6 +573,7 @@ void PrepPhase()
                 temp_jam = DetikToJam(43200);
                 main_loop = true;
                 prep_loop = false;
+                
                 execute(&S);
                 printf("Perintah diexecute\n");
             }

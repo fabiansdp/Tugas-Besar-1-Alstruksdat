@@ -14,7 +14,7 @@
 /* Nil adalah stack dengan elemen kosong . */
 
 typedef int infotype;
-typedef int address; /* indeks tabel */
+typedef int addr; /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
@@ -22,7 +22,7 @@ typedef int address; /* indeks tabel */
 typedef struct
 {
   COMMAND T[MaxElS]; /* tabel penyimpan elemen */
-  address TOP;      /* alamat TOP: elemen puncak */
+  addr TOP;      /* alamat TOP: elemen puncak */
   infotype timeS;
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */

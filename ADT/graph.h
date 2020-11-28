@@ -3,57 +3,56 @@
 
 #include "boolean.h"
 
-#define Nil NULL
 
-typedef struct tNode *addrNode;
+typedef struct gNode *gaddrNode;
 typedef struct tSuccNode *addrSuccNode;
-typedef struct tNode
+typedef struct gNode
 {
     int id;
     int NPred;
-    addrNode Next;
+    gaddrNode Next;
     addrSuccNode Trail;
 
-}Node;
+}GrafNode;
 
 typedef struct tSuccNode
 {
-    addrNode Succ;
+    gaddrNode Succ;
     addrSuccNode Nexts;
 }SuccNode;
 
 typedef struct tGraph
 {
-    addrNode First;
+    gaddrNode First;
 }Graph;
 
 typedef int infotype;
 
-#define First(G) (G).First
-#define Id(Pn) (Pn)->id
+#define FirstGraf(G) (G).First
+#define IdGraf(Pn) (Pn)->id
 #define Trail(Pn) (Pn)->Trail
 #define Succ(Pt) (Pt)->Succ
 #define NPred(Pn) (Pn)->NPred
-#define Next(Pn) (Pn)->Next
+#define NextGraf(Pn) (Pn)->Next
 #define Nexts(Pt) (Pt)->Nexts
 
 //konstruktor
 void CreateGraph(Graph * L,infotype X);
 
-addrNode AlokNode(infotype X);
+gaddrNode GrafAlokNode(infotype X);
 
-void dealokNode(addrNode P);
+void GrafDealokNode(gaddrNode P);
 
-addrSuccNode AlokSuccNode(addrNode Pn);
+addrSuccNode AlokSuccNode(gaddrNode Pn);
 
 void dealokSuccNode(addrSuccNode Pn);
 
 //fungsilain
-addrNode SearchNode(Graph G,infotype X);
+gaddrNode SearchNode(Graph G,infotype X);
 
 addrSuccNode SearchEdge(Graph G, infotype prec, infotype succ);
 
-void InsertNode(Graph * G, infotype X, addrNode * Pn);
+void InsertNode(Graph * G, infotype X, gaddrNode * Pn);
 
 void InsertEdge(Graph * G, infotype prec, infotype succ);
 

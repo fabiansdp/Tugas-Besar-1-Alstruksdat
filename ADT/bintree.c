@@ -11,7 +11,7 @@
 /* *** Konstruktor *** */
 BinTree Tree(infotype Akar, BinTree L, BinTree R)
 /* Menghasilkan sebuah pohon biner dari A, L, dan R, jika alokasi berhasil */
-/* Menghasilkan pohon kosong (Nil) jika alokasi gagal */
+/* Menghasilkan pohon kosong (NULL) jika alokasi gagal */
    {Node * pohon;
    pohon = (Node *) malloc(sizeof(Node));
 
@@ -28,15 +28,15 @@ BinTree Tree(infotype Akar, BinTree L, BinTree R)
 void MakeTree(infotype Akar, BinTree L, BinTree R, BinTree *P)
 /* I.S. Akar, L, R terdefinisi. P Sembarang */
 /* F.S. Membentuk pohon P dengan Akar(P)=Akar, Left(P)=L, dan Right(P)=R
-   jika alokasi berhasil. P = Nil jika alokasi gagal. */
+   jika alokasi berhasil. P = NULL jika alokasi gagal. */
 {
    (*P) = Tree(Akar,L,R);
 }
 
 BinTree BuildBalanceTree(int n)
-/* Menghasilkan sebuah balanced tree dengan n node, nilai setiap node dibaca */
-/* Jika n == 0, kembalikan Nil.
-   Mula-mula, baca nilai dari root dari stdin, lalu bangun pohon biner di kiri
+/* Menghasilkan sebuah balanced tree dengan n node, NULLai setiap node dibaca */
+/* Jika n == 0, kembalikan NULL.
+   Mula-mula, baca NULLai dari root dari stdin, lalu bangun pohon biner di kiri
    (dengan membaca dari stdin) lalu di tree kanan (dengan membaca dari stdin). 
    misal dari stdin: 1, 2, 3, 4, 5, 6, 7, hasilnya:
        1
@@ -47,12 +47,12 @@ BinTree BuildBalanceTree(int n)
    addrNode nod;
    int aselole;
    if(n==0){
-      return Nil;
+      return NULL;
    }else{
       scanf("%d",&aselole);
       nod = AlokNode(aselole);
-      if(nod==Nil){
-         return Nil;
+      if(nod==NULL){
+         return NULL;
       }else{
          int L = n/2;
          int R = n - L -1;
@@ -70,19 +70,19 @@ BinTree BuildBalanceTree(int n)
 /* Manajemen Memory */
 addrNode AlokNode(infotype X)
 /* Mengirimkan addrNode hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka addrNode tidak Nil, dan misalnya menghasilkan P,
-  maka Akar(P) = X, Left(P) = Nil, Right(P)=Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
+/* Jika alokasi berhasil, maka addrNode tidak NULL, dan misalnya menghasilkan P,
+  maka Akar(P) = X, Left(P) = NULL, Right(P)=NULL */
+/* Jika alokasi gagal, mengirimkan NULL */
 {
    Node * N;
    N = (Node *) malloc(sizeof(Node));
    if(N!=NULL){
       Akar(N) = X;
-      Left(N) = Nil;
-      Right(N) = Nil;
+      Left(N) = NULL;
+      Right(N) = NULL;
       return N;
    }else{
-      return Nil;
+      return NULL;
    }
 }
 
@@ -98,31 +98,31 @@ void DealokNode(addrNode P)
 boolean IsTreeEmpty(BinTree P)
 /* Mengirimkan true jika P adalah pohon biner kosong */
 {
-   return P==Nil;
+   return P==NULL;
 }
 
 boolean IsTreeOneElmt(BinTree P)
 /* Mengirimkan true jika P adalah pohon biner tidak kosong dan hanya memiliki 1 elemen */
 {
-   return P!=Nil && Right(P)==Nil && Left(P)==Nil;
+   return P!=NULL && Right(P)==NULL && Left(P)==NULL;
 }
 
 boolean IsUnerLeft(BinTree P)
 /* Mengirimkan true jika pohon biner tidak kosong P adalah pohon unerleft: hanya mempunyai subpohon kiri */
 {
-   return !IsTreeEmpty(P) && Right(P)==Nil && Left(P)!=Nil;
+   return !IsTreeEmpty(P) && Right(P)==NULL && Left(P)!=NULL;
 }
 
 boolean IsUnerRight(BinTree P)
 /* Mengirimkan true jika pohon biner tidak kosong P adalah pohon unerright: hanya mempunyai subpohon kanan*/
 {
-   return !IsTreeEmpty(P) && Right(P)!=Nil && Left(P)==Nil;
+   return !IsTreeEmpty(P) && Right(P)!=NULL && Left(P)==NULL;
 }
 
 boolean IsBiner(BinTree P)
 /* Mengirimkan true jika pohon biner tidak kosong P adalah pohon biner: mempunyai subpohon kiri dan subpohon kanan*/
 {
-   return !IsTreeEmpty(P) && Right(P)!= Nil && Left(P)!=Nil;
+   return !IsTreeEmpty(P) && Right(P)!= NULL && Left(P)!=NULL;
 }
 
 /* *** Traversal *** */
@@ -234,7 +234,7 @@ A
 
 /* *** Searching *** */
 boolean SearchTree(BinTree P, infotype X)
-/* Mengirimkan true jika ada node dari P yang bernilai X */
+/* Mengirimkan true jika ada node dari P yang berNULLai X */
 {
    if(IsTreeEmpty(P)){
       return false;
@@ -334,7 +334,7 @@ void AddDaunTerkiri(BinTree *P, infotype X)
 /* F.S. P bertambah simpulnya, dengan X sebagai simpul daun terkiri */
 {
    if(IsTreeEmpty(*P)){
-      (*P) =  Tree(X,Nil,Nil);
+      (*P) =  Tree(X,NULL,NULL);
    }else{
       AddDaunTerkiri(&Left(*P),X);
    }
@@ -344,13 +344,13 @@ void AddDaun(BinTree *P, infotype X, infotype Y, boolean Kiri)
 /* I.S. P tidak kosong, X adalah salah satu daun Pohon Biner P */
 /* F.S. P bertambah simpulnya, dengan Y sebagai anak kiri X (jika Kiri = true), atau
         sebagai anak Kanan X (jika Kiri = false) */
-/*		Jika ada > 1 daun bernilai X, diambil daun yang paling kiri */
+/*		Jika ada > 1 daun berNULLai X, diambil daun yang paling kiri */
 {
    if(IsTreeOneElmt(*P)){
       if(!Kiri){
-         Right(*P) = Tree(Y,Nil,Nil);
+         Right(*P) = Tree(Y,NULL,NULL);
       }else{
-         Left(*P) = Tree(Y,Nil,Nil);
+         Left(*P) = Tree(Y,NULL,NULL);
       }
    }else{
       if(SearchTree(Left(*P),X)){
@@ -368,7 +368,7 @@ void DelDaunTerkiri(BinTree *P, infotype *X)
 {
    if(IsTreeOneElmt(*P)){
       (*X) = Akar(*P);
-      (*P) = Nil;
+      (*P) = NULL;
       addrNode d = (*P);
       DealokNode(d);
    }else if (IsUnerRight(*P)){
@@ -380,11 +380,11 @@ void DelDaunTerkiri(BinTree *P, infotype *X)
 }
 
 void DelDaun(BinTree *P, infotype X)
-/* I.S. P tidak kosong, minimum ada 1 daun bernilai X. */
-/* F.S. Semua daun bernilai X dihapus dari P. */
+/* I.S. P tidak kosong, minimum ada 1 daun berNULLai X. */
+/* F.S. Semua daun berNULLai X dihapus dari P. */
 {
    if(!IsTreeEmpty(*P) && IsTreeOneElmt(*P) && Akar(*P)==X){
-      (*P) =Nil;
+      (*P) =NULL;
    }else if (!IsTreeEmpty(*P)){
       if(SearchTree(Left(*P),X)){
          DelDaun(&Left(*P),X);
@@ -403,7 +403,7 @@ List MakeListDaun(BinTree P)
    Menghasilkan list kosong jika ada alokasi yang gagal. */
 {
    if(IsTreeEmpty(P)){
-      return Nil;
+      return NULL;
    }else if(IsTreeOneElmt(P)){
       return Alokasi(Akar(P));
    }else{
@@ -419,7 +419,7 @@ List MakeListPreorder(BinTree P)
    Menghasilkan list kosong jika ada alokasi yang gagal. */
 {
    if(IsTreeEmpty(P)){
-      return Nil;
+      return NULL;
    }else{
       //return Concat(MakeListDaun(Left(P)),MakeListDaun(Right(P)));
       return Concat(Konso(Akar(P),MakeListPreorder(Left(P))),MakeListPreorder(Right(P)));
@@ -434,7 +434,7 @@ List MakeListLevel(BinTree P, int N)
    Menghasilkan list kosong jika ada alokasi yang gagal. */
 {
    if(IsTreeEmpty(P)){
-      return Nil;
+      return NULL;
    }else if(!IsTreeEmpty(P)&&N==1){
       return Alokasi(Akar(P));
    }else{
@@ -444,7 +444,7 @@ List MakeListLevel(BinTree P, int N)
 
 /* *** Binary  Search  Tree  *** */
 boolean BSearch(BinTree P, infotype X)
-/* Mengirimkan true jika ada node dari P yang bernilai X */
+/* Mengirimkan true jika ada node dari P yang berNULLai X */
 {
    if(Akar(P)==X){
       return true;
@@ -455,7 +455,7 @@ boolean BSearch(BinTree P, infotype X)
 
 
 void InsSearch(BinTree *P, infotype X)
-/* Menghasilkan sebuah pohon Binary Search Tree P dengan tambahan simpul X. Belum ada simpul P yang bernilai X. */
+/* Menghasilkan sebuah pohon Binary Search Tree P dengan tambahan simpul X. Belum ada simpul P yang berNULLai X. */
 {
    if (IsTreeEmpty(*P)){
       MakeTree(X,NULL,NULL,P);
@@ -478,8 +478,8 @@ void DnD(BinTree * P){
 
 void DelBtree(BinTree *P, infotype X)
 /* I.S. Pohon P tidak  kosong */
-/* F.S. Nilai X yang dihapus pasti ada */
-/* Sebuah node dengan nilai X dihapus */
+/* F.S. NULLai X yang dihapus pasti ada */
+/* Sebuah node dengan NULLai X dihapus */
 {
    addrNode AAA;
    if(Akar(*P)>X){
@@ -489,7 +489,7 @@ void DelBtree(BinTree *P, infotype X)
    }else{
       addrNode q = Tree(Akar(*P),Left(*P),Right(*P));
       if(IsTreeOneElmt(*P)){
-         (*P) = Nil;
+         (*P) = NULL;
       }else if(IsUnerLeft(*P)){
          (*P) = Left(*P);
       }else if(IsUnerRight(*P)){
