@@ -301,6 +301,11 @@ int Adjacency()
     {
         return(3);
     }
+    //sebelah border
+    else if (tipe_point[x-1][y]==6 || tipe_point[x][y-1]==6 ||tipe_point[x+1][y]==6 || tipe_point[x][y+1]==6)
+    {
+        return(6);
+    }
     //default 0
     return 0;
 }

@@ -69,6 +69,12 @@ Kata com_buy;
 Kata com_undo;
 Kata com_execute;
 Kata com_main;
+//part2
+Kata com_serve;
+Kata com_repair;
+Kata com_detail;
+Kata com_office;
+Kata com_prepare;
 //kamus main,jam
 Jam crnt_jam;
 Jam buka;
@@ -139,6 +145,34 @@ void PrintPrep()
     printf("Masukkan Perintah: ");
 }
 
+void PrintMain()
+{
+    /* Kamus Lokal */
+    /* Algoritma */
+    printf("Main phase day %d\n", crnt_day);
+    PrintPeta(L);
+    PrintLegend();
+    printf("\n");
+    printf("Name: ");
+    for (int i = 0; i < player_name.Length; i++)
+    {
+        printf("%c", player_name.TabKata[i]);
+    }
+    printf("\n");
+    printf("Money: %d\n", player_money);
+    printf("Current time: %d.%d\n", Hour(crnt_jam), Minute(crnt_jam));
+    printf("Current time: %d.%d\n", Hour(buka), Minute(buka));
+    printf("Time Remaining: ");
+    if (Hour(temp_jam) > 0)
+        printf(" %d hour(s)", Hour(temp_jam));
+    if (Minute(temp_jam) > 0)
+        printf(" %d minute(s)", Minute(temp_jam));
+    printf("\n");
+    // print antrian
+    // printf("Total aksi yang akan dilakukan: %d\n", total_aksi);
+    printf("Masukkan Perintah: ");    
+}
+
 void SetupKata()
 {
     //setup kata start
@@ -196,6 +230,41 @@ void SetupKata()
     com_main.TabKata[2] = 'i';
     com_main.TabKata[3] = 'n';
     com_main.Length = 4;
+    com_serve.TabKata[0] = 's';
+    com_serve.TabKata[1] = 'e';
+    com_serve.TabKata[2] = 'r';
+    com_serve.TabKata[3] = 'v';
+    com_serve.TabKata[4] = 'e';
+    com_serve.Length = 5;
+    com_repair.TabKata[0] = 'r';
+    com_repair.TabKata[1] = 'e';
+    com_repair.TabKata[2] = 'p';
+    com_repair.TabKata[3] = 'a';
+    com_repair.TabKata[4] = 'i';
+    com_repair.TabKata[5] = 'r';
+    com_repair.Length = 6;
+    com_detail.TabKata[0] = 'd';
+    com_detail.TabKata[1] = 'e';
+    com_detail.TabKata[2] = 't';
+    com_detail.TabKata[3] = 'a';
+    com_detail.TabKata[4] = 'i';
+    com_detail.TabKata[5] = 'l';
+    com_detail.Length = 6;
+    com_office.TabKata[0] = 'o';
+    com_office.TabKata[1] = 'f';
+    com_office.TabKata[2] = 'f';
+    com_office.TabKata[3] = 'i';
+    com_office.TabKata[4] = 'c';
+    com_office.TabKata[5] = 'e';
+    com_office.Length = 6;
+    com_prepare.TabKata[0] = 'p';
+    com_prepare.TabKata[1] = 'r';
+    com_prepare.TabKata[2] = 'e';
+    com_prepare.TabKata[3] = 'p';
+    com_prepare.TabKata[4] = 'a';
+    com_prepare.TabKata[5] = 'r';
+    com_prepare.TabKata[6] = 'e';
+    com_prepare.Length = 7;
     // Setup Wahana
     CandyCrush = W.ArrayW[0].nama;
     ChocolateForest = W.ArrayW[1].nama;
@@ -240,8 +309,6 @@ void ReadKataStart()
 void PrepPhase()
 {
     //prep phase loop
-    CreateEmptyStack(&S);
-    prep_loop = true;
     while (prep_loop)
     {
         STARTKATA();
@@ -286,7 +353,7 @@ void PrepPhase()
             {
                 // // Minta input
                 int id, harga, durasi;
-                if(Adjacency()!=5)
+                if(Adjacency()!=5 && Adjacency()!=6)
                 {
                     do
                     {
@@ -419,17 +486,24 @@ void PrepPhase()
             }
             else if (IsKataSama(ck, com_execute))
             {
-                execute(&S);
-                printf("Perintah diexecute\n");
                 crnt_jam = buka;
+                temp_jam = DetikToJam(43200);
                 main_loop = true;
                 prep_loop = false;
+                execute(&S);
+                printf("Perintah diexecute\n");
             }
             else if (IsKataSama(ck, com_main))
             {
                 printf("Input main\n");
                 crnt_jam = buka;
+                temp_jam = DetikToJam(43200);
                 main_loop = true;
+                prep_loop = false;
+            }
+            else if (IsKataSama(ck, exit_menu))
+            {
+                printf("Input exit\n");
                 prep_loop = false;
             }
             else
@@ -444,11 +518,104 @@ void PrepPhase()
             crnt_jam = buka;
             main_loop = true;
         }
-        if (!main_loop)
+        if (!main_loop&&prep_loop)
         {
             PrintPrep();
         }
     }
+}
+
+void MainPhase()
+{
+    //prep phase loop
+    while (main_loop)
+    {
+        STARTKATA();
+        ck = CKata;
+        if (EndKata)
+        {
+            printf("Input kosong \n");
+            ADVKATA();
+        }
+        while (!EndKata)
+        {
+            //cek office
+            if (IsKataSama(ck, com_W))
+            {
+                printf("Input w\n");
+                Movement('W', &L);
+                TambahMenit(&crnt_jam, 5);
+                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+            }
+            else if (IsKataSama(ck, com_A))
+            {
+                printf("Input a\n");
+                Movement('A', &L);
+                TambahMenit(&crnt_jam, 5);
+                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+            }
+            else if (IsKataSama(ck, com_S))
+            {
+                printf("Input s\n");
+                Movement('S', &L);
+                TambahMenit(&crnt_jam, 5);
+                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+            }
+            else if (IsKataSama(ck, com_D))
+            {
+                printf("Input d\n");
+                Movement('D', &L);
+                TambahMenit(&crnt_jam, 5);
+                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+            }
+            else if (IsKataSama(ck, com_serve))
+            {
+                printf("Input serve\n");
+            }
+            else if (IsKataSama(ck, com_repair))
+            {
+                printf("Input repair\n");
+            }
+            else if (IsKataSama(ck, com_detail))
+            {
+                printf("Input repair\n");
+            }
+            else if (IsKataSama(ck, com_office))
+            {
+                printf("Input repair\n");
+            }
+            else if (IsKataSama(ck, com_prepare))
+            {
+                printf("Input prepare\n");
+                main_loop = false;
+                prep_loop = true;
+                total_aksi = 0;
+                total_jam = DetikToJam(0);
+                total_uang = 0;
+                total_waktu = 0;
+            }
+            else if (IsKataSama(ck, exit_menu))
+            {
+                printf("Input exit\n");
+                main_loop = false;
+            }
+            else
+            {
+                printf("Input tidak valid \n");
+            }
+            ADVKATA();
+        }
+        if (JamToDetik(temp_jam) <= 0)
+        {
+            prep_loop = false;
+            crnt_jam = buka;
+            main_loop = true;
+        }
+        if (main_loop&&!prep_loop)
+        {
+            PrintMain();
+        }
+    }    
 }
 
 int main()
@@ -515,7 +682,6 @@ int main()
     total_aksi = 0;
     total_waktu = 0;
     total_uang = 0;
-    PrintPrep();
     //setup buy
     MakeEmptyTabel(&T);
     MakeEmptyTabel(&Resource);
@@ -542,8 +708,18 @@ int main()
     // }
 
     /*prep phase loop*/
-    PrepPhase();
-
+    CreateEmptyStack(&S);
+    prep_loop = true;
+    main_loop = false;
+    while (prep_loop||main_loop)
+    {
+        PrintPrep();
+        PrepPhase();
+        PrintMain();
+        MainPhase();
+        puts("Loop");
+        crnt_day++;
+    }
     // printf("X untuk keluar\n");
     // loop=true;
     // do
