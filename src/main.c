@@ -433,10 +433,8 @@ void PrepPhase()
                     y=Ordinat(player_loc);
                     //ubah tipe
                     tipe_point[x-1][y]=5;
-                    printf("Cek tipe_point di atas player: %d",tipe_point[x-1][y]);
                     //ubah matriks peta
                     ElmtM(L,x-1,y)='W';
-                    PrintPeta(L);
                     total_aksi++;
                     total_uang += harga;
                     total_waktu += durasi;
@@ -546,6 +544,10 @@ void MainPhase()
                 Movement('W', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                {
+                    printf("Masukkan ‘office’ untuk mengakses office\n");
+                }
             }
             else if (IsKataSama(ck, com_A))
             {
@@ -553,6 +555,10 @@ void MainPhase()
                 Movement('A', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                {
+                    printf("Masukkan ‘office’ untuk mengakses office\n");
+                }
             }
             else if (IsKataSama(ck, com_S))
             {
@@ -560,6 +566,10 @@ void MainPhase()
                 Movement('S', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                {
+                    printf("Masukkan ‘office’ untuk mengakses office\n");
+                }
             }
             else if (IsKataSama(ck, com_D))
             {
@@ -567,6 +577,10 @@ void MainPhase()
                 Movement('D', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                {
+                    printf("Masukkan ‘office’ untuk mengakses office\n");
+                }
             }
             else if (IsKataSama(ck, com_serve))
             {
