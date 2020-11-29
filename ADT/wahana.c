@@ -333,7 +333,6 @@ void PushNewWahana (ArrayWahana * A, DetilWahana DW){
     }else{
         printf("Array Wahana Sudah Penuh boss !!! \n");
     }
-    (*A).jumlahWahana = 0;
 }
 
 DetilWahana CariWahanaByID (ArrayWahana A, int ID){

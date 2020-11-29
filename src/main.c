@@ -604,6 +604,7 @@ void PrepPhase()
         {
             prep_loop = false;
             crnt_jam = buka;
+            temp_jam = DetikToJam(43200);
             main_loop = true;
         }
         if (!main_loop&&prep_loop)
@@ -866,6 +867,7 @@ void MainPhase()
         {
             prep_loop = true;
             crnt_jam = buka;
+            temp_jam = DetikToJam(43200);
             main_loop = false;
         }
         if (main_loop&&!prep_loop)
@@ -981,6 +983,8 @@ int main()
     {
         PrintPrep();
         PrepPhase();
+        printf("%d\n",Map1.jumlahWahana);
+        PrintAllWahana(Map1);
         PrintMain();
         MainPhase();
         puts("Loop");
