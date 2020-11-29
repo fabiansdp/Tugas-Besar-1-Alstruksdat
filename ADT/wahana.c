@@ -376,7 +376,7 @@ DetilWahana CariWahanaByLoc (ArrayWahana A, POINT Loc){
     int c = 0;
     while (c < A.jumlahWahana && f==false)
     {
-        if(A.ArrayW[c].lokasi.X==Loc.X && A.ArrayW[c].lokasi.X==Loc.Y){
+        if(A.ArrayW[c].lokasi.X==Loc.X && A.ArrayW[c].lokasi.Y==Loc.Y){
             f = true;
         }else{
             c++;
@@ -426,6 +426,24 @@ void UpdateLaporanWahana(ArrayWahana * A, int ID, Laporan LaporanBaru){
     }
 }
 
+BinTree checkUpgradeAvail(BinTree T, int IDUpgrade){
+    if(T==NULL){
+        return NULL;
+    }else if(T!=NULL && IDUpgrade==T->info && T->isApplied==false){
+        return T;
+    }else if(T!=NULL && T->isApplied == false){
+        return NULL;
+    }else{
+        if(SearchTree(Left(T),IDUpgrade)){
+            return checkUpgradeAvail(Left(T),IDUpgrade);
+        }else if(SearchTree(Right(T),IDUpgrade)){
+            return checkUpgradeAvail(Right(T),IDUpgrade);
+        }else{
+            return NULL;
+        }
+    }
+}
+
 BinTree searchTree2 (BinTree T, int IDTree){
     if(T==NULL){
         return NULL;
@@ -470,7 +488,7 @@ boolean UpgradeWahana(ArrayWahana *A, int IDWahana, int IDUpgrade){
     int c = 0;
     while (c < (*A).jumlahWahana && f==false)
     {
-        if((*A).ArrayW[c].id==IDUpgrade){
+        if((*A).ArrayW[c].id==IDWahana){
             f = true;
         }else{
             c++;

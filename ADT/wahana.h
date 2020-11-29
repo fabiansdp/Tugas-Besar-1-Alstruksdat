@@ -139,6 +139,8 @@ DetilWahana CariWahanaByLoc (ArrayWahana A, POINT Loc);
 
 BinTree searchTree2 (BinTree T, int IDTree);
 
+BinTree checkUpgradeAvail(BinTree T, int IDUpgrade);
+
 void UpdateInfoWahana(ArrayWahana * A, int ID, Wahana newWahana);
 
 void UpdateLaporanWahana(ArrayWahana * A, int ID, Laporan LaporanBaru);

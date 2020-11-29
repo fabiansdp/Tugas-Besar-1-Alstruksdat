@@ -21,7 +21,15 @@ int tipe_point[10][20];
 
 void build(ArrayWahana *W, COMMAND C, int * player_money);
 
-void upgrade();
+void upgrade(ArrayWahana *W,
+COMMAND C,
+BinTree * bt, 
+int * player_money, 
+int * player_air, 
+int * player_kayu, 
+int * player_batu, 
+int * player_besi,
+ListHistoUpdate * ListHist);
 
 void buy();
 
@@ -31,12 +39,17 @@ void DetailsCommandOffice(List map);
 
 void ReportCommandOffice(List map);
 
-void execute(Stack *S,
- ArrayWahana * Map1, 
- ArrayWahana * Map2, 
- ArrayWahana * Map3, 
- ArrayWahana * Map4, 
- int * player_money);
+void execute(Stack *S, 
+ArrayWahana * Map1,
+ArrayWahana * Map2, 
+ArrayWahana * Map3, 
+ArrayWahana * Map4, 
+int * player_money, 
+int * player_air, 
+int * player_kayu, 
+int * player_batu, 
+int * player_besi,
+ListHistoUpdate * ListHist);
 
 void office();
 #endif
