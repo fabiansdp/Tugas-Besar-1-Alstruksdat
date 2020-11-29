@@ -1,6 +1,6 @@
 #include "../ADT/boolean.h"
-#include "../ADT/wahana.h"
-#include "../ADT/prioqueuechar.h"
+#include "../ADT/wahana/wahana.h"
+#include "../ADT/prioqueuechar/prioqueuechar.h"
 #include "antrian.c"
 extern int crnt_map;
 extern ArrayWahana MapX,Map1, Map2, Map3, Map4;

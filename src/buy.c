@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../ADT/boolean.h"
-#include "../ADT/jam.h"
-#include "../ADT/command.h"
-#include "../ADT/arraypos.h"
-#include "../ADT/mesinkar.h"
-#include "../ADT/mesinkata.h"
+#include "../ADT/jam/jam.h"
+#include "../ADT/command/command.h"
+#include "../ADT/arraypos/arraypos.h"
+#include "../ADT/mesinkar/mesinkar.h"
+#include "../ADT/mesinkata/mesinkata.h"
 #define MAXCHAR 100
 
 //GLOBAL VARIABLE

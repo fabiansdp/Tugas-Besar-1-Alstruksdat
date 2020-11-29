@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../ADT/prioqueuechar.h"
+#include "../ADT/prioqueuechar/prioqueuechar.h"
 #include "../ADT/boolean.h"
-#include "../ADT/wahana.h"
+#include "../ADT/wahana/wahana.h"
 
 /* Kamus */
 int MaxAntrian = 10; //jumlah maksimum pengunjung perwahana

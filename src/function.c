@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../ADT/boolean.h"
-#include "../ADT/command.h"
-#include "../ADT/stackt.h"
-#include "../ADT/mesinkata.h"
-#include "../ADT/mesinkar.h"
-#include "../ADT/wahana.h"
-#include "../ADT/arraypos.h"
+#include "../ADT/command/command.h"
+#include "../ADT/stackt/stackt.h"
+#include "../ADT/mesinkata/mesinkata.h"
+#include "../ADT/mesinkar/mesinkar.h"
+#include "../ADT/wahana/wahana.h"
+#include "../ADT/arraypos/arraypos.h"
 // #include "../ADT/listlinier.h"
-#include "../ADT/bintree.h"
-#include "../ADT/listrek.h"
-#include "../ADT/prioqueuechar.h"
+#include "../ADT/bintree/bintree.h"
+#include "../ADT/listrek/listrek.h"
+#include "../ADT/prioqueuechar/prioqueuechar.h"
 // #include "../ADT/arraypos.h"
 
 extern int player_money;

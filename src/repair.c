@@ -1,4 +1,4 @@
-#include "../ADT/wahana.h"
+#include "../ADT/wahana/wahana.h"
 #include <stdlib.h>
 
 

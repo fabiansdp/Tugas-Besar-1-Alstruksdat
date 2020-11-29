@@ -2,8 +2,8 @@
 #include <stdlib.h>
 //menggunakan adt matriks
 #include "../ADT/boolean.h"
-#include "../ADT/matriks.c"
-#include "../ADT/point.c"
+#include "../ADT/matriks/matriks.c"
+#include "../ADT/point/point.c"
 
 /* Kamus */
 MATRIKS L;

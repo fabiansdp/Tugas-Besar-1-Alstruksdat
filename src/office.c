@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../ADT/boolean.h"
-#include "../ADT/mesinkata.h"
-#include "../ADT/mesinkar.h"
-#include "../ADT/wahana.h"
-#include "../ADT/point.h"
-#include "../ADT/bintree.h"
-#include "../ADT/listrek.h"
+#include "../ADT/mesinkata/mesinkata.h"
+#include "../ADT/mesinkar/mesinkar.h"
+#include "../ADT/wahana/wahana.h"
+#include "../ADT/point/point.h"
+#include "../ADT/bintree/bintree.h"
+#include "../ADT/listrek/listrek.h"
 // ==================================Deklarasi
 // ArrayWahana Map1, Map2, Map3, Map4;
 // int crnt_map = 1; //asumsi player di map1
