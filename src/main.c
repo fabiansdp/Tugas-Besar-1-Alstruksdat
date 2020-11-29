@@ -105,6 +105,9 @@ int x,y;
 DetilWahana crnt_wahana;
 POINT point_wahana;
 extern ArrWRide W1,W2,W3,W4;
+//kamus main,upgrade
+ListHistoUpdate sejarahUpgrade;
+char mat[20][256];
 
 int konvertKata(Kata K){
     int a = K.Length;
@@ -150,7 +153,7 @@ void PrintPrep()
     printf("\n");
     printf("Money: %d\n", player_money);
     printf("Current time: %d.%d\n", Hour(crnt_jam), Minute(crnt_jam));
-    printf("Current time: %d.%d\n", Hour(buka), Minute(buka));
+    printf("Opening time: %d.%d\n", Hour(buka), Minute(buka));
     printf("Time Remaining: ");
     if (Hour(temp_jam) > 0)
         printf(" %d hour(s)", Hour(temp_jam));
@@ -642,14 +645,132 @@ void PrepPhase()
             }
             else if (IsKataSama(ck, com_upgrade))
             {
-                //uang sejumlah harga upgrade
-                comm2 = MakeCOMMAND(2, 0, 20, 0, crnt_map, player_loc, 3600);
-                Push(&S, comm2);
-                printf("Input upgrade\n");
-                total_aksi++;
-                // total_uang+=50000;
-                total_waktu += 3600;
-                // upgrade();
+                if(crnt_day==1){
+                    puts("Masih hari pertama cuy, bangunan aja belum ada");
+                }else if(Adjacency()!=5){
+                    puts("Tidak ada wahana di sekitarmu!");
+                }else{
+                    ArrayWahana awa;
+                    if(crnt_map==1){ awa = Map1;}
+                    else if(crnt_map==2){awa=Map2;}
+                    else if(crnt_map==3){awa=Map3;}
+                    else if(crnt_map==4){awa=Map4;}
+                    x=Absis(player_loc);
+                    y=Ordinat(player_loc);
+                    int kemungkinan[4];
+                    int posibility=0;
+                    if(tipe_point[x+1][y]==5){
+                        kemungkinan[posibility] = CariWahanaByLoc(awa,MakePOINT(x+1,y)).id;
+                        //printf("ha = %d",kemungkinan[posibility]);
+                        posibility++;
+                    }
+
+                    if(tipe_point[x-1][y]==5){
+                        kemungkinan[posibility] = CariWahanaByLoc(awa,MakePOINT(x-1,y)).id;
+                        //printf("hi = %d",kemungkinan[posibility]);
+                        posibility++;
+                    }
+
+                    if(tipe_point[x][y+1]==5){
+                        kemungkinan[posibility] = CariWahanaByLoc(awa,MakePOINT(x,y+1)).id;
+                        //printf("hu = %d",kemungkinan[posibility]);
+                        posibility++;
+                    }
+
+                    if(tipe_point[x][y-1]==5){
+                        kemungkinan[posibility] = CariWahanaByLoc(awa,MakePOINT(x,y-1)).id;
+                        //printf("he = %d",kemungkinan[posibility]);
+                        posibility++;
+                    }
+
+                    
+                    if(posibility>0){
+                        printf("pilih wahana yang mau diupgrade: \n\n");
+                        printf("ID Wahana      Nama Wahana \n");
+                        for(int xxx=0;xxx<posibility;xxx++){
+                        DetilWahana dwhn = CariWahanaByID(awa,kemungkinan[xxx]);
+                        if(dwhn.id!=ValUndef){
+                        printf("%d              ",dwhn.id);printkata(dwhn.wahana.nama);printf("\n");
+                        }}
+                        int upgradeeid;
+                        boolean inputflag = false;
+                        while (inputflag==false)
+                        {
+                            printf("masukkan id yang mau diupgrade = ");
+                            STARTKATA();
+                            while (!EndKata)
+                            {
+                                upgradeeid = konvertKata(CKata);
+                                ADVKATA();
+                            }  
+
+                            if(upgradeeid!=-1){
+                                for(int yoy = 0;yoy<posibility;yoy++){
+                                    if(kemungkinan[yoy]==upgradeeid){
+                                        inputflag=true;
+                                    }
+                                }
+                            }
+
+                            if(inputflag!=true){
+                                printf("inputan salah atau id tidak tersedia, ulangi lagi \n");
+                            }
+                        }
+                        DetilWahana dwhn = CariWahanaByID(awa,upgradeeid);
+                        ShowAvailableUpgrade(awa,upgradeeid);
+                        int spekupgrade;
+                        inputflag = false;
+                        while (inputflag==false)
+                        {
+                            printf("input upgrade yang mau di apply (by id upgrade, gunakan 9999 untuk batal) = ");
+                            STARTKATA();
+                            while (!EndKata)
+                            {
+                                spekupgrade = konvertKata(CKata);
+                                ADVKATA();
+                            }  
+                            
+                            if(spekupgrade==9999){
+                                inputflag = true;
+                            }else{
+                                if(checkUpgradeAvail(dwhn.upgradeTree,spekupgrade)!=NULL){
+                                    inputflag = true;
+                                }
+                            }
+
+                            if(inputflag!=true){
+                                printf("inputan salah atau id tidak tersedia, ulangi lagi \n");
+                            }
+                        }
+
+                        if(spekupgrade!=9999){
+                            BinTree asoy = checkUpgradeAvail(dwhn.upgradeTree,spekupgrade);
+                            if(
+                                player_money>=asoy->harga
+                                && Resource.TI[0].value >= asoy->air
+                                && Resource.TI[1].value >= asoy->kayu
+                                && Resource.TI[2].value >= asoy->batu
+                                && Resource.TI[3].value >= asoy->besi
+                                )
+                            {
+                                comm2 = MakeCOMMAND(2, upgradeeid, spekupgrade, crnt_day, crnt_map, player_loc, 3600);
+                                Push(&S,comm2);
+                                total_aksi++;
+                                TambahMenit(&total_jam,60);
+                                //upgrade menggunakan resource bukan uang 
+                            }else{
+
+                                printf("mohon maaf resource anda kurang\n");
+                            }
+                            
+                        }else{
+                            printf("upgrade dibatalkan\n");
+                        }
+                        
+                    }else{
+                        printf("Tidak ada wahana disini!\n");
+                    }
+                }
             }
             else if (IsKataSama(ck, com_buy))
             {
@@ -822,7 +943,7 @@ void MainPhase()
                 break;
             }
         }
-        else if (randomizer==1)
+        else if (randomizer==10)
         {
             switch (crnt_map)
             {
@@ -1088,7 +1209,9 @@ void MainPhase()
                 main_loop = false;
                 prep_loop = true;
                 total_aksi = 0;
+                temp_jam = DetikToJam(43200);
                 total_jam = DetikToJam(0);
+                crnt_jam = tutup;
                 total_uang = 0;
                 total_waktu = 0;
             }
@@ -1106,7 +1229,7 @@ void MainPhase()
         if (JamToDetik(temp_jam) <= 0)
         {
             prep_loop = true;
-            crnt_jam = buka;
+            crnt_jam = tutup;
             temp_jam = DetikToJam(43200);
             main_loop = false;
             total_aksi = 0;

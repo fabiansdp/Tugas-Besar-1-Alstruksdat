@@ -323,7 +323,7 @@ void printDaftarWahana (BasisListWahana L)
     }
 }
 
-DetilWahana DirikanWahanaBaru(int id,Wahana BasisWahana, POINT Loc, BinTree skemaUpgrade){
+DetilWahana DirikanWahanaBaru(int id, Wahana BasisWahana, POINT Loc, BinTree skemaUpgrade){
     DetilWahana det;
     det.id = id;
     det.laporan.naikharian = 0;
@@ -345,6 +345,7 @@ void PushNewWahana (ArrayWahana * A, DetilWahana DW){
     }else{
         printf("Array Wahana Sudah Penuh boss !!! \n");
     }
+    //(*A).jumlahWahana = 0;
 }
 
 DetilWahana CariWahanaByID (ArrayWahana A, int ID){
@@ -375,7 +376,7 @@ DetilWahana CariWahanaByLoc (ArrayWahana A, POINT Loc){
     int c = 0;
     while (c < A.jumlahWahana && f==false)
     {
-        if(A.ArrayW[c].lokasi.X==Loc.X && A.ArrayW[c].lokasi.X==Loc.Y){
+        if(A.ArrayW[c].lokasi.X==Loc.X && A.ArrayW[c].lokasi.Y==Loc.Y){
             f = true;
         }else{
             c++;
@@ -425,6 +426,24 @@ void UpdateLaporanWahana(ArrayWahana * A, int ID, Laporan LaporanBaru){
     }
 }
 
+BinTree checkUpgradeAvail(BinTree T, int IDUpgrade){
+    if(T==NULL){
+        return NULL;
+    }else if(T!=NULL && IDUpgrade==T->info && T->isApplied==false){
+        return T;
+    }else if(T!=NULL && T->isApplied == false){
+        return NULL;
+    }else{
+        if(SearchTree(Left(T),IDUpgrade)){
+            return checkUpgradeAvail(Left(T),IDUpgrade);
+        }else if(SearchTree(Right(T),IDUpgrade)){
+            return checkUpgradeAvail(Right(T),IDUpgrade);
+        }else{
+            return NULL;
+        }
+    }
+}
+
 BinTree searchTree2 (BinTree T, int IDTree){
     if(T==NULL){
         return NULL;
@@ -469,7 +488,7 @@ boolean UpgradeWahana(ArrayWahana *A, int IDWahana, int IDUpgrade){
     int c = 0;
     while (c < (*A).jumlahWahana && f==false)
     {
-        if((*A).ArrayW[c].id==IDUpgrade){
+        if((*A).ArrayW[c].id==IDWahana){
             f = true;
         }else{
             c++;
@@ -500,7 +519,7 @@ void PrintAllWahana(ArrayWahana A){
     for(x=0;x<A.jumlahWahana;x++){
         printf("ID WAHANA = %d\n",A.ArrayW[x].id);
         printf("BASIS WAHANA = %d\n",A.ArrayW[x].wahana.id);
-        printf("NAMA WAHANA = %s\n",A.ArrayW[x].wahana.nama);
+        printf("NAMA WAHANA = "); printkata(A.ArrayW[x].wahana.nama);printf("\n");
         printf("HARGA WAHANA = %d\n",A.ArrayW[x].wahana.harga);
         printf("KAPASITAS WAHANA = %d\n",A.ArrayW[x].wahana.kapasitas);
         printf("LOKASI WAHANA = %.2f,%.2f\n",A.ArrayW[x].lokasi.X,A.ArrayW[x].lokasi.Y);

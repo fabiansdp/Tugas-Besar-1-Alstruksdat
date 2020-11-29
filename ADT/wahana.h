@@ -85,7 +85,7 @@ typedef struct tHistoryUpgrade
 typedef Haddress ListHistoUpdate;
 typedef Uaddress BasisListWahana;
 
-
+void printkata(Kata K);
 //UNTUK KEPENTINGAN INISIALISASI WAHANA
 Uaddress AlokUList (infotype X,BinTree Bt,Wahana W);
 
@@ -124,8 +124,10 @@ void addDaunRight(BinTree * Utama, BinTree tambahan);
 
 //==============================================================
 
-//UNTUK KEPENTINGAN MATRIKS WAHANA
+//UNTUK KEPENTINGAN ARRAY WAHANA
 void makeArrayWahana (ArrayWahana * A);
+
+void printDaftarWahana (BasisListWahana L);
 
 DetilWahana DirikanWahanaBaru(int id, Wahana BasisWahana, POINT Loc, BinTree skemaUpgrade);
 
@@ -136,6 +138,8 @@ DetilWahana CariWahanaByID (ArrayWahana A, int ID);
 DetilWahana CariWahanaByLoc (ArrayWahana A, POINT Loc);
 
 BinTree searchTree2 (BinTree T, int IDTree);
+
+BinTree checkUpgradeAvail(BinTree T, int IDUpgrade);
 
 void UpdateInfoWahana(ArrayWahana * A, int ID, Wahana newWahana);
 

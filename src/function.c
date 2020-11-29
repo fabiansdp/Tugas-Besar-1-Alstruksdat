@@ -5,7 +5,6 @@
 #include "../ADT/stackt.h"
 #include "../ADT/mesinkata.h"
 #include "../ADT/mesinkar.h"
-#include "../ADT/listlinier.h"
 #include "../ADT/wahana.h"
 #include "../ADT/arraypos.h"
 // #include "../ADT/listlinier.h"
@@ -23,6 +22,7 @@ extern int x,y;
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern int tipe_point[10][20];
 extern int crnt_map;
+extern ListHistoUpdate sejarahUpgrade;
 BasisListWahana B;
 ArrWRide W1,W2,W3,W4; //wahana untuk dinaiki
 // ===================================================PREPARATION PHASE========================================================
@@ -79,9 +79,46 @@ void build(ArrayWahana *W, COMMAND C)
     // }
 }
 
-void upgrade()
+void upgrade(ArrayWahana *W,
+COMMAND C,
+BinTree * bt, 
+int * player_money, 
+int * player_air, 
+int * player_kayu, 
+int * player_batu, 
+int * player_besi,
+ListHistoUpdate * ListHist)
 {
-    printf("ini UPGRADE\n");
+    if((*player_money)>= (*bt)->harga
+    && (*player_air)>= (*bt)->air 
+    && (*player_kayu) >= (*bt)->kayu 
+    && (*player_batu)>= (*bt)->batu  
+    && (*player_besi)>= (*bt)->besi){
+        //printf("otw diupgrade gess");
+        //PrintAllWahana(*W);
+        if(UpgradeWahana(W,Name(C),Amount(C))){
+            (*player_money) = (*player_money) - (*bt)->harga;
+            (*player_air)   = (*player_air) - (*bt)->air;
+            (*player_kayu)  = (*player_kayu) - (*bt)->kayu;
+            (*player_batu)  = (*player_batu) - (*bt)->batu;
+            (*player_besi)  = (*player_besi) - (*bt)->besi;
+            
+            InfoHis ihis= CreateNewHistoryInfo(
+                C.gold,
+                DetikToJam(C.time),
+                CariWahanaByID(*W,Name(C)).wahana.nama,
+                (*bt)->detail
+                );
+            
+            (*ListHist) = AddNewHistory((*ListHist),ihis,Name(C),Amount(C));
+            
+        }else{
+            printf("Upgrade wahana %d gagal tiba-tiba",Name(C) );
+        }
+        //PrintAllWahana(*W);
+    }else{
+        printf("Gagal upgrade wahana dengan id %d karena kekurangan resources",Name(C));
+    }
 }
 
 void buy(TabEl *Resource, COMMAND C)
@@ -150,6 +187,10 @@ void execute(Stack *S)
     }
     while (!IsEmptyStack(exeStack))
     {
+        int* player_air = &Value(Resource,0);
+        int* player_kayu = &Value(Resource,1);
+        int* player_batu = &Value(Resource,2);
+        int* player_besi = &Value(Resource,3);
         COMMAND C;
         Pop(&exeStack, &C);
         if (Comm(C) == 1)
@@ -174,7 +215,50 @@ void execute(Stack *S)
         }
         else if (Comm(C) == 2)
         {
-            upgrade();
+
+            switch (Map(C))
+            {
+                BinTree bt;
+
+                // int player_air = Resource.TI[0].value;
+                // int player_kayu = Resource.TI[1].value;
+                // int player_batu = Resource.TI[2].value;
+                // int player_besi = Resource.TI[3].value;
+                case 1:
+                    bt =  searchTree2(CariWahanaByID(Map1,Name(C)).upgradeTree,Amount(C));
+                    if(bt!=NULL){
+                       upgrade(&Map1,C,&bt,&player_money,player_air,player_kayu,player_batu,player_besi,&sejarahUpgrade); 
+                    }else{
+                        printf("ada kesalahan ketika upgrade wahana %d untuk upgrade %d\n",Name(C),Amount(C));
+                    }
+                    break;
+                case 2:
+                    bt =  searchTree2(CariWahanaByID(Map2,Name(C)).upgradeTree,Amount(C));
+                    if(bt!=NULL){
+                        upgrade(&Map2,C,&bt,&player_money,player_air,player_kayu,player_batu,player_besi,&sejarahUpgrade);
+                    }else{
+                        printf("ada kesalahan ketika upgrade wahana %d untuk upgrade %d\n",Name(C),Amount(C));
+                    }
+                    break;
+                case 3:
+                    bt =  searchTree2(CariWahanaByID(Map3,Name(C)).upgradeTree,Amount(C));
+                    if(bt!=NULL){
+                        upgrade(&Map3,C,&bt,&player_money,player_air,player_kayu,player_batu,player_besi,&sejarahUpgrade);
+                    }else{
+                        printf("ada kesalahan ketika upgrade wahana %d untuk upgrade %d\n",Name(C),Amount(C));
+                    }
+                    break;
+                case 4:
+                    bt =  searchTree2(CariWahanaByID(Map4,Name(C)).upgradeTree,Amount(C));
+                    if(bt!=NULL){
+                        upgrade(&Map4,C,&bt,&player_money,player_air,player_kayu,player_batu,player_besi,&sejarahUpgrade);
+                    }else{
+                        printf("ada kesalahan ketika upgrade wahana %d untuk upgrade %d\n",Name(C),Amount(C));
+                    }
+                    break;
+                default:
+                    break;
+            }
             //dikurang material
             //upgrade ditambah
         }

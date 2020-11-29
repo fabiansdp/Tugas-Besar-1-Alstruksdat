@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../ADT/boolean.h"
-#include "../ADT/mesinkata.c"
-#include "../ADT/mesinkar.c"
-#include "../ADT/wahana.c"
-#include "../ADT/point.c"
-#include "../ADT/bintree.c"
-#include "../ADT/listrek.c"
+#include "../ADT/mesinkata.h"
+#include "../ADT/mesinkar.h"
+#include "../ADT/wahana.h"
+#include "../ADT/point.h"
+#include "../ADT/bintree.h"
+#include "../ADT/listrek.h"
 // ==================================Deklarasi
-ArrayWahana Map1, Map2, Map3, Map4;
-int crnt_map = 1; //asumsi player di map1
+// ArrayWahana Map1, Map2, Map3, Map4;
+// int crnt_map = 1; //asumsi player di map1
+// DetilWahana vardetilwahana;
+extern ArrayWahana Map1, Map2, Map3, Map4;
+extern int crnt_map;
 DetilWahana vardetilwahana;
 
 //===============================FUNGSI TAMBAHAN====================================================
@@ -265,88 +268,88 @@ void detail(DetilWahana W)
 }
 
 //===============================TESTING====================================================
-int main()
-{
-    BasisListWahana B = MakeUpgradeList();
-    makeArrayWahana(&Map1);
+// int main()
+// {
+//     BasisListWahana B = MakeUpgradeList();
+//     makeArrayWahana(&Map1);
 
-    // build Candy Crush
-    POINT LokasiAtas = MakePOINT(11, 24);
-    Wahana WahanaBaru = SearchWahanaBase(B, 11);
-    BinTree TreeBaru = SearchUList(B, 11);
-    DetilWahana DetilBaru = DirikanWahanaBaru((Map1).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
-    PushNewWahana(&Map1, DetilBaru);
+//     // build Candy Crush
+//     POINT LokasiAtas = MakePOINT(11, 24);
+//     Wahana WahanaBaru = SearchWahanaBase(B, 11);
+//     BinTree TreeBaru = SearchUList(B, 11);
+//     DetilWahana DetilBaru = DirikanWahanaBaru((Map1).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
+//     PushNewWahana(&Map1, DetilBaru);
 
-    // Build bombomcar
-    POINT LokasiAtas2 = MakePOINT(13, 24);
-    Wahana WahanaBaru2 = SearchWahanaBase(B, 13);
-    BinTree TreeBaru2 = SearchUList(B, 13);
-    DetilWahana DetilBaru2 = DirikanWahanaBaru((Map1).jumlahWahana, WahanaBaru2, LokasiAtas2, TreeBaru2);
-    PushNewWahana(&Map1, DetilBaru2);
+//     // Build bombomcar
+//     POINT LokasiAtas2 = MakePOINT(13, 24);
+//     Wahana WahanaBaru2 = SearchWahanaBase(B, 13);
+//     BinTree TreeBaru2 = SearchUList(B, 13);
+//     DetilWahana DetilBaru2 = DirikanWahanaBaru((Map1).jumlahWahana, WahanaBaru2, LokasiAtas2, TreeBaru2);
+//     PushNewWahana(&Map1, DetilBaru2);
 
-    // Build forest
-    POINT LokasiAtas3 = MakePOINT(13, 24);
-    Wahana WahanaBaru3 = SearchWahanaBase(B, 17);
-    BinTree TreeBaru3 = SearchUList(B, 17);
-    DetilWahana DetilBaru3 = DirikanWahanaBaru((Map1).jumlahWahana, WahanaBaru3, LokasiAtas3, TreeBaru3);
-    PushNewWahana(&Map1, DetilBaru3);
+//     // Build forest
+//     POINT LokasiAtas3 = MakePOINT(13, 24);
+//     Wahana WahanaBaru3 = SearchWahanaBase(B, 17);
+//     BinTree TreeBaru3 = SearchUList(B, 17);
+//     DetilWahana DetilBaru3 = DirikanWahanaBaru((Map1).jumlahWahana, WahanaBaru3, LokasiAtas3, TreeBaru3);
+//     PushNewWahana(&Map1, DetilBaru3);
 
-    // ==========================================================
-    printf("Selamat datang di game!!\n");
-    printf("Masukan command!!\n");
+//     // ==========================================================
+//     printf("Selamat datang di game!!\n");
+//     printf("Masukan command!!\n");
 
-    Kata officecom, exitcom;
+//     Kata officecom, exitcom;
 
-    officecom.TabKata[0] = 'o';
-    officecom.TabKata[1] = 'f';
-    officecom.TabKata[2] = 'f';
-    officecom.TabKata[3] = 'i';
-    officecom.TabKata[4] = 'c';
-    officecom.TabKata[5] = 'e';
-    officecom.Length = 6;
+//     officecom.TabKata[0] = 'o';
+//     officecom.TabKata[1] = 'f';
+//     officecom.TabKata[2] = 'f';
+//     officecom.TabKata[3] = 'i';
+//     officecom.TabKata[4] = 'c';
+//     officecom.TabKata[5] = 'e';
+//     officecom.Length = 6;
 
-    exitcom.TabKata[0] = 'e';
-    exitcom.TabKata[1] = 'x';
-    exitcom.TabKata[2] = 'i';
-    exitcom.TabKata[3] = 't';
-    exitcom.Length = 4;
+//     exitcom.TabKata[0] = 'e';
+//     exitcom.TabKata[1] = 'x';
+//     exitcom.TabKata[2] = 'i';
+//     exitcom.TabKata[3] = 't';
+//     exitcom.Length = 4;
 
-    printf("===========================================\n");
-    printf("===========================================\n");
-    printf("================MAIN MODE==================\n");
-    printf("===========================================\n");
-    printf("===========================================\n");
-    printf("===========================================\n");
-    STARTKATA();
-    while (!IsKataSama(CKata, exitcom))
-    {
-        while (!IsKataSama(CKata, officecom) && !IsKataSama(CKata, exitcom))
-        {
-            printf("===========================================\n");
-            printf("===========================================\n");
-            printf("================MAIN MODE==================\n");
-            printf("===========================================\n");
-            printf("===========================================\n");
-            printf("===========================================\n");
-            printf("Maaf, command yang anda masukan salah, ulangi lagi!\n");
-            STARTKATA();
-        }
-        if (IsKataSama(CKata, officecom))
-        {
-            office();
-        }
-        printf("===========================================\n");
-        printf("===========================================\n");
-        printf("================MAIN MODE==================\n");
-        printf("===========================================\n");
-        printf("===========================================\n");
-        printf("===========================================\n");
-        STARTKATA();
-    }
-    if (IsKataSama(CKata, exitcom))
-    {
-        printf("Terimakasih sudah bermain!\n");
-    }
+//     printf("===========================================\n");
+//     printf("===========================================\n");
+//     printf("================MAIN MODE==================\n");
+//     printf("===========================================\n");
+//     printf("===========================================\n");
+//     printf("===========================================\n");
+//     STARTKATA();
+//     while (!IsKataSama(CKata, exitcom))
+//     {
+//         while (!IsKataSama(CKata, officecom) && !IsKataSama(CKata, exitcom))
+//         {
+//             printf("===========================================\n");
+//             printf("===========================================\n");
+//             printf("================MAIN MODE==================\n");
+//             printf("===========================================\n");
+//             printf("===========================================\n");
+//             printf("===========================================\n");
+//             printf("Maaf, command yang anda masukan salah, ulangi lagi!\n");
+//             STARTKATA();
+//         }
+//         if (IsKataSama(CKata, officecom))
+//         {
+//             office();
+//         }
+//         printf("===========================================\n");
+//         printf("===========================================\n");
+//         printf("================MAIN MODE==================\n");
+//         printf("===========================================\n");
+//         printf("===========================================\n");
+//         printf("===========================================\n");
+//         STARTKATA();
+//     }
+//     if (IsKataSama(CKata, exitcom))
+//     {
+//         printf("Terimakasih sudah bermain!\n");
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
