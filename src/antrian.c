@@ -1,72 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
-// #include "prioqueuechar.h"
-#include "../ADT/prioqueuechar.c"
+#include "../ADT/prioqueuechar.h"
 #include "../ADT/boolean.h"
+#include "../ADT/wahana.h"
+
 /* Kamus */
-int MaxAntrian = 10;
+int MaxAntrian = 10; //jumlah maksimum pengunjung perwahana
 int default_angka = 10;
-PrioQueueChar Q;
-// int jmlhWahana = 3;
-char Nama[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}; 
+PrioQueueChar Q,Q1,Q2,Q3,Q4;
+char Nama[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}; //pengunjung
 int crntname = 0;
 infotype_pq temp;
 infotype_pq served;
 /* Algoritma */
 
-void TambahAntrian(PrioQueueChar *Q, infotype_pq X)
+void TambahAntrian(PrioQueueChar *Q, ArrayWahana W, infotype_pq X)
 /*I.S. Menambah antrian Q mungkin kosong*/
 /*F.S. infotype_pq ditambahkan ke Q*/
 {
     /*KamusLokal*/
-    int n;
+    int n,i,j;
+    int index_wahana;
     int seed=crntname; //pseudorandom dengan seed tertentu
     /*Algoritma*/
     srand(seed); //lebih baik nanti pake ADT time
-    n = (rand()%3)+1;
-    switch (n)
-    {
-    case 1:
-        Wahana(X,0)='C';
-        Wahana(X,1)='o';
-        Wahana(X,2)='a';
-        Wahana(X,3)='s';
-        Wahana(X,4)='t';
-        Wahana(X,5)='e';
-        Wahana(X,6)='r';
-        Wahana(X,7)='.';
-        break;
-    case 2:
-        Wahana(X,0)='M';
-        Wahana(X,1)='o';
-        Wahana(X,2)='b';
-        Wahana(X,3)='i';
-        Wahana(X,4)='l';
-        Wahana(X,5)='.';
-        break;
-    case 3:
-        Wahana(X,0)='C';
-        Wahana(X,1)='a';
-        Wahana(X,2)='r';
-        Wahana(X,3)='o';
-        Wahana(X,4)='s';
-        Wahana(X,5)='e';
-        Wahana(X,6)='l';
-        Wahana(X,7)='.';
-        break;
-    default:
-        Wahana(X,0)='T';
-        Wahana(X,1)='o';
-        Wahana(X,2)='r';
-        Wahana(X,3)='n';
-        Wahana(X,4)='a';
-        Wahana(X,5)='d';
-        Wahana(X,6)='o';
-        Wahana(X,7)='.';
-        break;
+    n = (rand()%W.jumlahWahana); //random jumlah wahana
+    WahanaPengunjung(X) = n;
+    //dapet jumlah wahana yang mau dimasukin
+    for (i = 0; i <= n ;i++){
+        index_wahana = (rand()%W.jumlahWahana);
+        j=0;
+        while(j <= n){
+            if(IndeksWahana(X,j) == index_wahana){
+                index_wahana = (rand()%W.jumlahWahana);
+                j = 0;
+            }
+            j++;
+        }//keluar while loop ketika j > n dan indeks ga ada yang sama
+        IndeksWahana(X,i) = index_wahana;
     }
     Enqueue(Q,X);
-    seed++;
 }
 
 void KurangAntrian(PrioQueueChar *Q, infotype_pq *X)
@@ -162,7 +135,7 @@ void KurangAntrian(PrioQueueChar *Q, infotype_pq *X)
                 loop=false;
             }
             //tambah prio
-            Prio(ElmtQ(*Q,i))++;
+            Prio(ElmtQ(*Q,i))--;
             i=(i+1)%MaxEl(*Q);
         }
     }

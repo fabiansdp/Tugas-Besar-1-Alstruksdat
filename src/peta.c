@@ -29,19 +29,19 @@ void BacaPeta(int x, MATRIKS *L)
     switch (x)
     {
     case 1:
-        fh=fopen("map1.txt","r");
+        fh=fopen("../map1.txt","r");
         break;
     case 2:
-        fh=fopen("map2.txt","r");
+        fh=fopen("../map2.txt","r");
         break;
     case 3:
-        fh=fopen("map3.txt","r");
+        fh=fopen("../map3.txt","r");
         break;
     case 4:
-        fh=fopen("map4.txt","r");
+        fh=fopen("../map4.txt","r");
         break;
     default:
-        fh=fopen("map1.txt","r"); //asumsi file tidak kosong
+        fh=fopen("../map1.txt","r"); //asumsi file tidak kosong
         break;
     }
     while ((ch=fgetc(fh))!=EOF)

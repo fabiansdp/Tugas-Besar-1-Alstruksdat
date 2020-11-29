@@ -5,22 +5,30 @@
 #include "../ADT/stackt.h"
 #include "../ADT/mesinkata.h"
 #include "../ADT/mesinkar.h"
-#include "../ADT/listlinier.h"
 #include "../ADT/wahana.h"
 #include "../ADT/arraypos.h"
 // #include "../ADT/listlinier.h"
 #include "../ADT/bintree.h"
 #include "../ADT/listrek.h"
+#include "../ADT/prioqueuechar.h"
 // #include "../ADT/arraypos.h"
 
 extern int player_money;
 extern TabEl Resource;
-extern int banyak;
+extern int banyak; 
 extern int indeks_buy;
+int temporary_index;
 extern int x,y;
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern int tipe_point[10][20];
+<<<<<<< HEAD
 
+=======
+extern int crnt_map;
+extern ListHistoUpdate sejarahUpgrade;
+BasisListWahana B;
+ArrWRide W1,W2,W3,W4; //wahana untuk dinaiki
+>>>>>>> fa434b554ef338d46ec808d91d10587d3b94f85e
 // ===================================================PREPARATION PHASE========================================================
 
 void build(ArrayWahana *W, COMMAND C)
@@ -33,32 +41,108 @@ void build(ArrayWahana *W, COMMAND C)
 =======
     int x = Absis(Coordinate(C))-1;
     int y = Ordinat(Coordinate(C));
+<<<<<<< HEAD
 >>>>>>> ada016a457e90854ecc0db401b262874f3a70e29
 
     // Cek wahana di lokasi atasnya ada wahana atau tidak
+=======
+>>>>>>> fa434b554ef338d46ec808d91d10587d3b94f85e
     POINT LokasiAtas = MakePOINT(x, y);
-    DetilWahana CekWahana = CariWahanaByLoc(*W, LokasiAtas);
+    Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
+    BinTree TreeBaru = SearchUList(B, Name(C));
+    DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
+    PushNewWahana(W, DetilBaru);
+    player_money -= Gold(C);
+    //tambah ke WahanaRide
+    switch (crnt_map)
+    {
+    case 1:
+        W1.ArrayW[W1.ElP].MaxP=WahanaBaru.kapasitas;
+        W1.ArrayW[W1.ElP].isBuilt=true;
+        W1.ElP++;
+        break;
+    case 2:
+        W2.ArrayW[W2.ElP].MaxP=WahanaBaru.kapasitas;
+        W2.ArrayW[W2.ElP].isBuilt=true;
+        W2.ElP++;
+        break;
+    case 3:
+        W3.ArrayW[W3.ElP].MaxP=WahanaBaru.kapasitas;
+        W3.ArrayW[W3.ElP].isBuilt=true;
+        W3.ElP++;
+        break;
+    case 4:
+        W4.ArrayW[W4.ElP].MaxP=WahanaBaru.kapasitas;
+        W4.ArrayW[W4.ElP].isBuilt=true;
+        W4.ElP++;
+        break;
+    default:
+        break;
+    }
 
-    // Cek ada wahana, border, office, atau gerbang
-    if ((tipe_point[x-1][y] != 6) && (tipe_point[x-1][y] != 3) && (tipe_point[x-1][y] != 4)) {
-        Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
-        BinTree TreeBaru = SearchUList(B, Name(C));
-        DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
-        PushNewWahana(W, DetilBaru);
-        player_money -= Gold(C);
+    // // Cek wahana di lokasi atasnya ada wahana atau tidak
+    // POINT LokasiAtas = MakePOINT(x, y);
+    // DetilWahana CekWahana = CariWahanaByLoc(*W, LokasiAtas);
+    // // Cek ada wahana, border, office, atau gerbang
+    // if ((tipe_point[x][y] != 6) && (tipe_point[x][y] != 3) && (tipe_point[x][y] != 4)) {
+    //     Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
+    //     BinTree TreeBaru = SearchUList(B, Name(C));
+    //     DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
+    //     PushNewWahana(W, DetilBaru);
+    //     player_money -= Gold(C);
+    // } else {
+    //     puts("Tidak bisa membangun di lokasi ini!");
+    // }
+}
 
-    } else {
-        puts("Tidak bisa membangun di lokasi ini!");
+void upgrade(ArrayWahana *W,
+COMMAND C,
+BinTree * bt, 
+int * player_money, 
+int * player_air, 
+int * player_kayu, 
+int * player_batu, 
+int * player_besi,
+ListHistoUpdate * ListHist)
+{
+    if((*player_money)>= (*bt)->harga
+    && (*player_air)>= (*bt)->air 
+    && (*player_kayu) >= (*bt)->kayu 
+    && (*player_batu)>= (*bt)->batu  
+    && (*player_besi)>= (*bt)->besi){
+        //printf("otw diupgrade gess");
+        //PrintAllWahana(*W);
+        if(UpgradeWahana(W,Name(C),Amount(C))){
+            (*player_money) = (*player_money) - (*bt)->harga;
+            (*player_air)   = (*player_air) - (*bt)->air;
+            (*player_kayu)  = (*player_kayu) - (*bt)->kayu;
+            (*player_batu)  = (*player_batu) - (*bt)->batu;
+            (*player_besi)  = (*player_besi) - (*bt)->besi;
+            
+            InfoHis ihis= CreateNewHistoryInfo(
+                C.gold,
+                DetikToJam(C.time),
+                CariWahanaByID(*W,Name(C)).wahana.nama,
+                (*bt)->detail
+                );
+            
+            (*ListHist) = AddNewHistory((*ListHist),ihis,Name(C),Amount(C));
+            
+        }else{
+            printf("Upgrade wahana %d gagal tiba-tiba",Name(C) );
+        }
+        //PrintAllWahana(*W);
+    }else{
+        printf("Gagal upgrade wahana dengan id %d karena kekurangan resources",Name(C));
     }
 }
 
-void upgrade()
+void buy(TabEl *Resource, COMMAND C)
 {
-    printf("ini UPGRADE\n");
-}
-
-void buy()
-{
+    //ditambah ke resource
+    temporary_index = Name(C);
+    Value(*Resource,temporary_index) += banyak;
+    TulisIsiTab(*Resource);
     printf("Buy berhasil dilakukan\n");
 }
 
@@ -110,6 +194,7 @@ void undo(Stack *S)
 void execute(Stack *S)
 {
     Stack exeStack;
+    CreateEmptyStack(&exeStack);
     while (!IsEmptyStack(*S))
     {
         COMMAND C;
@@ -118,6 +203,10 @@ void execute(Stack *S)
     }
     while (!IsEmptyStack(exeStack))
     {
+        int* player_air = &Value(Resource,0);
+        int* player_kayu = &Value(Resource,1);
+        int* player_batu = &Value(Resource,2);
+        int* player_besi = &Value(Resource,3);
         COMMAND C;
         Pop(&exeStack, &C);
         if (Comm(C) == 1)
@@ -142,13 +231,56 @@ void execute(Stack *S)
         }
         else if (Comm(C) == 2)
         {
-            upgrade();
+
+            switch (Map(C))
+            {
+                BinTree bt;
+
+                // int player_air = Resource.TI[0].value;
+                // int player_kayu = Resource.TI[1].value;
+                // int player_batu = Resource.TI[2].value;
+                // int player_besi = Resource.TI[3].value;
+                case 1:
+                    bt =  searchTree2(CariWahanaByID(Map1,Name(C)).upgradeTree,Amount(C));
+                    if(bt!=NULL){
+                       upgrade(&Map1,C,&bt,&player_money,player_air,player_kayu,player_batu,player_besi,&sejarahUpgrade); 
+                    }else{
+                        printf("ada kesalahan ketika upgrade wahana %d untuk upgrade %d\n",Name(C),Amount(C));
+                    }
+                    break;
+                case 2:
+                    bt =  searchTree2(CariWahanaByID(Map2,Name(C)).upgradeTree,Amount(C));
+                    if(bt!=NULL){
+                        upgrade(&Map2,C,&bt,&player_money,player_air,player_kayu,player_batu,player_besi,&sejarahUpgrade);
+                    }else{
+                        printf("ada kesalahan ketika upgrade wahana %d untuk upgrade %d\n",Name(C),Amount(C));
+                    }
+                    break;
+                case 3:
+                    bt =  searchTree2(CariWahanaByID(Map3,Name(C)).upgradeTree,Amount(C));
+                    if(bt!=NULL){
+                        upgrade(&Map3,C,&bt,&player_money,player_air,player_kayu,player_batu,player_besi,&sejarahUpgrade);
+                    }else{
+                        printf("ada kesalahan ketika upgrade wahana %d untuk upgrade %d\n",Name(C),Amount(C));
+                    }
+                    break;
+                case 4:
+                    bt =  searchTree2(CariWahanaByID(Map4,Name(C)).upgradeTree,Amount(C));
+                    if(bt!=NULL){
+                        upgrade(&Map4,C,&bt,&player_money,player_air,player_kayu,player_batu,player_besi,&sejarahUpgrade);
+                    }else{
+                        printf("ada kesalahan ketika upgrade wahana %d untuk upgrade %d\n",Name(C),Amount(C));
+                    }
+                    break;
+                default:
+                    break;
+            }
             //dikurang material
             //upgrade ditambah
         }
         else if (Comm(C) == 3)
         {
-            buy();
+            buy(&Resource,C);
             player_money-=Gold(C);
             // printf("Sisa uang setelah buy %d\n",player_money);
         }
@@ -161,6 +293,12 @@ void execute(Stack *S)
 }
 
 // ==============================================================MAIN PHASE==========================================================
+
+// void Serve()
+// {
+    
+// }
+
 
 // ========================office=============================================
 // void DetailsCommandOffice(List map)
