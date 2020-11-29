@@ -16,7 +16,9 @@ void Broken(ArrayWahana W){
     //kalau rusak ga bisa digunain
     // pemain bisa memperbaiki wahana kalau ada di deket wahana
 }
-void Repair(ArrayWahana *W, int broken_number){
-    //ubah status wahana menjadi bisa dipakai
-    Status(*W,broken_number) = 1;
+void Repair(DetilWahana *crnt_wahana){
+    crnt_wahana->wahana.status = 1;
+
 }
+    //ubah status wahana menjadi bisa dipakai
+   

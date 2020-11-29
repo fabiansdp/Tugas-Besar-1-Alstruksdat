@@ -6,7 +6,7 @@
 #include "../ADT/point.c"
 
 /* Kamus */
-MATRIKS L;
+MATRIKS L,L1,L2,L3,L4;
 typedef struct {
 	POINT P[200];
     int tipe[200];

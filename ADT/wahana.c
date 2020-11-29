@@ -62,7 +62,8 @@ Wahana FirstWhnInfo (BasisListWahana L){
         w.kapasitas = 0;
         w.nama.Length=0;
         w.status = 0;
-        return w;}
+        return w;
+        }
 }
 BasisListWahana UTail(BasisListWahana L){
     return L->nextt;

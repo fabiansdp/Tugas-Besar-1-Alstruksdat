@@ -7,8 +7,9 @@
 #include "../ADT/mesinkata.c"
 #include "../ADT/mesinkar.c"
 #include "../ADT/jam.c"
-// #include "../ADT/wahana2.c"
-
+#include "../ADT/wahana.c"
+#include "../ADT/bintree.c"
+#include "../ADT/listrek.c"
 #include "../ADT/arraypos.c"
 // #include "../ADT/listlinier.c"
 //include from src
@@ -459,7 +460,7 @@ void PrepPhase()
                 {
                     do
                     {
-                        ListWahana();
+                        //ListWahana();
                         puts("Mau bangun apa?");
                         STARTKATA();
                         while (!EndKata)
@@ -710,13 +711,10 @@ void MainPhase()
                             }                        
                             if(crnt_wahana.wahana.status == 0)
                             { // cek wahana rusak, MASIH BELUM BENER i nya
-                                Repair(&Map2,i);
+                                Repair(&crnt_wahana);
+                                printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
-                            }
-                            else 
-                            {
-                                printf("ID Wahana : %d\n",crnt_wahana.wahana.id);
                             }
                             break;
                         case 2:
@@ -746,13 +744,10 @@ void MainPhase()
                             }                        
                             if(crnt_wahana.wahana.status == 0)
                             { // cek wahana rusak, MASIH BELUM BENER i nya
-                                Repair(&Map2,i);
+                                Repair(&crnt_wahana);
+                                printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
-                            }
-                            else 
-                            {
-                                printf("ID Wahana : %d\n",crnt_wahana.wahana.id);
                             }
                             break;
                         case 3:
@@ -782,13 +777,10 @@ void MainPhase()
                             }                        
                             if(crnt_wahana.wahana.status == 0)
                             { // cek wahana rusak, MASIH BELUM BENER i nya
-                                Repair(&Map3,i);
+                                Repair(&crnt_wahana);
+                                printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
-                            }
-                            else 
-                            {
-                                printf("ID Wahana : %d\n",crnt_wahana.wahana.id);
                             }
                             break;
                         case 4:
@@ -818,13 +810,10 @@ void MainPhase()
                             }                        
                             if(crnt_wahana.wahana.status == 0)
                             { // cek wahana rusak, MASIH BELUM BENER i nya
-                                Repair(&Map4,i);
+                                Repair(&crnt_wahana);
+                                printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
-                            }
-                            else 
-                            {
-                                printf("ID Wahana : %d\n",crnt_wahana.wahana.id);
                             }
                             break;
                         default:
