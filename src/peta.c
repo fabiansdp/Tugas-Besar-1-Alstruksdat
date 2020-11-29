@@ -6,7 +6,7 @@
 #include "../ADT/point.c"
 
 /* Kamus */
-MATRIKS L;
+MATRIKS L,L1,L2,L3,L4;
 typedef struct {
 	POINT P[200];
     int tipe[200];
@@ -209,7 +209,7 @@ void Movement(char ch, MATRIKS *L)
         break;
     case 'A':
         // printf("Test kiri\n");
-        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
+        if (tipe_point[x][y-1]==0 || tipe_point[x][y-1]==3)
         {
             //ubah tipe
             tipe_point[x][y-1]=2;
@@ -230,7 +230,7 @@ void Movement(char ch, MATRIKS *L)
         break;
     case 'S':
         // printf("Test bawah\n");
-        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
+        if (tipe_point[x+1][y]==0 || tipe_point[x+1][y]==3)
         {
             //ubah tipe
             tipe_point[x+1][y]=2;
@@ -251,7 +251,7 @@ void Movement(char ch, MATRIKS *L)
         break;
     case 'D':
         // printf("Test kanan\n");
-        if (tipe_point[x][y-1]==0 || tipe_point[x-1][y]==3)
+        if (tipe_point[x][y+1]==0 || tipe_point[x][y+1]==3)
         {
             //ubah tipe
             tipe_point[x][y+1]=2;
@@ -334,6 +334,11 @@ int Adjacency()
     else if (tipe_point[x-1][y]==6 || tipe_point[x][y-1]==6 ||tipe_point[x+1][y]==6 || tipe_point[x][y+1]==6)
     {
         return(6);
+    }
+    //sebelah gerbang
+    else if (tipe_point[x-1][y]==4 || tipe_point[x][y-1]==4 || tipe_point[x+1][y]==4 || tipe_point[x][y+1]==4 )
+    {
+        return(4);
     }
     //default 0
     return 0;

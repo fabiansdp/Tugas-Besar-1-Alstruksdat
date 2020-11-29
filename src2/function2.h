@@ -17,10 +17,9 @@ extern TabEl Resource;
 extern int banyak;
 extern int indeks_buy;
 extern int x,y;
-extern ArrayWahana Map1, Map2, Map3, Map4;
 int tipe_point[10][20];
 
-void build(ArrayWahana *W, COMMAND C);
+void build(ArrayWahana *W, COMMAND C, int * player_money);
 
 void upgrade();
 
@@ -28,11 +27,16 @@ void buy();
 
 void undo(Stack *S);
 
-void execute(Stack *S);
-
 void DetailsCommandOffice(List map);
 
 void ReportCommandOffice(List map);
+
+void execute(Stack *S,
+ ArrayWahana * Map1, 
+ ArrayWahana * Map2, 
+ ArrayWahana * Map3, 
+ ArrayWahana * Map4, 
+ int * player_money);
 
 void office();
 #endif

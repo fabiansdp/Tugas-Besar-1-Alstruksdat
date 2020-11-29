@@ -61,7 +61,7 @@ infotype FirstElmt (List L){
   }
 }
 /* Mengirimkan elemen pertama sebuah list L yang tidak kosong */
-List Tail(List L){
+List TailList(List L){
   if(IsEmpty(L)==0){
     return Next(L);
   }else
@@ -111,7 +111,7 @@ List Copy (List L){
     if(L==NULL){
       return NULL;
     }else{
-      List retlist = Konso(Info(L),Copy(Tail(L)));
+      List retlist = Konso(Info(L),Copy(TailList(L)));
       return retlist;
     }
 }
@@ -173,7 +173,7 @@ int NbElmtList (List L){
   if(IsEmpty(L)==1){
     return 0;
   }else{
-    return 1+NbElmtList(Tail(L));
+    return 1+NbElmtList(TailList(L));
   }
 }
 /* Mengirimkan banyaknya elemen list L, Nol jika L kosong */
@@ -183,7 +183,7 @@ boolean Search (List L, infotype X){
   }else if(FirstElmt(L)==X){
     return true;
   }else{
-    return Search(Tail(L),X);
+    return Search(TailList(L),X);
   }
     
 }
@@ -194,13 +194,13 @@ boolean Search (List L, infotype X){
 infotype MaxList (List L){
     infotype maks;
     maks = FirstElmt(L);
-    L = Tail(L);
+    L = TailList(L);
     while (L!=NULL)
     {
       if(FirstElmt(L)>maks){
         maks = FirstElmt(L);
       }
-      L = Tail(L);
+      L = TailList(L);
     }
     return maks;
 }
@@ -209,13 +209,13 @@ infotype MaxList (List L){
 infotype MinList (List L){
   infotype mini;
     mini = FirstElmt(L);
-    L = Tail(L);
+    L = TailList(L);
     while (L!=NULL)
     {
       if(FirstElmt(L)<mini){
         mini = FirstElmt(L);
       }
-      L = Tail(L);
+      L = TailList(L);
     }
     return mini;
 }
@@ -225,7 +225,7 @@ infotype SumList (List L){
   if(IsEmpty(L)==1){
     return 0;
   }else{
-    return FirstElmt(L)+SumList(Tail(L));
+    return FirstElmt(L)+SumList(TailList(L));
   }
 }
 /* Mengirimkan total jumlah elemen List L */
@@ -246,7 +246,7 @@ List InverseList (List L){
   if(L==NULL){
       return NULL;
     }else{
-      List retlist = KonsB(InverseList(Tail(L)),Info(L));
+      List retlist = KonsB(InverseList(TailList(L)),Info(L));
       return retlist;
     }
 }
@@ -261,10 +261,10 @@ void SplitPosNeg (List L, List *L1, List *L2){
     }else{
       address asw;
       if(FirstElmt(L)>=0){
-        SplitPosNeg(Tail(L),&asw,L2);
+        SplitPosNeg(TailList(L),&asw,L2);
         (*L1) = Konso(Info(L),asw);
       }else{
-        SplitPosNeg(Tail(L),L1,&asw);
+        SplitPosNeg(TailList(L),L1,&asw);
         (*L2) = Konso(Info(L),asw);
       }
     }
@@ -283,10 +283,10 @@ void SplitOnX (List L, infotype X, List *L1, List *L2){
     }else{
       address asw;
       if(FirstElmt(L)<X){
-        SplitPosNeg(Tail(L),&asw,L2);
+        SplitPosNeg(TailList(L),&asw,L2);
         (*L1) = Konso(Info(L),asw);
       }else{
-        SplitPosNeg(Tail(L),L1,&asw);
+        SplitPosNeg(TailList(L),L1,&asw);
         (*L2) = Konso(Info(L),asw);
       }
     }
@@ -313,7 +313,7 @@ int ListCompare (List L1, List L2){
         if(FirstElmt(L1)!=FirstElmt(L2)){
           flag = false;
         }else{
-          L1 = Tail(L1); L2 = Tail(L2);
+          L1 = TailList(L1); L2 = TailList(L2);
         }
       }
 
@@ -347,7 +347,7 @@ boolean IsAllExist (List L1, List L2){
   boolean flag = true;
   while(L1!=NULL && flag){
     if(Search(L2,FirstElmt(L1))){
-      L1 = Tail(L1);
+      L1 = TailList(L1);
     }else{
       flag = false;
     }

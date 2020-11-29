@@ -25,17 +25,22 @@ extern int tipe_point[10][20];
 
 void build(ArrayWahana *W, COMMAND C)
 {
+<<<<<<< HEAD
     BasisListWahana B;
     B = MakeUpgradeList();
     int x = Absis(Coordinate(C));
     int y = Ordinat(Coordinate(C))+1;
+=======
+    int x = Absis(Coordinate(C))-1;
+    int y = Ordinat(Coordinate(C));
+>>>>>>> ada016a457e90854ecc0db401b262874f3a70e29
 
     // Cek wahana di lokasi atasnya ada wahana atau tidak
     POINT LokasiAtas = MakePOINT(x, y);
     DetilWahana CekWahana = CariWahanaByLoc(*W, LokasiAtas);
 
     // Cek ada wahana, border, office, atau gerbang
-    if ((CekWahana.id != ValUndef) && (tipe_point[x][y+1] != 6) && (tipe_point[x][y+1] != 3) && (tipe_point[x][y+1] != 4)) {
+    if ((tipe_point[x-1][y] != 6) && (tipe_point[x-1][y] != 3) && (tipe_point[x-1][y] != 4)) {
         Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
         BinTree TreeBaru = SearchUList(B, Name(C));
         DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);

@@ -124,8 +124,10 @@ void addDaunRight(BinTree * Utama, BinTree tambahan);
 
 //==============================================================
 
-//UNTUK KEPENTINGAN MATRIKS WAHANA
+//UNTUK KEPENTINGAN ARRAY WAHANA
 void makeArrayWahana (ArrayWahana * A);
+
+void printDaftarWahana (BasisListWahana L);
 
 DetilWahana DirikanWahanaBaru(int id, Wahana BasisWahana, POINT Loc, BinTree skemaUpgrade);
 

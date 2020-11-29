@@ -12,15 +12,14 @@
 #include "../ADT/listrek.h"
 #include "function2.h"
 
-int player_money;
 TabEl Resource;
 int banyak;
 int indeks_buy;
 int x,y;
-ArrayWahana Map1, Map2, Map3, Map4;
 
-void build(ArrayWahana *W, COMMAND C)
+void build(ArrayWahana *W, COMMAND C, int * player_money)
 {
+    printf("haha ngebuild\n");
     BasisListWahana B;
     B = MakeUpgradeList();
     int x = Absis(Coordinate(C));
@@ -34,7 +33,8 @@ void build(ArrayWahana *W, COMMAND C)
     BinTree TreeBaru = SearchUList(B, Name(C));
     DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
     PushNewWahana(W, DetilBaru);
-    player_money -= Gold(C);
+    PrintAllWahana(*W);
+    (*player_money) -= Gold(C);
 }
 
 void upgrade()
@@ -92,7 +92,12 @@ void undo(Stack *S)
     MakeEmptyCOMMAND(&C);
 }
 
-void execute(Stack *S)
+void execute(Stack *S, 
+ArrayWahana * Map1,
+ArrayWahana * Map2, 
+ArrayWahana * Map3, 
+ArrayWahana * Map4, 
+int * player_money)
 {
     Stack exeStack;
     while (!IsEmptyStack(*S))
@@ -103,6 +108,7 @@ void execute(Stack *S)
     }
     while (!IsEmptyStack(exeStack))
     {
+        printf("lagi ekse bosqu\n");
         COMMAND C;
         Pop(&exeStack, &C);
         if (Comm(C) == 1)
@@ -110,16 +116,16 @@ void execute(Stack *S)
             switch (Map(C))
             {
                 case 1:
-                    build(&Map1, C);
+                    build(Map1, C, player_money);
                     break;
                 case 2:
-                    build(&Map2, C);
+                    build(Map2, C, player_money);
                     break;
                 case 3:
-                    build(&Map3, C);
+                    build(Map3, C, player_money);
                     break;
                 case 4:
-                    build(&Map4, C);
+                    build(Map4, C,player_money);
                     break;
                 default:
                     break;
@@ -134,7 +140,7 @@ void execute(Stack *S)
         else if (Comm(C) == 3)
         {
             buy();
-            player_money-=Gold(C);
+            (*player_money)-=Gold(C);
             // printf("Sisa uang setelah buy %d\n",player_money);
         }
         else if (Comm(C) == 4)
@@ -142,5 +148,5 @@ void execute(Stack *S)
             undo(&exeStack);
         }
     }
-    printf("Sisa uang setelah execute %d\n",player_money);
+    printf("Sisa uang setelah execute %d\n",(*player_money));
 }

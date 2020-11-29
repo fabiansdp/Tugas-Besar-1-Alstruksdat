@@ -42,6 +42,7 @@ Jam crnt_jam, jam_buka, jam_tutup, temp_jam, total_jam;
 int crnt_day,crnt_map,tipe_point[10][20];
 int total_uang,total_waktu,total_aksi;
 int price;
+int player_money;
 Stack S;
 MATRIKS L;
 Arr_POINT AP;
@@ -380,6 +381,8 @@ void PrepPhase()
                 {
                     do
                     {
+                        puts("Daftar wahana:");
+                        printDaftarWahana(B);
                         puts("Mau bangun apa?");
                         STARTKATA();
                         while (!EndKata)
@@ -427,23 +430,30 @@ void PrepPhase()
                         }
                     } while (!IsKataSama(CKata, CandyCrush) && !IsKataSama(CKata, ChocolateForest) && !IsKataSama(CKata, BombomCar) && !IsKataSama(CKata, LemonSplash) && !IsKataSama(CKata, CandyVillage) && !IsKataSama(CKata, CandySwing) && !IsKataSama(CKata, BlackForestTornado));
                     // MakeCommand(idComm, idWahana, JmlhMaterial, Gold, Map, Lokasi, Durasi)
-                    W = SearchWahanaBase(B, id);
-                    harga = W.harga;
-                    durasi = W.durasi;
 
-                    comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
-                    
-                    Push(&S, comm1);
-                    // edit peta
-                    x=Absis(player_loc);
-                    y=Ordinat(player_loc);
-                    //ubah tipe
-                    tipe_point[x-1][y]=5;
-                    //ubah matriks peta
-                    ElmtM(L,x-1,y)='W';
-                    total_aksi++;
                     total_uang += harga;
-                    total_waktu += durasi;
+
+                    if (total_uang <= player_money) {
+                        W = SearchWahanaBase(B, id);
+                        harga = W.harga;
+                        durasi = W.durasi;
+
+                        comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
+                        
+                        Push(&S, comm1);
+                        // edit peta
+                        x=Absis(player_loc);
+                        y=Ordinat(player_loc);
+                        //ubah tipe
+                        tipe_point[x-1][y]=5;
+                        //ubah matriks peta
+                        ElmtM(L,x-1,y)='W';
+                        total_aksi++;
+                        total_waktu += durasi;
+                    } else {
+                        puts("Uang tidak cukup!");
+                        total_uang -= harga;
+                    }
                 }
                 else
                 {
@@ -495,7 +505,7 @@ void PrepPhase()
                 //main_loop = true;
                 prep_loop = false;
                 
-                execute(&S);
+                execute(&S,&Map1,&Map2,&Map3,&Map4,&player_money);
                 printf("Perintah diexecute\n");
             }
             else if (IsKataSama(ck, com_main))
@@ -606,7 +616,13 @@ int main(){
         puts("Loop");
         crnt_day++;
     }
+
+    //DEBUGING
+    /*
     PrintAllWahana(Map1);
+    PrintAllWahana(Map2);
+    PrintAllWahana(Map3);
+    PrintAllWahana(Map4); */
 
 
 
