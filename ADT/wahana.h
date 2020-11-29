@@ -1,14 +1,14 @@
-/* Header File buat Wahana */
-
 #ifndef wahana_H
 #define wahana_H
+
 
 #include "boolean.h"
 #include "mesinkar.h"
 #include "mesinkata.h"
 #include "point.h"
-
-/*  Kamus Umum */
+#include "listrek.h"
+#include "bintree.h" 
+#include "jam.h"
 #define IdxMax 99
 /* Indeks maksimum array */
 #define IdxMin 0
@@ -18,7 +18,14 @@
 #define ValUndef -1
 /* Nilai elemen tak terdefinisi*/
 
-/* Struktur buat Laporan Wahana*/
+typedef struct
+{
+    int naiktotal;
+    int penghasilantotal;
+    int naikharian;
+    int penghasilanharian;
+} Laporan;
+
 typedef struct
 {
     int air;
@@ -29,70 +36,141 @@ typedef struct
 
 typedef struct
 {
-    int naiktotal;
-    int penghasilantotal;
-    int naikharian;
-    int penghasilanharian;
-} Laporan;
-
-/* Struktur Data Khusus buat Detail Wahana */
-typedef struct
-{
     int id, harga, kapasitas, durasi, status;
-    POINT lokasi;
     Kata nama;
     Kata deskripsi;
-    Laporan laporan;
     UpgradeMaterial material;
 } Wahana;
 
 typedef struct
 {
-    Wahana ArrayW[IdxMax + 1];
+    int id;
+    Wahana wahana;
+    Laporan laporan;
+    POINT lokasi;
+    BinTree upgradeTree;
+} DetilWahana;
+
+typedef struct
+{
+    DetilWahana ArrayW[IdxMax + 1];
     int jumlahWahana;
 } ArrayWahana;
 
-#define ID(W, i) (W).ArrayW[(i)].id
-#define Harga(W, i) (W).ArrayW[(i)].harga
-#define Kapasitas(W, i) (W).ArrayW[(i)].kapasitas
-#define Durasi(W, i) (W).ArrayW[(i)].durasi
-#define Status(W, i) (W).ArrayW[(i)].status
-#define NaikTotal(W, i) (W).ArrayW[(i)].laporan.naiktotal
-#define TotalPenghasilan(W, i) (W).ArrayW[(i)].laporan.penghasilantotal
-#define NaikHarian(W, i) (W).ArrayW[(i)].laporan.naikharian
-#define PenghasilanHarian(W, i) (W).ArrayW[(i)].laporan.penghasilanharian
-#define Air(W, i) (W).ArrayW[(i)].material.air
-#define Kayu(W, i) (W).ArrayW[(i)].material.kayu
-#define Batu(W, i) (W).ArrayW[(i)].material.batu
-#define Besi(W, i) (W).ArrayW[(i)].material.besi
-#define JumlahWahana(W) (W).jumlahWahana
+typedef int infotype;
+typedef struct tBaseWahanalist *Uaddress;
+typedef struct tHistoryUpgrade *Haddress;
+typedef struct tBaseWahanalist { 
+	infotype idWahana;
+    Wahana wahana;
+    BinTree detailUpgrade;
+	Uaddress nextt;
+} BaseWahanalist;
 
-// Baca dari teks file
-void ListWahana();
+typedef struct tInfoHis{
+    int day;
+    Jam waktuUpgrade;
+    Kata namaWahana;
+    Kata namaUpgrade;
+}InfoHis;
 
-// Buat Data Wahana Untuk Int
-void CreateDataWahana(ArrayWahana *ArrayW);
+typedef struct tHistoryUpgrade
+{
+    int upgradeID;
+    int idWahana;
+    InfoHis InfoUpgrade;
+    Haddress lanjut;
+}HistoryUpgrade;
 
-// Buat Data wahana untuk Char
-void CreateNamaWahana(ArrayWahana *W);
+typedef Haddress ListHistoUpdate;
+typedef Uaddress BasisListWahana;
 
-// Hitung panjang string
-int mystrlen(char *str);
 
-// Return Index
-int searchID(ArrayWahana W, int id);
+//UNTUK KEPENTINGAN INISIALISASI WAHANA
+Uaddress AlokUList (infotype X,BinTree Bt,Wahana W);
 
-// Informasi Dasar Wahana by ID
-void InfoWahana(ArrayWahana W, int id);
+infotype FirstUID (BasisListWahana L);
 
-// Laporan Wahana by ID
-void LaporanWahana(ArrayWahana W, int id);
+BinTree FirstBinU (BasisListWahana L);
 
-void namaToID(Kata nama, int *idwahana);
-/* I.S. nama wahana benar dan terdefinisi di wahana.txt */
-/* F.S. idwahana berisi id dari nama*/
+Wahana FirstWhnInfo (BasisListWahana L);
 
-boolean searchNamaWahana(Kata nama);
-/* Mengirimkan true jika terdapat nama di wahana.txt */
+BasisListWahana UTail(BasisListWahana L);
+/* Mengirimkan list L tanpa elemen pertamanya, mungkin menjadi list kosong */
+
+/* *** Konstruktor *** */
+BasisListWahana UKonso(infotype e,BinTree B,Wahana W, BasisListWahana L);
+/* Mengirimkan list L dengan tambahan e sebagai elemen pertamanya. 
+e dialokasi terlebih dahulu. Jika alokasi gagal, mengirimkan L. */
+BasisListWahana UKonsB(BasisListWahana L, infotype e,Wahana W,BinTree B);
+/* Mengirimkan list L dengan tambahan e sebagai elemen terakhirnya */
+/* e harus dialokasi terlebih dahulu */
+/* Jika alokasi e gagal, mengirimkan L */ 
+
+/*skema read file from file txt*/
+BasisListWahana MakeUpgradeList();
+
+/*skema ngeprint buat debug*/
+void PrintUpList(BasisListWahana L);
+
+/*tambahan*/
+BinTree SearchUList(BasisListWahana L, infotype ID);
+
+Wahana SearchWahanaBase(BasisListWahana L,infotype ID);
+
+void addDaunLeft(BinTree * Utama, BinTree tambahan);
+
+void addDaunRight(BinTree * Utama, BinTree tambahan);
+
+//==============================================================
+
+//UNTUK KEPENTINGAN MATRIKS WAHANA
+void makeArrayWahana (ArrayWahana * A);
+
+DetilWahana DirikanWahanaBaru(int id, Wahana BasisWahana, POINT Loc, BinTree skemaUpgrade);
+
+void PushNewWahana (ArrayWahana * A, DetilWahana DW);
+
+DetilWahana CariWahanaByID (ArrayWahana A, int ID);
+
+DetilWahana CariWahanaByLoc (ArrayWahana A, POINT Loc);
+
+BinTree searchTree2 (BinTree T, int IDTree);
+
+void UpdateInfoWahana(ArrayWahana * A, int ID, Wahana newWahana);
+
+void UpdateLaporanWahana(ArrayWahana * A, int ID, Laporan LaporanBaru);
+
+void ShowAvailableUpgrade(ArrayWahana A,int IDWahana);
+
+boolean UpgradeWahana(ArrayWahana *A, int IDWahana, int IDUpgrade);
+
+//DEBUGGING PURPOSE
+void PrintAllWahana(ArrayWahana A);
+
+//==============================================================
+
+//UNTUK KEPENTINGAN UPGRADE HISTORY
+InfoHis CreateNewHistoryInfo ( int day, Jam waktuUpgrade, Kata namaWhn, Kata namaUpgrade);
+
+Haddress AlokHistoUpgrade(int idWahana, InfoHis detUpgrade);
+
+int getFirstHistoryByIDWahana(ListHistoUpdate L);
+
+int getFirstHistoryByIDUpgrade(ListHistoUpdate L);
+
+InfoHis getFirstHistoInfo(ListHistoUpdate L);
+
+ListHistoUpdate HistoTail (ListHistoUpdate L);
+
+ListHistoUpdate AddNewHistory(ListHistoUpdate L, InfoHis Info, int IdWahana, int upgradeID);
+
+InfoHis SearchHistory (ListHistoUpdate L, int IdWahana);
+
+void PrintAllHistory (ListHistoUpdate L);
+
+void PrintHistoryByID (ListHistoUpdate L,int IDWahana);
+
+int NbElmtHistory (ListHistoUpdate L);
 
 #endif

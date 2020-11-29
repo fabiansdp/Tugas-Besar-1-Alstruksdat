@@ -5,30 +5,30 @@
 
 //konstruktor
 void CreateGraph(Graph * L,infotype X){
-    First(*L) = AlokNode(X);
+    FirstGraf(*L) = GrafAlokNode(X);
 }
 
-addrNode AlokNode(infotype X){
-    Node * a;
-    a = (Node *) malloc(sizeof(Node));
-    if(a!=Nil){
-        Id(a) = X;
+gaddrNode GrafAlokNode(infotype X){
+    GrafNode * a;
+    a = (GrafNode *) malloc(sizeof(GrafNode));
+    if(a!=NULL){
+        IdGraf(a) = X;
         NPred(a) = 0;
-        Trail(a) = Nil;
-        Next(a) = Nil;  
+        Trail(a) = NULL;
+        NextGraf(a) = NULL;  
     }
     return a;
 }
 
-void dealokNode(addrNode P){
+void GrafDealokNode(gaddrNode P){
     free(P);
 }
 
-addrSuccNode AlokSuccNode(addrNode Pn){
+addrSuccNode AlokSuccNode(gaddrNode Pn){
     SuccNode * s;
     s = (SuccNode *) malloc(sizeof(SuccNode));
-    if(s!=Nil){
-        Nexts(s) = Nil;
+    if(s!=NULL){
+        Nexts(s) = NULL;
         Succ(s) = Pn;
     }
     return s;
@@ -39,28 +39,28 @@ void dealokSuccNode(addrSuccNode Pn){
 }
 
 //fungsilain
-addrNode SearchNode(Graph G,infotype X){
-    if(First(G)==Nil){
-        return Nil;
-    }else if(Id(First(G))==X){
-        return First(G);
+gaddrNode SearchNode(Graph G,infotype X){
+    if(FirstGraf(G)==NULL){
+        return NULL;
+    }else if(IdGraf(FirstGraf(G))==X){
+        return FirstGraf(G);
     }else{
-        First(G) = Next(First(G));
+        FirstGraf(G) = NextGraf(FirstGraf(G));
         return SearchNode(G,X);
     }
 }
 
 addrSuccNode SearchEdge(Graph G, infotype prec, infotype succ){
-    addrNode a = First(G);
+    gaddrNode a = FirstGraf(G);
     boolean flag = false;
-    addrSuccNode retadr = Nil;
-    while(a!=Nil && flag == false){
+    addrSuccNode retadr = NULL;
+    while(a!=NULL && flag == false){
         addrSuccNode b = Trail(a);
-        if(Id(a)==prec){
-            while (b!=Nil && flag==false)
+        if(IdGraf(a)==prec){
+            while (b!=NULL && flag==false)
             {
-                addrNode c = Succ(b);
-                if(Id(c)==succ){
+                gaddrNode c = Succ(b);
+                if(IdGraf(c)==succ){
                     retadr = b;
                     flag=true;
                 }else{
@@ -68,65 +68,65 @@ addrSuccNode SearchEdge(Graph G, infotype prec, infotype succ){
                 }
             }
         }
-        a = Next(a);
+        a = NextGraf(a);
     }
 
     return retadr;
 }
 
-void InsertNode(Graph * G, infotype X, addrNode * Pn){
-    if(First(*G)==Nil){
-        (*Pn) = AlokNode(X);
-        First(*G) = (*Pn);
+void InsertNode(Graph * G, infotype X, gaddrNode * Pn){
+    if(FirstGraf(*G)==NULL){
+        (*Pn) = GrafAlokNode(X);
+        FirstGraf(*G) = (*Pn);
     }else{
-        addrNode a = First(*G);
-        while (Next(a)!=Nil)
+        gaddrNode a = FirstGraf(*G);
+        while (NextGraf(a)!=NULL)
         {
-            a = Next(a);
+            a = NextGraf(a);
         }
 
-        (*Pn) = AlokNode(X);
-        Next(a) = (*Pn);
+        (*Pn) = GrafAlokNode(X);
+        NextGraf(a) = (*Pn);
     }
 }
 
 void InsertEdge(Graph * G, infotype prec, infotype succ){
-    if(SearchNode(*G,prec)!=Nil && SearchNode(*G,succ)!=Nil){
-        addrNode lok =  SearchNode(*G,prec);
-        addrNode tuj =  SearchNode(*G,succ);
+    if(SearchNode(*G,prec)!=NULL && SearchNode(*G,succ)!=NULL){
+        gaddrNode lok =  SearchNode(*G,prec);
+        gaddrNode tuj =  SearchNode(*G,succ);
         addrSuccNode c = Trail(lok);
         NPred(tuj)++;
-        if(c==Nil){
+        if(c==NULL){
             Trail(lok) = AlokSuccNode(tuj);
         }else{
-            while(Nexts(c)!=Nil){
+            while(Nexts(c)!=NULL){
                 c = Nexts(c);
             }
             Nexts(c) = AlokSuccNode(tuj);
         }
         
-    }else if(SearchNode(*G,prec)!=Nil){
-        addrNode p;
+    }else if(SearchNode(*G,prec)!=NULL){
+        gaddrNode p;
         InsertNode(G,succ,&p);
-        addrNode lok =  SearchNode(*G,prec);
+        gaddrNode lok =  SearchNode(*G,prec);
         NPred(p)++;
         addrSuccNode c = Trail(lok);
-        if(c==Nil){
+        if(c==NULL){
             Trail(lok) = AlokSuccNode(p);
         }else{
-            while(Nexts(c)!=Nil){
+            while(Nexts(c)!=NULL){
                 c = Nexts(c);
             }
             Nexts(c) = AlokSuccNode(p);
         }
-    }else if(SearchNode(*G,succ)!=Nil){
-        addrNode p;
-        addrNode tuj =  SearchNode(*G,succ);
+    }else if(SearchNode(*G,succ)!=NULL){
+        gaddrNode p;
+        gaddrNode tuj =  SearchNode(*G,succ);
         InsertNode(G,prec,&p);
         Trail(p) = AlokSuccNode(tuj);
         NPred(tuj)++;
     }else{
-        addrNode p,pp;
+        gaddrNode p,pp;
         InsertNode(G,prec,&p);
         InsertNode(G,succ,&pp);
         NPred(pp)++;
@@ -135,20 +135,20 @@ void InsertEdge(Graph * G, infotype prec, infotype succ){
 }
 
 void PrintGraph(Graph G){
-    addrNode a = First(G);
-    while (a!=Nil)
+    gaddrNode a = FirstGraf(G);
+    while (a!=NULL)
     {
-        printf("<%d> => ",Id(a));
+        printf("<%d> => ",IdGraf(a));
         addrSuccNode b = Trail(a);
-        while (b!=Nil)
+        while (b!=NULL)
         {
-            addrNode c = Succ(b);
-            printf("[%d] -> ",Id(c));
+            gaddrNode c = Succ(b);
+            printf("[%d] -> ",IdGraf(c));
             b = Nexts(b);
         }
         
         printf("\n");
-        a = Next(a);
+        a = NextGraf(a);
     }
     
 }

@@ -9,7 +9,8 @@
 /* Modul lain yang digunakan : */
 #include "listrek.h"
 #include "boolean.h"
-
+#include "mesinkar.h"
+#include "mesinkata.h"
 /* #define Nil NULL */ /* konstanta Nil sesuai pada modul listrek */
 
 /* *** Definisi Type Pohon Biner *** */
@@ -19,8 +20,9 @@ typedef struct tNode
 {
     infotype info;
     boolean isApplied;
-    char detail[50];
-    infotype detailLEN;
+    //char detail[50];
+    //infotype detailLEN;
+    Kata detail;
     infotype harga;
     infotype Kapasitas;
     infotype durasi;

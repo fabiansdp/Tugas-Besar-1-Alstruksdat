@@ -9,18 +9,18 @@
 address Alokasi (infotype X){
     ElmtList * Elis;
     Elis = (ElmtList *) malloc(sizeof(ElmtList));
-    if(Elis==Nil){
-      return Nil;
+    if(Elis==NULL){
+      return NULL;
     }else{
       Info(Elis) = X;
-      Next(Elis) = Nil;
+      Next(Elis) = NULL;
       return Elis;
     }
 }
 /* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak Nil, dan misalnya menghasilkan P, 
-  maka Info(P) = X, Next(P) = Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
+/* Jika alokasi berhasil, maka address tidak NULL, dan misalnya menghasilkan P, 
+  maka Info(P) = X, Next(P) = NULL */
+/* Jika alokasi gagal, mengirimkan NULL */
 void Dealokasi (address P){
     free(P);
 }
@@ -41,7 +41,7 @@ int IsEmpty(List L){
 /* Mengirimkan 1 jika L kosong dan 0 jika L tidak kosong */
 int IsOneElmt(List L){
   if (IsEmpty(L)==0){
-    if(Next(L)==Nil){
+    if(Next(L)==NULL){
       return 1;
     }else{
       return 0;
@@ -66,7 +66,7 @@ List Tail(List L){
     return Next(L);
   }else
   {
-    return Nil;
+    return NULL;
   }
   
 }
@@ -75,9 +75,9 @@ List Tail(List L){
 /* *** Konstruktor *** */
 List Konso(infotype e, List L){
       address ad = Alokasi(e);
-      if(ad!=Nil && IsEmpty(L)==1){
+      if(ad!=NULL && IsEmpty(L)==1){
         return ad;
-      }else if(ad!=Nil){
+      }else if(ad!=NULL){
         Next(ad) = L;
         return ad;
       }else{
@@ -88,13 +88,13 @@ List Konso(infotype e, List L){
 e dialokasi terlebih dahulu. Jika alokasi gagal, mengirimkan L. */
 List KonsB(List L, infotype e){
     address adr = Alokasi(e);
-    if(L==Nil && adr!=Nil){
+    if(L==NULL && adr!=NULL){
       L = adr;
       return L;
-    }else if(adr!=Nil && Next(L)==Nil){
+    }else if(adr!=NULL && Next(L)==NULL){
       Next(L) = adr;
       return L;
-    }else if (adr!=Nil){
+    }else if (adr!=NULL){
       List retrn = L;
       Next(retrn) = KonsB(Next(L),e);
       return retrn;
@@ -108,8 +108,8 @@ List KonsB(List L, infotype e){
 
 /* *** Operasi Lain *** */
 List Copy (List L){
-    if(L==Nil){
-      return Nil;
+    if(L==NULL){
+      return NULL;
     }else{
       List retlist = Konso(Info(L),Copy(Tail(L)));
       return retlist;
@@ -122,7 +122,7 @@ void MCopy (List Lin, List *Lout){
   //(*Lout) = haha;
 
   if(IsEmpty(Lin)){
-    *Lout = Nil;
+    *Lout = NULL;
   }else{
     address asoy;
     MCopy(Next(Lin),&asoy);
@@ -133,9 +133,9 @@ void MCopy (List Lin, List *Lout){
 /* F.S. Lout berisi salinan dari Lin */
 /* Proses : menyalin Lin ke Lout */
 List Concat (List L1, List L2){
-    if(L1==Nil && L2==Nil){
-      return Nil;
-    }else if(L1==Nil){
+    if(L1==NULL && L2==NULL){
+      return NULL;
+    }else if(L1==NULL){
       return Konso(Info(L2),Concat(L1,Next(L2)));
     }else{
       return Konso(Info(L1),Concat(Next(L1),L2));
@@ -143,11 +143,11 @@ List Concat (List L1, List L2){
     
 }
 /* Mengirimkan salinan hasil konkatenasi list L1 dan L2 (menjadi list baru) */
-/* Jika ada alokasi gagal, menghasilkan Nil */
+/* Jika ada alokasi gagal, menghasilkan NULL */
 void MConcat (List L1, List L2, List *LHsl){
-    if(L1==Nil && L2==Nil){
-      (*LHsl) = Nil;
-    }else if(L1==Nil){
+    if(L1==NULL && L2==NULL){
+      (*LHsl) = NULL;
+    }else if(L1==NULL){
       address cekaja;
       MConcat(L1,Next(L2),&cekaja);
       (*LHsl) = Konso(Info(L2),cekaja);
@@ -162,7 +162,7 @@ void MConcat (List L1, List L2, List *LHsl){
 /* F.S. LHsl adalah hasil melakukan konkatenasi L1 dan L2 dengan cara "disalin" */
 /* Proses : Menghasilkan salinan hasil konkatenasi list L1 dan L2 */
 void PrintList (List L){
-  if(L!=Nil){
+  if(L!=NULL){
     printf("%d\n",Info(L));
     PrintList(Next(L));
   }
@@ -189,13 +189,13 @@ boolean Search (List L, infotype X){
 }
 /* Mengirim true jika X adalah anggota list, false jika tidak */
 
-/*** Pencarian nilai ekstrim ***/
+/*** Pencarian NULLai ekstrim ***/
 /* Prekondisi untuk Max/Min/Sum/Average : List tidak kosong */
 infotype MaxList (List L){
     infotype maks;
     maks = FirstElmt(L);
     L = Tail(L);
-    while (L!=Nil)
+    while (L!=NULL)
     {
       if(FirstElmt(L)>maks){
         maks = FirstElmt(L);
@@ -204,13 +204,13 @@ infotype MaxList (List L){
     }
     return maks;
 }
-/* Mengirimkan nilai info(P) yang maksimum */
+/* Mengirimkan NULLai info(P) yang maksimum */
 
 infotype MinList (List L){
   infotype mini;
     mini = FirstElmt(L);
     L = Tail(L);
-    while (L!=Nil)
+    while (L!=NULL)
     {
       if(FirstElmt(L)<mini){
         mini = FirstElmt(L);
@@ -219,7 +219,7 @@ infotype MinList (List L){
     }
     return mini;
 }
-/* Mengirimkan nilai info(P) yang minimum */
+/* Mengirimkan NULLai info(P) yang minimum */
 
 infotype SumList (List L){
   if(IsEmpty(L)==1){
@@ -239,12 +239,12 @@ float AverageList (List L){
     return 0;
   }
 }
-/* Mengirimkan nilai rata-rata elemen list L */
+/* Mengirimkan NULLai rata-rata elemen list L */
 
 /*** Operasi-Operasi Lain ***/
 List InverseList (List L){
-  if(L==Nil){
-      return Nil;
+  if(L==NULL){
+      return NULL;
     }else{
       List retlist = KonsB(InverseList(Tail(L)),Info(L));
       return retlist;
@@ -255,9 +255,9 @@ Semua elemen list baru harus dialokasi */
 /* Jika alokasi gagal, hasilnya list kosong */
 
 void SplitPosNeg (List L, List *L1, List *L2){
-    if(L==Nil){
-      (*L1) = Nil;
-      (*L2) = Nil;
+    if(L==NULL){
+      (*L1) = NULL;
+      (*L2) = NULL;
     }else{
       address asw;
       if(FirstElmt(L)>=0){
@@ -277,9 +277,9 @@ semua elemen L yang negatif; semua dengan urutan yang sama seperti di L */
 /* Jika L kosong, maka L1 dan L2 kosong */
 
 void SplitOnX (List L, infotype X, List *L1, List *L2){
-  if(L==Nil){
-      (*L1) = Nil;
-      (*L2) = Nil;
+  if(L==NULL){
+      (*L1) = NULL;
+      (*L2) = NULL;
     }else{
       address asw;
       if(FirstElmt(L)<X){
@@ -308,7 +308,7 @@ int ListCompare (List L1, List L2){
       return 1;
     }else{
       boolean flag = true;
-      while (L1!=Nil && L2!=Nil && flag)
+      while (L1!=NULL && L2!=NULL && flag)
       {
         if(FirstElmt(L1)!=FirstElmt(L2)){
           flag = false;
@@ -345,7 +345,7 @@ urutan i yang sama, L1[i]=L2[i], namun |L1|<|L2| */
 
 boolean IsAllExist (List L1, List L2){
   boolean flag = true;
-  while(L1!=Nil && flag){
+  while(L1!=NULL && flag){
     if(Search(L2,FirstElmt(L1))){
       L1 = Tail(L1);
     }else{
