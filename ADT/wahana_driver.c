@@ -1,35 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ADT/boolean.h"
-#include "ADT/mesinkar.h"
-#include "ADT/mesinkata.h"
-#include "ADT/point.h"
-#include "ADT/listrek.h"
-#include "ADT/bintree.h" 
-#include "ADT/jam.h"
-#include "ADT/wahana.h"
-#include <math.h>
-
-int konvertKata(Kata K){
-    int a = K.Length;
-    int x;
-    int res = 0;
-    for(x=0;x<K.Length;x++){
-        if(K.TabKata[x]>='0' && K.TabKata[x]<='9'){
-            int pangkat = (int) pow(10,a-1);
-            int konvert = (int) K.TabKata[x];
-            konvert = konvert - 48;
-            res = res+(pangkat*(konvert));
-            a = a-1;
-        }
-    }
-    return res;
-}
-
-void Detail()
-{
-    
-}
+#include "boolean.h"
+#include "mesinkar.h"
+#include "mesinkata.h"
+#include "point.h"
+#include "listrek.h"
+#include "bintree.h" 
+#include "jam.h"
+#include "wahana.h"
 
 int main(){
     BasisListWahana B;
@@ -38,6 +16,8 @@ int main(){
     p1.X =2;p1.Y=5;
     p2.X =11;p2.Y=6;
     p3.X =12;p3.Y=9;
+
+    PrintUpList(B);
 
     ArrayWahana ArrW;
     makeArrayWahana(&ArrW);
@@ -71,10 +51,5 @@ int main(){
     PrintAllHistory(sejarahUpgrade);
     printf("\nprint upgrade untuk id 1\n\n");
     PrintHistoryByID(sejarahUpgrade,1);
-
-    
+    return 0;
 }
-
-/*
-gcc -o wahana_driver wahana_driver.c mesinkar.c mesinkata.c point.c listrek.c bintree.c jam.c wahana.c
-*/

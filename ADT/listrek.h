@@ -7,8 +7,6 @@
 
 #include "boolean.h"
 
-
-
 /* Definisi Type */
 typedef int infotype;
 typedef struct tElmtlist *address;
