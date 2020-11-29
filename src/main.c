@@ -456,7 +456,7 @@ void PrepPhase()
                 // // Minta input
                 int id, harga, durasi;
                 Wahana W;
-                if(Adjacency()!=5 && Adjacency()!=6)
+                if(Adjacency()!=5 && Adjacency()!=6 && Adjacency() != 4)
                 {
                     do
                     {
@@ -710,7 +710,7 @@ void MainPhase()
                                 crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
                             }                        
                             if(crnt_wahana.wahana.status == 0)
-                            { // cek wahana rusak, MASIH BELUM BENER i nya
+                            { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
                                 Repair(&crnt_wahana);
                                 printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
                                 TambahMenit(&crnt_jam,20);
@@ -743,7 +743,7 @@ void MainPhase()
                                 crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
                             }                        
                             if(crnt_wahana.wahana.status == 0)
-                            { // cek wahana rusak, MASIH BELUM BENER i nya
+                            { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
                                 Repair(&crnt_wahana);
                                 printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
                                 TambahMenit(&crnt_jam,20);
@@ -776,7 +776,7 @@ void MainPhase()
                                 crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
                             }                        
                             if(crnt_wahana.wahana.status == 0)
-                            { // cek wahana rusak, MASIH BELUM BENER i nya
+                            { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
                                 Repair(&crnt_wahana);
                                 printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
                                 TambahMenit(&crnt_jam,20);
@@ -809,7 +809,7 @@ void MainPhase()
                                 crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
                             }                        
                             if(crnt_wahana.wahana.status == 0)
-                            { // cek wahana rusak, MASIH BELUM BENER i nya
+                            { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
                                 Repair(&crnt_wahana);
                                 printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
                                 TambahMenit(&crnt_jam,20);
@@ -864,9 +864,9 @@ void MainPhase()
         }
         if (JamToDetik(temp_jam) <= 0)
         {
-            prep_loop = false;
+            prep_loop = true;
             crnt_jam = buka;
-            main_loop = true;
+            main_loop = false;
         }
         if (main_loop&&!prep_loop)
         {

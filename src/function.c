@@ -33,7 +33,7 @@ void build(ArrayWahana *W, COMMAND C)
     DetilWahana CekWahana = CariWahanaByLoc(*W, LokasiAtas);
 
     // Cek ada wahana, border, office, atau gerbang
-    if ((CekWahana.id != ValUndef) && (tipe_point[x-1][y] != 6) && (tipe_point[x-1][y] != 3) && (tipe_point[x-1][y] != 4)) {
+    if ((tipe_point[x-1][y] != 6) && (tipe_point[x-1][y] != 3) && (tipe_point[x-1][y] != 4)) {
         Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
         BinTree TreeBaru = SearchUList(B, Name(C));
         DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);

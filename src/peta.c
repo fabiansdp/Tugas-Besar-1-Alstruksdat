@@ -335,6 +335,11 @@ int Adjacency()
     {
         return(6);
     }
+    //sebelah gerbang
+    else if (tipe_point[x-1][y]==4 || tipe_point[x][y-1]==4 || tipe_point[x+1][y]==4 || tipe_point[x][y+1]==4 )
+    {
+        return(4);
+    }
     //default 0
     return 0;
 }
