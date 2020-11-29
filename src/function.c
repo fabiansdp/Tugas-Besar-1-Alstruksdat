@@ -20,11 +20,13 @@ extern int indeks_buy;
 extern int x,y;
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern int tipe_point[10][20];
-BasisListWahana B;
+
 // ===================================================PREPARATION PHASE========================================================
 
 void build(ArrayWahana *W, COMMAND C)
 {
+    BasisListWahana B;
+    B = MakeUpgradeList();
     int x = Absis(Coordinate(C));
     int y = Ordinat(Coordinate(C))+1;
 

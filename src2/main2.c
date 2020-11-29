@@ -1,104 +1,55 @@
+/*
+gcc -o main2 main2.c ../ADT/arraypos.c ../ADT/wahana.c ../ADT/stackt.c ../ADT/prioqueuechar.c ../ADT/matriks.c ../ADT/bintree.c ../ADT/command.c ../ADT/graph.c ../ADT/listlinier.c ../ADT/listrek.c ../ADT/point.c ../ADT/mesinkar.c ../ADT/mesinkata.c ../ADT/jam.c maps2.c buy2.c antrian2.c
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 //include ADT
 #include "../ADT/boolean.h"
-#include "../ADT/command.c"
-#include "../ADT/stackt.c"
-#include "../ADT/mesinkata.c"
-#include "../ADT/mesinkar.c"
-#include "../ADT/jam.c"
-#include "../ADT/wahana.c"
-
-#include "../ADT/arraypos.c"
-// #include "../ADT/listlinier.c"
+#include "../ADT/arraypos.h"
+#include "../ADT/wahana.h"
+#include "../ADT/stackt.h"
+#include "../ADT/prioqueuechar.h"
+#include "../ADT/matriks.h"
+#include "../ADT/bintree.h"
+#include "../ADT/command.h"
+#include "../ADT/graph.h"
+#include "../ADT/listlinier.h"
+#include "../ADT/listrek.h"
+#include "../ADT/point.h"
+#include "../ADT/mesinkar.h"
+#include "../ADT/mesinkata.h"
+#include "../ADT/jam.h"
 //include from src
-#include "peta.c"
-#include "antrian.c"
-#include "function.c"
-#include "buy.c"
-#include "repair.c"
-//kamus peta
-extern ArrayWahana Map1, Map2, Map3, Map4;
-extern BasisListWahana B;
-extern MATRIKS L;
-extern Arr_POINT AP;
-// extern int tipe_point;
-extern POINT player_loc;
-//kamus antrian
-extern int MaxAntrian;
-extern int default_angka;
-PrioQueueChar Q;
-// int jmlhWahana = 3;
-extern char Nama[];
-extern int crntname;
-extern infotype_pq temp;
-extern infotype_pq served;
-//kamus peta_2
-char input;
-int i, j;
-boolean loop;
-int adjacent;
-//kamus stack
-Stack S;
-COMMAND comm1, comm2, comm3, comm4;
-//kamus di command
-extern int total_aksi;
-extern int total_waktu;
-extern int total_uang;
-//Kamus di buy
-extern char mat[20][256];
-extern int banyak;
-extern TabEl T, Resource;
-extern Kata CKata, Air, Kayu, Batu, Besi;
-extern int price;
-extern int indeks_buy;
-//kamus main
-boolean start_loop;
-boolean prep_loop;
-boolean main_loop;
-//kamus main,kata
+//#include "peta.c"
+//#include "antrian.c"
+//#include "buy.c"
+#include "maps2.h"
+#include "buy2.h"
+#include "antrian2.h"
+#include "function2.h"
+
 Kata ck;
-Kata start;
-Kata exit_menu;
-Kata player_name;
-//kamus main,command
-Kata com_W;
-Kata com_A;
-Kata com_S;
-Kata com_D;
-Kata com_build;
-Kata com_upgrade;
-Kata com_buy;
-Kata com_undo;
-Kata com_execute;
-Kata com_main;
-//part2
-Kata com_serve;
-Kata com_repair;
-Kata com_detail;
-Kata com_office;
-Kata com_prepare;
-//kamus main,jam
-Jam crnt_jam;
-Jam buka;
-Jam tutup;
-Jam temp_jam;
-Jam total_jam;
-//kamus main,wahana
-BasisListWahana B;
-ArrayWahana Map1, Map2, Map3, Map4;
-Kata CandyCrush;
-Kata ChocolateForest;
-Kata BombomCar;
-Kata LemonSplash;
-Kata CandyVillage;
-Kata CandySwing;
-Kata BlackForestTornado;
-//kamus main,int
-int crnt_day;
-int crnt_map;
-int player_money;
-int x,y;
+Kata start,exit_menu,player_name;
+Kata com_W,com_A,com_S,com_D;
+Kata com_build,com_upgrade,com_buy,com_undo,com_execute,com_main;
+Kata com_serve,com_repair,com_detail,com_office,com_prepare;
+Kata CandyCrush,ChocolateForest,BombomCar,LemonSplash,CandyVillage,CandySwing,BlackForestTornado;
+boolean start_loop, prep_loop, main_loop;
+extern ArrayWahana Map1,Map2,Map3,Map4;
+ArrayWahana Map1,Map2,Map3,Map4;
+Jam crnt_jam, jam_buka, jam_tutup, temp_jam, total_jam;
+int crnt_day,crnt_map,tipe_point[10][20];
+int total_uang,total_waktu,total_aksi;
+int price;
+Stack S;
+MATRIKS L;
+Arr_POINT AP;
+COMMAND comm1,comm2,comm3;
+POINT player_loc;
+TabEl T,Resource;
+Wahana W;
+char mat[20][256];
 
 void PrintLegend()
 {
@@ -108,69 +59,6 @@ void PrintLegend()
     printf("W = Wahana\n");
     printf("O = Office\n");
     printf("<, ^, >, V = Gerbang\n");
-}
-
-void PrintPrep()
-{
-    /* Kamus Lokal */
-    /* Algoritma */
-    printf("Preparation phase day %d\n", crnt_day);
-    PrintPeta(L);
-    PrintLegend();
-    printf("\n");
-    printf("Name: ");
-    for (int i = 0; i < player_name.Length; i++)
-    {
-        printf("%c", player_name.TabKata[i]);
-    }
-    printf("\n");
-    printf("Money: %d\n", player_money);
-    printf("Current time: %d.%d\n", Hour(crnt_jam), Minute(crnt_jam));
-    printf("Current time: %d.%d\n", Hour(buka), Minute(buka));
-    printf("Time Remaining: ");
-    if (Hour(temp_jam) > 0)
-        printf(" %d hour(s)", Hour(temp_jam));
-    if (Minute(temp_jam) > 0)
-        printf(" %d minute(s)", Minute(temp_jam));
-    printf("\n");
-    printf("Total aksi yang akan dilakukan: %d\n", total_aksi);
-    total_jam = DetikToJam(total_waktu);
-    printf("Total waktu yang dibutuhkan: ");
-    if (Hour(total_jam) > 0)
-        printf(" %d hour(s)", Hour(total_jam));
-    printf(" %d minute(s)", Minute(total_jam));
-    printf("\n");
-    printf("Total uang yang dibutuhkan: %d\n", total_uang);
-    printf("\n");
-    printf("Masukkan Perintah: ");
-}
-
-void PrintMain()
-{
-    /* Kamus Lokal */
-    /* Algoritma */
-    printf("Main phase day %d\n", crnt_day);
-    PrintPeta(L);
-    PrintLegend();
-    printf("\n");
-    printf("Name: ");
-    for (int i = 0; i < player_name.Length; i++)
-    {
-        printf("%c", player_name.TabKata[i]);
-    }
-    printf("\n");
-    printf("Money: %d\n", player_money);
-    printf("Current time: %d.%d\n", Hour(crnt_jam), Minute(crnt_jam));
-    printf("Current time: %d.%d\n", Hour(buka), Minute(buka));
-    printf("Time Remaining: ");
-    if (Hour(temp_jam) > 0)
-        printf(" %d hour(s)", Hour(temp_jam));
-    if (Minute(temp_jam) > 0)
-        printf(" %d minute(s)", Minute(temp_jam));
-    printf("\n");
-    // print antrian
-    // printf("Total aksi yang akan dilakukan: %d\n", total_aksi);
-    printf("Masukkan Perintah: ");    
 }
 
 void SetupKata()
@@ -369,7 +257,7 @@ void SetupKata()
     BlackForestTornado.TabKata[15] = 'n';
     BlackForestTornado.TabKata[16] = 'a';
     BlackForestTornado.TabKata[17] = 'd';
-    BlackForestTornado.TabKata[18] = '0';
+    BlackForestTornado.TabKata[18] = 'o';
     BlackForestTornado.Length = 19;
 }
 
@@ -404,8 +292,44 @@ void ReadKataStart()
     }
 }
 
+void PrintPrep()
+{
+    /* Kamus Lokal */
+    /* Algoritma */
+    printf("Preparation phase day %d\n", crnt_day);
+    PrintPeta(L);
+    PrintLegend();
+    printf("\n");
+    printf("Name: ");
+    for (int i = 0; i < player_name.Length; i++)
+    {
+        printf("%c", player_name.TabKata[i]);
+    }
+    printf("\n");
+    printf("Money: %d\n", player_money);
+    printf("Current time: %d.%d\n", Hour(crnt_jam), Minute(crnt_jam));
+    printf("Current time: %d.%d\n", Hour(jam_buka), Minute(jam_buka));
+    printf("Time Remaining: ");
+    if (Hour(temp_jam) > 0)
+        printf(" %d hour(s)", Hour(temp_jam));
+    if (Minute(temp_jam) > 0)
+        printf(" %d minute(s)", Minute(temp_jam));
+    printf("\n");
+    printf("Total aksi yang akan dilakukan: %d\n", total_aksi);
+    total_jam = DetikToJam(total_waktu);
+    printf("Total waktu yang dibutuhkan: ");
+    if (Hour(total_jam) > 0)
+        printf(" %d hour(s)", Hour(total_jam));
+    printf(" %d minute(s)", Minute(total_jam));
+    printf("\n");
+    printf("Total uang yang dibutuhkan: %d\n", total_uang);
+    printf("\n");
+    printf("Masukkan Perintah: ");
+}
+
 void PrepPhase()
 {
+    BasisListWahana B = MakeUpgradeList();
     //prep phase loop
     while (prep_loop)
     {
@@ -456,7 +380,6 @@ void PrepPhase()
                 {
                     do
                     {
-                        ListWahana();
                         puts("Mau bangun apa?");
                         STARTKATA();
                         while (!EndKata)
@@ -567,9 +490,9 @@ void PrepPhase()
             }
             else if (IsKataSama(ck, com_execute))
             {
-                crnt_jam = buka;
+                crnt_jam = jam_buka;
                 temp_jam = DetikToJam(43200);
-                main_loop = true;
+                //main_loop = true;
                 prep_loop = false;
                 
                 execute(&S);
@@ -578,9 +501,9 @@ void PrepPhase()
             else if (IsKataSama(ck, com_main))
             {
                 printf("Input main\n");
-                crnt_jam = buka;
+                crnt_jam = jam_buka;
                 temp_jam = DetikToJam(43200);
-                main_loop = true;
+                //main_loop = true;
                 prep_loop = false;
             }
             else if (IsKataSama(ck, exit_menu))
@@ -597,7 +520,7 @@ void PrepPhase()
         if (JamToDetik(temp_jam) <= 0)
         {
             prep_loop = false;
-            crnt_jam = buka;
+            crnt_jam = jam_buka;
             main_loop = true;
         }
         if (!main_loop&&prep_loop)
@@ -607,176 +530,50 @@ void PrepPhase()
     }
 }
 
-void MainPhase()
-{
-    //prep phase loop
-    while (main_loop)
-    {
-        STARTKATA();
-        ck = CKata;
-        if (EndKata)
-        {
-            printf("Input kosong \n");
-            ADVKATA();
-        }
-        while (!EndKata)
-        {
-            //cek office
-            if (IsKataSama(ck, com_W))
-            {
-                printf("Input w\n");
-                Movement('W', &L);
-                TambahMenit(&crnt_jam, 5);
-                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
-                {
-                    printf("Masukkan ‘office’ untuk mengakses office\n");
-                }
-            }
-            else if (IsKataSama(ck, com_A))
-            {
-                printf("Input a\n");
-                Movement('A', &L);
-                TambahMenit(&crnt_jam, 5);
-                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
-                {
-                    printf("Masukkan ‘office’ untuk mengakses office\n");
-                }
-            }
-            else if (IsKataSama(ck, com_S))
-            {
-                printf("Input s\n");
-                Movement('S', &L);
-                TambahMenit(&crnt_jam, 5);
-                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
-                {
-                    printf("Masukkan ‘office’ untuk mengakses office\n");
-                }
-            }
-            else if (IsKataSama(ck, com_D))
-            {
-                printf("Input d\n");
-                Movement('D', &L);
-                TambahMenit(&crnt_jam, 5);
-                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
-                {
-                    printf("Masukkan ‘office’ untuk mengakses office\n");
-                }
-            }
-            else if (IsKataSama(ck, com_serve))
-            {
-                printf("Input serve\n");
-            }
-            else if (IsKataSama(ck, com_repair))
-            {
-                printf("Input repair\n");
-                if(Adjacency() == 5){ // cek player disebelah wahana
-                    if(Status(W,i) == 0){ // cek wahana rusak, MASIH BELUM BENER i nya
-                        Repair(&W,i);
-                        TambahMenit(&crnt_jam,20);
-                        temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
-                    }else printf("ID Wahana : %d\n",ID(W,0));
-                }else printf("You need to go beside Wahana\n");//kalau palyer ga disebelah wahana ga akan bisa repair
-            }  
-            else if (IsKataSama(ck, com_detail))
-            {
-                printf("Input detail\n");
-            }
-            else if (IsKataSama(ck, com_office))
-            {
-                printf("Input office\n");
-            }
-            else if (IsKataSama(ck, com_prepare))
-            {
-                printf("Input prepare\n");
-                main_loop = false;
-                prep_loop = true;
-                total_aksi = 0;
-                total_jam = DetikToJam(0);
-                total_uang = 0;
-                total_waktu = 0;
-            }
-            else if (IsKataSama(ck, exit_menu))
-            {
-                printf("Input exit\n");
-                main_loop = false;
-            }
-            else
-            {
-                printf("Input tidak valid \n");
-            }
-            ADVKATA();
-        }
-        if (JamToDetik(temp_jam) <= 0)
-        {
-            prep_loop = false;
-            crnt_jam = buka;
-            main_loop = true;
-        }
-        if (main_loop&&!prep_loop)
-        {
-            PrintMain();
-        }
-    }    
-}
-
-int main()
-{
-    // Inisialisasi List Wahana
-    //B = MakeUpgradeList();
+int main(){
+    // Pembukaan Game
     makeArrayWahana(&Map1);
     makeArrayWahana(&Map2);
     makeArrayWahana(&Map3);
     makeArrayWahana(&Map4);
-
-    //menu awal
     printf("Welcome to Willy wangky's\n");
     printf("New game / load game / exit? \n");
+    
+    // Setup Kata
     SetupKata();
 
-    //menu awal
     start_loop = true;
     while (start_loop)
     {
         ReadKataStart();
-        if (IsKataSama(ck, exit_menu))
+        if(IsKataSama(ck,exit_menu))
         {
             printf("Terima kasih telah bermain \n");
             return 0;
         }
     }
 
-    //input nama
     printf("Masukkan nama: \n");
     STARTKATA();
     player_name = CKata;
 
     //setup jam
     crnt_jam = MakeJam(21, 0);
-    buka = MakeJam(9, 0);
-    tutup = MakeJam(21, 0);
+    jam_buka = MakeJam(9, 0);
+    jam_tutup = MakeJam(21, 0);
     crnt_day = 1;
-    temp_jam = DetikToJam(abs(JamToDetik(buka) - JamToDetik(crnt_jam)));
+    temp_jam = DetikToJam(abs(JamToDetik(jam_buka) - JamToDetik(crnt_jam)));
     total_jam = MakeJam(0, 0);
+    
+    /* SKEMA SETUP WAHANA DISINI NANTINYA*/
 
-    //setup wahana
-    // CreateDataWahana(&W);
-    // CreateNamaWahana(&W);
-    //cek wahana
-    // if (!IsDibangun(W,2)) {
-    //     puts("NotBuild");
-    // }
-    // printf("%d\n", Air(W,1));
-    // InfoWahana(W, 13);
-
-    /*peta*/
+    /*== AKHIR SKEMA SETUP WAHANA ==*/
     //setup matriks tipe
-    for (i = 0; i <= 9; i++)
+    
+    /* SETUP PETA DISINI*/
+    for (int i = 0; i <= 9; i++)
     {
-        for (j = 0; j <= 19; j++)
+        for (int j = 0; j <= 19; j++)
         {
             tipe_point[i][j] = 0;
         }
@@ -796,28 +593,7 @@ int main()
     MakeEmptyTabel(&T);
     MakeEmptyTabel(&Resource);
 
-    // //Jam J;
-    // //BacaJam(&J);
-
-    // printf("Welcome to the shop\n ");
-    // printf("Material List :\n");
-    // BacaMaterial(1,mat);
-    // BacaHarga(1,&T,&Resource);
-    // BacaInput();
-    // boolean x;
-    // x =EnoughMoney(1000,banyak,&Resource);
-    // if(x == false){
-    //     printf("Not enought money!\n");
-    //     BacaInput();
-    // }
-    // else{
-    //     // masuk ke stack
-    //     // TambahMenit(&J,10);
-    //     // TulisJam(J);
-    // printf("BENER");
-    // }
-
-    /*prep phase loop*/
+    /*Phase LOOP*/
     CreateEmptyStack(&S);
     prep_loop = true;
     main_loop = false;
@@ -825,117 +601,14 @@ int main()
     {
         PrintPrep();
         PrepPhase();
-        PrintMain();
-        MainPhase();
+        //PrintMain();
+        //MainPhase();
         puts("Loop");
         crnt_day++;
     }
-    // printf("X untuk keluar\n");
-    // loop=true;
-    // do
-    // {
-    //     adjacent=Adjacency();
-    //     printf("Nilai adjacent: %d\n",adjacent);
-    //     printf("Masukkan arah pergerakan:\n");
-    //     scanf("%c",&input);
-    //     if (adjacent==5)
-    //     {
-    //         printf("Sebelah wahana\n");
-    //     }
-    //     else if (adjacent==3)
-    //     {
-    //         printf("Sebelah office\n");
-    //     }
-    //     if (input=='X')
-    //     {
-    //         loop=false;
-    //     }
-    //     else if (input=='W'||input=='A'||input=='S'||input=='D')
-    //     {
-    //         Movement(input,&L);
-    //         PrintPeta(L);
-    //     }
-    // } while (loop);
+    PrintAllWahana(Map1);
 
-    //cek tipe_point
-    // for (i = 0; i <= 9; i++)
-    // {
-    //     for (j = 0; j <= 19; j++)
-    //     {
-    //         printf("%d",tipe_point[i][j]);
-    //     }
-    //     printf("\n");
-    // }
 
-    /*antrian*/
-    // MakeEmpty(&Q, MaxAntrian);
-    // while (!IsFullQueue(Q))
-    // {
-    //     /*Inisialisasi infotype_pq*/
-    //     srand(crntname); //lebih baik nanti pake ADT time
-    //     Nama(temp)=Nama[crntname];
-    //     Prio(temp)=crntname;
-    //     Kesabaran(temp)=(rand()%3)+1;
-    //     // Kesabaran(temp)=default_angka;
-    //     /*Selama tidak full, bisa tambah antrian*/
-    //     TambahAntrian(&Q,temp);
-    //     /*Setiap bertambah waktu tambah antrian(not implemented)*/
-    //     crntname++; /*Nama selanjutnya*/
-    //     if (crntname==27)
-    //     {
-    //         crntname=0;
-    //     }
-    // }
 
-    // printf("Antrian awal\n");
-    // PrintAntrian(Q);
-
-    // //Cek wahana yang ingin dinaiki
-    // int nama=0;
-    // char ch;
-    // ch = Wahana(ElmtQ(Q,0),nama);
-    // printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,0)));
-    // while (ch !='.')
-    // {
-    //     printf("%c",ch);
-    //     nama++;
-    //     ch = Wahana(ElmtQ(Q,0),nama);
-    // }
-    // printf("\n");
-
-    // nama=0;
-    // ch = Wahana(ElmtQ(Q,2),nama);
-    // printf("Wahana pelanggan %c: \n",Nama(ElmtQ(Q,2)));
-    // while (ch !='.')
-    // {
-    //     printf("%c",ch);
-    //     nama++;
-    //     ch = Wahana(ElmtQ(Q,2),nama);
-    // }
-    // printf("\n");
-    // printf("Antrian[%d/%d]",NBElmtQueue(Q),MaxAntrian);
-
-    // //Simulasi antrian habis dari penuh
-    // while (!IsEmptyQueue(Q))
-    // {
-    //     KurangAntrian(&Q,&served);
-    //     printf("Pelanggan %c dilayani\n",Nama(served));
-    //     printf("Antrian[%d/%d]",NBElmtQueue(Q),MaxAntrian);
-    //     if (!IsEmptyQueue(Q))
-    //     {
-    //         PrintAntrian(Q);
-    //     }
-    // }
-
-    // //stack command
-    // Comm(comm1) = 1;
-    // Comm(comm2) = 2;
-    // Comm(comm3) = 3;
-    // Comm(comm4) = 4;
-    // Push(&S, comm1);
-    // Push(&S, comm2);
-    // Push(&S, comm3);
-    // Push(&S, comm4);
-    // execute(&S);
     return 0;
 }
