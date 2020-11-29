@@ -169,7 +169,7 @@ void PrintAntrian (PrioQueueChar Q, ArrayWahana W)
             if (wahana_want.id!=ValUndef)
             {
                 name_length=wahana_want.wahana.nama.Length;
-                for (int j = 0; j <= name_length; j++)
+                for (int j = 0; j < name_length; j++)
                 {
                     printf("%c",wahana_want.wahana.nama.TabKata[j]);
                 }
