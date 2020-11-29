@@ -173,7 +173,7 @@ void PrintAntrian (PrioQueueChar Q, ArrayWahana W)
                 {
                     printf("%c",wahana_want.wahana.nama.TabKata[j]);
                 }
-                if (i!=W.jumlahWahana-1)
+                if (i!=WahanaPengunjung(x))
                 {
                     printf(",");
                 }
