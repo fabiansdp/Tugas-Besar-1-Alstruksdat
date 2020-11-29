@@ -49,10 +49,10 @@ void BacaHarga(int x,TabEl *T,TabEl *Resource)
     switch(x)
     {
     case 1:
-        fp=fopen("material.txt","r");
+        fp=fopen("../material.txt","r");
         break;
     default:
-        fp=fopen("material.txt","r"); //asumsi file tidak kosong
+        fp=fopen("../material.txt","r"); //asumsi file tidak kosong
         break;
     }
     while (fgets(str,MAXCHAR,fp) != NULL){
@@ -76,10 +76,10 @@ void BacaMaterial(int x,char mat[20][256]){
     switch(x)
     {
     case 1:
-        fp=fopen("material.txt","r");
+        fp=fopen("../material.txt","r");
         break;
     default:
-        fp=fopen("material.txt","r"); //asumsi file tidak kosong
+        fp=fopen("../material.txt","r"); //asumsi file tidak kosong
         break;
     }
     while (fgets(str, sizeof(str), fp)){

@@ -22,31 +22,22 @@ void TambahAntrian(PrioQueueChar *Q, ArrayWahana W, infotype_pq X)
     int n,i,j;
     int index_wahana;
     int seed=crntname; //pseudorandom dengan seed tertentu
-    boolean unique;
     /*Algoritma*/
     srand(seed); //lebih baik nanti pake ADT time
     n = (rand()%W.jumlahWahana); //random jumlah wahana
-    //masukin list wahana yang mau dimaenin pengunjung sebanyak n
+    WahanaPengunjung(X) = n;
+    //dapet jumlah wahana yang mau dimasukin
     for (i = 0; i <= n ;i++){
-        // while(!unique){
-        
-        // }//dapet yang unik        
         index_wahana = (rand()%W.jumlahWahana);
-        unique=false;
         j=0;
-        while (!unique && j<=n)
-        {
+        while(j <= n){
             if(IndeksWahana(X,j) == index_wahana){
                 index_wahana = (rand()%W.jumlahWahana);
-                j=0;
-            }
-            else
-            {
-                unique = true;
+                j = 0;
             }
             j++;
-        }
-        if(unique) IndeksWahana(X,i) = index_wahana;
+        }//keluar while loop ketika j > n dan indeks ga ada yang sama
+        IndeksWahana(X,i) = index_wahana;
     }
     Enqueue(Q,X);
 }

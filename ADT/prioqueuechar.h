@@ -16,7 +16,8 @@ typedef struct {
     int prio;  /* [1..100], prioritas dengan nilai 1..100 (1 adalah prioritas tertinggi) */
     char nama;  /* nama pengunjung */
     int indexwahana[20]; /*indeks wahana*/
-    int kesabaran; /* tingkatan kesabaran */ 
+    int kesabaran; /* tingkatan kesabaran */
+    int whn_p; 
 }infotype_pq;
 typedef int addr;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype PrioQueueChar : */
@@ -41,7 +42,7 @@ typedef struct {
 #define InfoTail(Q) (Q).T[(Q).TAIL]
 #define MaxEl(Q)    (Q).MaxElQ
 #define ElmtQ(Q,i)   (Q).T[(i)]
-
+#define WahanaPengunjung(e) (e).whn_p
 /* ********* Prototype ********* */
 boolean IsEmptyQueue (PrioQueueChar Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */

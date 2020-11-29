@@ -163,7 +163,7 @@ void PrintAntrian (PrioQueueChar Q, ArrayWahana W)
     {
         printf("(");
         Dequeue(&Q,&x);
-        for (int i = 0; i < W.jumlahWahana; i++)
+        for (int i = 0; i <= WahanaPengunjung(x); i++)
         {
             wahana_want=CariWahanaByID(W,IndeksWahana(x,i));
             if (wahana_want.id!=ValUndef)

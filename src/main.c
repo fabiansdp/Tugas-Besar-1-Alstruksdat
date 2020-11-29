@@ -1004,7 +1004,7 @@ int main()
 
     //menu awal
     printf("Welcome to Willy wangky's\n");
-    printf("New game / load game / exit? \n");
+    printf("New game / exit? \n");
     SetupKata();
 
     //menu awal
