@@ -13,6 +13,8 @@
 // DetilWahana vardetilwahana;
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern int crnt_map;
+extern Jam crnt_jam,temp_jam;
+extern ListHistoUpdate sejarahUpgrade;
 DetilWahana vardetilwahana;
 
 //===============================FUNGSI TAMBAHAN====================================================
@@ -103,8 +105,11 @@ void DetailsCommandOffice(ArrayWahana map)
         printf("Kapasitas wahana = %d\n", map.ArrayW[input - 1].wahana.kapasitas);
         printf("Durasi wahana    = %d\n", map.ArrayW[input - 1].wahana.durasi);
         printf("History upgrade  =\n");
-        PrintHistoryUpgrade(map.ArrayW[input - 1].upgradeTree);
+        PrintHistoryByID(sejarahUpgrade,map.ArrayW[input - 1].id);
+        // PrintHistoryUpgrade(map.ArrayW[input - 1].upgradeTree);
         printf("============================================\n");
+        TambahMenit(&crnt_jam,10);
+        temp_jam = DetikToJam(JamToDetik(temp_jam) - 600);
     }
     else
     {
@@ -149,6 +154,8 @@ void ReportCommandOffice(ArrayWahana map)
         printf("Total penggunaan wahana hari ini  = %d\n", map.ArrayW[input - 1].laporan.naikharian);
         printf("Total penghasilan wahana hari ini = %d\n", map.ArrayW[input - 1].laporan.penghasilanharian);
         printf("============================================\n");
+        TambahMenit(&crnt_jam,10);
+        temp_jam = DetikToJam(JamToDetik(temp_jam) - 600);
     }
     else
     {
@@ -264,7 +271,9 @@ void detail(DetilWahana W)
     printf("Kapasitas wahana = %d\n", W.wahana.kapasitas);
     printf("Durasi wahana    = %d\n", W.wahana.durasi);
     printf("History upgrade  =\n");
-    PrintHistoryUpgrade(W.upgradeTree);
+    PrintHistoryByID(sejarahUpgrade,W.id);
+    TambahMenit(&crnt_jam,10);
+    temp_jam = DetikToJam(JamToDetik(temp_jam) - 600);
 }
 
 //===============================TESTING====================================================

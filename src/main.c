@@ -19,6 +19,7 @@
 #include "function.c"
 #include "buy.c"
 #include "repair.c"
+#include "office.c"
 //kamus peta
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern BasisListWahana B;
@@ -108,24 +109,6 @@ extern ArrWRide W1,W2,W3,W4;
 //kamus main,upgrade
 ListHistoUpdate sejarahUpgrade;
 char mat[20][256];
-
-int konvertKata(Kata K){
-    int a = K.Length;
-    int x;
-    int res = 0;
-    for(x=0;x<K.Length;x++){
-        if(K.TabKata[x]>='0' && K.TabKata[x]<='9'){
-            int pangkat = (int) pow(10,a-1);
-            int konvert = (int) K.TabKata[x];
-            konvert = konvert - 48;
-            res = res+(pangkat*(konvert));
-            a = a-1;
-        }else{
-            return -1;
-        }
-    }
-    return res;
-}
 
 void PrintLegend()
 {
@@ -240,11 +223,11 @@ void PrintMain()
         {
             if (Map2.ArrayW[count].wahana.status==1)
             {
-                printf("Terdeteksi kerusakan");
+                printf("Terdeteksi kerusakan:");
                 int name_length=Map2.ArrayW[count].wahana.nama.Length;
                 for (int count2 = 0; count2 < name_length; count2++)
                 {
-                    printf("%c",Map2.ArrayW[count].wahana.nama.TabKata[count2]);
+                    printf("%c ",Map2.ArrayW[count].wahana.nama.TabKata[count2]);
                 }
             }
         }
@@ -950,22 +933,22 @@ void MainPhase()
             case 1:
                 randomrusak = (rand()%Map1.jumlahWahana);
                 Broken(&Map1.ArrayW[randomrusak].wahana);
-                printf("Ada yang rusak di map1\n");
+                // printf("Ada yang rusak di map1\n");
                 break;
             case 2:
                 randomrusak= (rand()%Map2.jumlahWahana);
                 Broken(&Map2.ArrayW[randomrusak].wahana);
-                printf("Ada yang rusak di map2\n");
+                // printf("Ada yang rusak di map2\n");
                 break;
             case 3:
                 randomrusak= (rand()%Map3.jumlahWahana);
                 Broken(&Map3.ArrayW[randomrusak].wahana);
-                printf("Ada yang rusak di map3\n");
+                // printf("Ada yang rusak di map3\n");
                 break;
             case 4:
                 randomrusak= (rand()%Map4.jumlahWahana);
                 Broken(&Map4.ArrayW[randomrusak].wahana);
-                printf("Ada yang rusak di map4\n");
+                // printf("Ada yang rusak di map4\n");
                 break;
             default:
                 break;
@@ -998,9 +981,9 @@ void MainPhase()
                 Movement('A', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15 && crnt_map==1)
                 {
-                    printf("Masukkan ‘office’ untuk mengakses office\n");
+                    printf("Masukkan kata office untuk mengakses office\n");
                 }
             }
             else if (IsKataSama(ck, com_S))
@@ -1009,9 +992,9 @@ void MainPhase()
                 Movement('S', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15 && crnt_map==1)
                 {
-                    printf("Masukkan ‘office’ untuk mengakses office\n");
+                    printf("Masukkan kata office untuk mengakses office\n");
                 }
             }
             else if (IsKataSama(ck, com_D))
@@ -1020,9 +1003,9 @@ void MainPhase()
                 Movement('D', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15 && crnt_map==1)
                 {
-                    printf("Masukkan ‘office’ untuk mengakses office\n");
+                    printf("Masukkan kata office untuk mengakses office\n");
                 }
             }
             else if (IsKataSama(ck, com_serve))
@@ -1066,14 +1049,16 @@ void MainPhase()
                             IdWahana = crnt_wahana.id;   
                             if(Map1.ArrayW[IdWahana].wahana.status == 1)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
-                                printf("Status sebelum diubah :%d\n",Map1.ArrayW[IdWahana].wahana.status);
+                                printf("Status sebelum diubah : ");
+                                if(Map1.ArrayW[IdWahana].wahana.status == 1) printf("Wahana rusak\n");
                                 Repair(&Map1.ArrayW[IdWahana].wahana);
-                                printf("Status berubah menjadi :%d\n",Map1.ArrayW[IdWahana].wahana.status);
+                                printf("Status berubah menjadi : ");
+                                if(Map1.ArrayW[IdWahana].wahana.status == 0) printf("Wahana tidak rusak\n");
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
                             }
                             else{
-                                printf("Status akhir :%d\n",Map1.ArrayW[IdWahana].wahana.status);
+                                if(Map1.ArrayW[IdWahana].wahana.status == 0) printf("Status terakhir : Wahana tidak rusak\n");
                             }
                             break;
                         case 2:
@@ -1104,10 +1089,16 @@ void MainPhase()
                             IdWahana = crnt_wahana.id;                       
                             if(Map2.ArrayW[IdWahana].wahana.status == 1)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
+                                printf("Status sebelum diubah : ");
+                                if(Map2.ArrayW[IdWahana].wahana.status == 1) printf("Wahana rusak\n");
                                 Repair(&Map2.ArrayW[IdWahana].wahana);
-                                printf("Status berubah menjadi :%d\n",Map2.ArrayW[IdWahana].wahana.status);
+                                printf("Status berubah menjadi : ");
+                                if(Map2.ArrayW[IdWahana].wahana.status == 0) printf("Wahana tidak rusak\n");
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                            }
+                            else{
+                                if(Map2.ArrayW[IdWahana].wahana.status == 0) printf("Status terakhir : Wahana tidak rusak\n");
                             }
                             break;
                         case 3:
@@ -1138,10 +1129,16 @@ void MainPhase()
                             IdWahana = crnt_wahana.id;                         
                             if(Map3.ArrayW[IdWahana].wahana.status == 1)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
+                                printf("Status sebelum diubah : ");
+                                if(Map3.ArrayW[IdWahana].wahana.status == 1) printf("Wahana rusak\n");
                                 Repair(&Map3.ArrayW[IdWahana].wahana);
-                                printf("Status berubah menjadi :%d\n",Map3.ArrayW[IdWahana].wahana.status);
+                                printf("Status berubah menjadi : ");
+                                if(Map3.ArrayW[IdWahana].wahana.status == 0) printf("Wahana tidak rusak\n");
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                            }
+                            else{
+                                if(Map3.ArrayW[IdWahana].wahana.status == 0) printf("Status terakhir : Wahana tidak rusak\n");
                             }
                             break;
                         case 4:
@@ -1172,10 +1169,16 @@ void MainPhase()
                             IdWahana = crnt_wahana.id;                         
                             if(Map4.ArrayW[IdWahana].wahana.status == 1)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
+                                printf("Status sebelum diubah : ");
+                                if(Map4.ArrayW[IdWahana].wahana.status == 1) printf("Wahana rusak\n");
                                 Repair(&Map4.ArrayW[IdWahana].wahana);
-                                printf("Status berubah menjadi :%d\n",Map4.ArrayW[IdWahana].wahana.status);
+                                printf("Status berubah menjadi : ");
+                                if(Map4.ArrayW[IdWahana].wahana.status == 0) printf("Wahana tidak rusak\n");
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                            }
+                            else{
+                                if(Map4.ArrayW[IdWahana].wahana.status == 0) printf("Status terakhir : Wahana tidak rusak\n");
                             }
                             break;
                         default:
@@ -1190,13 +1193,127 @@ void MainPhase()
             else if (IsKataSama(ck, com_detail))
             {
                 printf("Input detail\n");
+                    switch (crnt_map)
+                    {
+                        case 1:
+                            // atas
+                            if (tipe_point[x-1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x-1,y);
+                                crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
+                            }
+                            // kiri
+                            else if (tipe_point[x][y-1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y-1);
+                                crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
+                            }
+                            //bawah
+                            else if (tipe_point[x+1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x+1,y);
+                                crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
+                            }
+                            //kanan
+                            else if (tipe_point[x][y+1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y+1);
+                                crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
+                            }
+                            break;                        
+                        case 2:
+                            // atas
+                            if (tipe_point[x-1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x-1,y);
+                                crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
+                            }
+                            // kiri
+                            else if (tipe_point[x][y-1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y-1);
+                                crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
+                            }
+                            //bawah
+                            else if (tipe_point[x+1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x+1,y);
+                                crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
+                            }
+                            //kanan
+                            else if (tipe_point[x][y+1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y+1);
+                                crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
+                            }   
+                            break;
+                        case 3:
+                            // atas
+                            if (tipe_point[x-1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x-1,y);
+                                crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
+                            }
+                            // kiri
+                            else if (tipe_point[x][y-1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y-1);
+                                crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
+                            }
+                            //bawah
+                            else if (tipe_point[x+1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x+1,y);
+                                crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
+                            }
+                            //kanan
+                            else if (tipe_point[x][y+1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y+1);
+                                crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
+                            }
+                            break;
+                        case 4:
+                            // atas
+                            if (tipe_point[x-1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x-1,y);
+                                crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
+                            }
+                            // kiri
+                            else if (tipe_point[x][y-1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y-1);
+                                crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
+                            }
+                            //bawah
+                            else if (tipe_point[x+1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x+1,y);
+                                crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
+                            }
+                            //kanan
+                            else if (tipe_point[x][y+1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y+1);
+                                crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
+                            }
+                            break;
+                        default:
+                            break;
+                }
+                if (crnt_wahana.id!=ValUndef) 
+                {
+                    detail(crnt_wahana);
+                }
             }
             else if (IsKataSama(ck, com_office))
             {
                 printf("Input office\n");
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15 && crnt_map==1)
                 {
                     printf("Masuk ke office\n");
+                    office();
                 }
                 else
                 {
