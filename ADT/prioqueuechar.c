@@ -6,6 +6,7 @@
 
 #include "boolean.h"
 #include "prioqueuechar.h"
+#include "wahana.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -146,18 +147,40 @@ void Dequeue (PrioQueueChar * Q, infotype_pq * X)
 }
 
 /* Operasi Tambahan */
-void PrintAntrian (PrioQueueChar Q)
+void PrintAntrian (PrioQueueChar Q, ArrayWahana W)
 /* Mencetak isi queue Q ke layar */
 /* I.S. Q terdefinisi, mungkin kosong */
 /* F.S. Q tercetak ke layar antrian */
 {
     /* Kamus Lokal */
     infotype_pq x;
+    PrioQueueChar Qtemp;
+    DetilWahana wahana_want;
+    int name_length;
     /* Algoritma */
-    printf("Antrian:\n");
+    Qtemp = Q;
     while (IsEmptyQueue(Q)==false)
     {
+        printf("(");
         Dequeue(&Q,&x);
-        printf("%c %d\n", x.nama, x.kesabaran);
+        for (int i = 0; i < W.jumlahWahana; i++)
+        {
+            wahana_want=CariWahanaByID(W,IndeksWahana(x,i));
+            if (wahana_want.id!=ValUndef)
+            {
+                name_length=wahana_want.wahana.nama.Length;
+                for (int j = 0; j <= name_length; j++)
+                {
+                    printf("%c",wahana_want.wahana.nama.TabKata[j]);
+                }
+                if (i!=W.jumlahWahana-1)
+                {
+                    printf(",");
+                }
+            }
+        }
+        printf(")");
+        // printf("priority: %d ",x.prio);
+        printf("kesabaran: %d //Customer %c\n", x.kesabaran, x.nama);
     }
 }

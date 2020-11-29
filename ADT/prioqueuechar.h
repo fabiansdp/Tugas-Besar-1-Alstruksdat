@@ -15,7 +15,7 @@
 typedef struct {
     int prio;  /* [1..100], prioritas dengan nilai 1..100 (1 adalah prioritas tertinggi) */
     char nama;  /* nama pengunjung */
-    char wahana[100]; /* nama wahana */ 
+    int indexwahana[20]; /*indeks wahana*/
     int kesabaran; /* tingkatan kesabaran */ 
 }infotype_pq;
 typedef int addr;   /* indeks tabel */
@@ -33,7 +33,7 @@ typedef struct {
 /* Jika e adalah infotype_pq dan Q adalah PrioQueueChar, maka akses elemen : */
 #define Prio(e)     (e).prio
 #define Nama(e)     (e).nama
-#define Wahana(e,i) (e).wahana[i]
+#define IndeksWahana(e,i) (e).indexwahana[i]
 #define Kesabaran(e)(e).kesabaran
 #define Head(Q)     (Q).HEAD
 #define Tail(Q)     (Q).TAIL
@@ -78,7 +78,7 @@ void Dequeue (PrioQueueChar * Q, infotype_pq * X);
         Q mungkin kosong */
 
 /* Operasi Tambahan */
-void PrintAntrian (PrioQueueChar Q);
+void PrintAntrian (PrioQueueChar Q,ArrayWahana W);
 /* Mencetak isi queue Q ke layar */
 /* I.S. Q terdefinisi, mungkin kosong */
 /* F.S. Q tercetak ke layar dengan format:*/

@@ -311,6 +311,18 @@ void makeArrayWahana (ArrayWahana * A){
     (*A).jumlahWahana = 0;
 }
 
+void printDaftarWahana (BasisListWahana L)
+{
+    if(L==NULL){
+
+    }else{
+        printf("- ");
+        printkata(L->wahana.nama);
+        printf("\n");
+        printDaftarWahana(UTail(L));
+    }
+}
+
 DetilWahana DirikanWahanaBaru(int id,Wahana BasisWahana, POINT Loc, BinTree skemaUpgrade){
     DetilWahana det;
     det.id = id;

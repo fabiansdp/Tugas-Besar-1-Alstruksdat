@@ -11,6 +11,7 @@
 #include "../ADT/bintree.c"
 #include "../ADT/listrek.c"
 #include "../ADT/arraypos.c"
+#include "../ADT/prioqueuechar.c"
 // #include "../ADT/listlinier.c"
 //include from src
 #include "peta.c"
@@ -28,7 +29,7 @@ extern POINT player_loc;
 //kamus antrian
 extern int MaxAntrian;
 extern int default_angka;
-PrioQueueChar Q;
+PrioQueueChar Q,Q1,Q2,Q3,Q4;
 // int jmlhWahana = 3;
 extern char Nama[];
 extern int crntname;
@@ -165,7 +166,7 @@ void PrintMain()
     printf("\n");
     printf("Money: %d\n", player_money);
     printf("Current time: %d.%d\n", Hour(crnt_jam), Minute(crnt_jam));
-    printf("Current time: %d.%d\n", Hour(buka), Minute(buka));
+    printf("Current time: %d.%d\n", Hour(buka), Minute(tutup));
     printf("Time Remaining: ");
     if (Hour(temp_jam) > 0)
         printf(" %d hour(s)", Hour(temp_jam));
@@ -173,7 +174,27 @@ void PrintMain()
         printf(" %d minute(s)", Minute(temp_jam));
     printf("\n");
     // print antrian
-    // printf("Total aksi yang akan dilakukan: %d\n", total_aksi);
+    switch (crnt_map)
+    {
+    case 1:
+        printf("Antrian[%d/%d]:\n",NBElmtQueue(Q1),MaxAntrian);
+        PrintAntrian(Q1,Map1);
+        break;
+    case 2:
+        printf("Antrian[%d/%d]:\n",NBElmtQueue(Q2),MaxAntrian);
+        PrintAntrian(Q2,Map2);
+        break;
+    case 3:
+        printf("Antrian[%d/%d]:\n",NBElmtQueue(Q3),MaxAntrian);
+        PrintAntrian(Q3,Map3);
+        break;
+    case 4:
+        printf("Antrian[%d/%d]:\n",NBElmtQueue(Q4),MaxAntrian);
+        PrintAntrian(Q4,Map4);
+        break;
+    default:
+        break;
+    }
     printf("Masukkan Perintah: ");    
 }
 
@@ -373,7 +394,7 @@ void SetupKata()
     BlackForestTornado.TabKata[15] = 'n';
     BlackForestTornado.TabKata[16] = 'a';
     BlackForestTornado.TabKata[17] = 'd';
-    BlackForestTornado.TabKata[18] = '0';
+    BlackForestTornado.TabKata[18] = 'o'; 
     BlackForestTornado.Length = 19;
 }
 
@@ -454,13 +475,14 @@ void PrepPhase()
             else if (IsKataSama(ck, com_build))
             {
                 // // Minta input
-                int id, harga, durasi;
+                int id, harga, durasi, subtotal;
                 Wahana W;
                 if(Adjacency()!=5 && Adjacency()!=6 && Adjacency() != 4)
                 {
                     do
                     {
                         //ListWahana();
+                        printDaftarWahana(B);
                         puts("Mau bangun apa?");
                         STARTKATA();
                         while (!EndKata)
@@ -511,20 +533,26 @@ void PrepPhase()
                     W = SearchWahanaBase(B, id);
                     harga = W.harga;
                     durasi = W.durasi;
-
-                    comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
-                    
-                    Push(&S, comm1);
-                    // edit peta
-                    x=Absis(player_loc);
-                    y=Ordinat(player_loc);
-                    //ubah tipe
-                    tipe_point[x-1][y]=5;
-                    //ubah matriks peta
-                    ElmtM(L,x-1,y)='W';
-                    total_aksi++;
-                    total_uang += harga;
-                    total_waktu += durasi;
+                    subtotal = total_uang+harga;
+                    if (subtotal<=player_money)
+                    {
+                        comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
+                        Push(&S, comm1);
+                        // edit peta
+                        x=Absis(player_loc);
+                        y=Ordinat(player_loc);
+                        //ubah tipe
+                        tipe_point[x-1][y]=5;
+                        //ubah matriks peta
+                        ElmtM(L,x-1,y)='W';
+                        total_aksi++;
+                        total_uang += harga;
+                        total_waktu += durasi;
+                    }
+                    else
+                    {
+                        puts("Uang tidak mencukupi");
+                    }
                 }
                 else
                 {
@@ -619,6 +647,94 @@ void MainPhase()
     //prep phase loop
     while (main_loop)
     {
+        //Managemen antrian dan wahana rusak
+        srand(JamToDetik(crnt_jam));
+        int randomizer=(rand()%10)+1;
+        //masuk wahana
+        if (randomizer<8)
+        {
+            switch (crnt_map)
+            {
+            case 1:
+                if (!IsFullQueue(Q1))
+                {
+                    /*Inisialisasi infotype_pq*/
+                    srand(JamToDetik(crnt_jam)); //lebih baik nanti pake ADT time
+                    Nama(temp)=Nama[crntname];
+                    Prio(temp)=crntname;
+                    Kesabaran(temp)=(rand()%10)+1;
+                    // Kesabaran(temp)=default_angka;
+                    /*Selama tidak full, bisa tambah antrian*/
+                    TambahAntrian(&Q1,Map1,temp);
+                    /*Setiap bertambah waktu tambah antrian(not implemented)*/
+                    crntname++; /*Nama selanjutnya*/
+                    if (crntname==27)
+                    {
+                        crntname=0;
+                    }
+                }
+                break;
+            case 2:
+                if (!IsFullQueue(Q2))
+                {
+                    /*Inisialisasi infotype_pq*/
+                    srand(JamToDetik(crnt_jam)); //lebih baik nanti pake ADT time
+                    Nama(temp)=Nama[crntname];
+                    Prio(temp)=crntname;
+                    Kesabaran(temp)=(rand()%10)+1;
+                    // Kesabaran(temp)=default_angka;
+                    /*Selama tidak full, bisa tambah antrian*/
+                    TambahAntrian(&Q2,Map2,temp);
+                    /*Setiap bertambah waktu tambah antrian(not implemented)*/
+                    crntname++; /*Nama selanjutnya*/
+                    if (crntname==27)
+                    {
+                        crntname=0;
+                    }
+                }
+                break;
+            case 3:
+                if (!IsFullQueue(Q3))
+                {
+                    /*Inisialisasi infotype_pq*/
+                    srand(JamToDetik(crnt_jam)); //lebih baik nanti pake ADT time
+                    Nama(temp)=Nama[crntname];
+                    Prio(temp)=crntname;
+                    Kesabaran(temp)=(rand()%10)+1;
+                    // Kesabaran(temp)=default_angka;
+                    /*Selama tidak full, bisa tambah antrian*/
+                    TambahAntrian(&Q3,Map3,temp);
+                    /*Setiap bertambah waktu tambah antrian(not implemented)*/
+                    crntname++; /*Nama selanjutnya*/
+                    if (crntname==27)
+                    {
+                        crntname=0;
+                    }
+                }
+                break;
+            case 4:
+                if (!IsFullQueue(Q4))
+                {
+                    /*Inisialisasi infotype_pq*/
+                    srand(JamToDetik(crnt_jam)); //lebih baik nanti pake ADT time
+                    Nama(temp)=Nama[crntname];
+                    Prio(temp)=crntname;
+                    Kesabaran(temp)=(rand()%10)+1;
+                    // Kesabaran(temp)=default_angka;
+                    /*Selama tidak full, bisa tambah antrian*/
+                    TambahAntrian(&Q4,Map4,temp);
+                    /*Setiap bertambah waktu tambah antrian(not implemented)*/
+                    crntname++; /*Nama selanjutnya*/
+                    if (crntname==27)
+                    {
+                        crntname=0;
+                    }
+                }
+                break;                        
+            default:
+                break;
+            }
+        }
         STARTKATA();
         ck = CKata;
         if (EndKata)
@@ -916,16 +1032,6 @@ int main()
     temp_jam = DetikToJam(abs(JamToDetik(buka) - JamToDetik(crnt_jam)));
     total_jam = MakeJam(0, 0);
 
-    //setup wahana
-    // CreateDataWahana(&W);
-    // CreateNamaWahana(&W);
-    //cek wahana
-    // if (!IsDibangun(W,2)) {
-    //     puts("NotBuild");
-    // }
-    // printf("%d\n", Air(W,1));
-    // InfoWahana(W, 13);
-
     /*peta*/
     //setup matriks tipe
     for (i = 0; i <= 9; i++)
@@ -954,26 +1060,12 @@ int main()
     MakeEmptyTabel(&T);
     MakeEmptyTabel(&Resource);
 
-    // //Jam J;
-    // //BacaJam(&J);
-
-    // printf("Welcome to the shop\n ");
-    // printf("Material List :\n");
-    // BacaMaterial(1,mat);
-    // BacaHarga(1,&T,&Resource);
-    // BacaInput();
-    // boolean x;
-    // x =EnoughMoney(1000,banyak,&Resource);
-    // if(x == false){
-    //     printf("Not enought money!\n");
-    //     BacaInput();
-    // }
-    // else{
-    //     // masuk ke stack
-    //     // TambahMenit(&J,10);
-    //     // TulisJam(J);
-    // printf("BENER");
-    // }
+    /*antrian*/
+    //setup antrian
+    MakeEmpty(&Q1,MaxAntrian);
+    MakeEmpty(&Q2,MaxAntrian);
+    MakeEmpty(&Q3,MaxAntrian);
+    MakeEmpty(&Q4,MaxAntrian);
 
     /*prep phase loop*/
     CreateEmptyStack(&S);
@@ -990,6 +1082,7 @@ int main()
         puts("Loop");
         crnt_day++;
     }
+
     // printf("X untuk keluar\n");
     // loop=true;
     // do
@@ -1027,25 +1120,7 @@ int main()
     //     printf("\n");
     // }
 
-    /*antrian*/
-    // MakeEmpty(&Q, MaxAntrian);
-    // while (!IsFullQueue(Q))
-    // {
-    //     /*Inisialisasi infotype_pq*/
-    //     srand(crntname); //lebih baik nanti pake ADT time
-    //     Nama(temp)=Nama[crntname];
-    //     Prio(temp)=crntname;
-    //     Kesabaran(temp)=(rand()%3)+1;
-    //     // Kesabaran(temp)=default_angka;
-    //     /*Selama tidak full, bisa tambah antrian*/
-    //     TambahAntrian(&Q,temp);
-    //     /*Setiap bertambah waktu tambah antrian(not implemented)*/
-    //     crntname++; /*Nama selanjutnya*/
-    //     if (crntname==27)
-    //     {
-    //         crntname=0;
-    //     }
-    // }
+
 
     // printf("Antrian awal\n");
     // PrintAntrian(Q);
