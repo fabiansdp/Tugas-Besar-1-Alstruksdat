@@ -4,6 +4,7 @@ gcc -o main2 main2.c ../ADT/arraypos.c ../ADT/wahana.c ../ADT/stackt.c ../ADT/pr
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 //include ADT
 #include "../ADT/boolean.h"
 #include "../ADT/arraypos.h"
@@ -51,6 +52,22 @@ POINT player_loc;
 TabEl T,Resource;
 Wahana W;
 char mat[20][256];
+
+int konvertKata(Kata K){
+    int a = K.Length;
+    int x;
+    int res = 0;
+    for(x=0;x<K.Length;x++){
+        if(K.TabKata[x]>='0' && K.TabKata[x]<='9'){
+            int pangkat = (int) pow(10,a-1);
+            int konvert = (int) K.TabKata[x];
+            konvert = konvert - 48;
+            res = res+(pangkat*(konvert));
+            a = a-1;
+        }
+    }
+    return res;
+}
 
 void PrintLegend()
 {
@@ -430,14 +447,13 @@ void PrepPhase()
                         }
                     } while (!IsKataSama(CKata, CandyCrush) && !IsKataSama(CKata, ChocolateForest) && !IsKataSama(CKata, BombomCar) && !IsKataSama(CKata, LemonSplash) && !IsKataSama(CKata, CandyVillage) && !IsKataSama(CKata, CandySwing) && !IsKataSama(CKata, BlackForestTornado));
                     // MakeCommand(idComm, idWahana, JmlhMaterial, Gold, Map, Lokasi, Durasi)
-
+                    W = SearchWahanaBase(B, id);
+                    harga = W.harga;
+                    durasi = W.durasi;
                     total_uang += harga;
 
                     if (total_uang <= player_money) {
-                        W = SearchWahanaBase(B, id);
-                        harga = W.harga;
-                        durasi = W.durasi;
-
+                        
                         comm1 = MakeCOMMAND(1, id, 0, harga, crnt_map, player_loc, durasi);
                         
                         Push(&S, comm1);
@@ -462,14 +478,50 @@ void PrepPhase()
             }
             else if (IsKataSama(ck, com_upgrade))
             {
-                //uang sejumlah harga upgrade
-                comm2 = MakeCOMMAND(2, 0, 20, 0, crnt_map, player_loc, 3600);
-                Push(&S, comm2);
-                printf("Input upgrade\n");
-                total_aksi++;
-                // total_uang+=50000;
-                total_waktu += 3600;
-                // upgrade();
+
+                if(crnt_day==1){
+                    printf("Masih hari pertama cuy, bangunan aja belum ada \n");
+                }else if(Adjacency()!=6){
+                    printf("tidak ada wahana disekitarmu");
+                }else{
+                    ArrayWahana awa;
+                    if(crnt_map==1){ awa = Map1;}
+                    else if(crnt_map==2){awa=Map2;}
+                    else if(crnt_map==3){awa=Map3;}
+                    else if(crnt_map==4){awa=Map4;}
+                    x=Absis(player_loc);
+                    y=Ordinat(player_loc);
+                    int kemungkinan[4];
+                    int posibility=0;
+                    if(tipe_point[x+1][y]==5){
+                        kemungkinan[posibility] = CariWahanaByLoc(awa,MakePOINT((float)x+1,(float)y)).id;
+                        posibility++;
+                    }
+
+                    if(tipe_point[x-1][y]==5){
+                        kemungkinan[posibility] = CariWahanaByLoc(awa,MakePOINT((float)x-1,(float)y)).id;
+                        posibility++;
+                    }
+
+                    if(tipe_point[x][y+1]==5){
+                        kemungkinan[posibility] = CariWahanaByLoc(awa,MakePOINT((float)x,(float)y+1)).id;
+                        posibility++;
+                    }
+
+                    if(tipe_point[x][y-1]==5){
+                        kemungkinan[posibility] = CariWahanaByLoc(awa,MakePOINT((float)x,(float)y-1)).id;
+                        posibility++;
+                    }
+
+                    printf("pilih wahana yang mau diupgrade: \n\n");
+                    printf("ID Wahana      Nama Wahana \n");
+                    for(int xxx=0;xxx<posibility;xxx++){
+                    DetilWahana dwhn = CariWahanaByID(awa,kemungkinan[xxx]);
+                    printf("%d              ",dwhn.id);printkata(dwhn.wahana.nama);printf("\n");
+                    }
+                    comm2 = MakeCOMMAND(2, 0, 20, 0, crnt_map, player_loc, 3600);
+                    
+                }
             }
             else if (IsKataSama(ck, com_buy))
             {

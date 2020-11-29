@@ -85,7 +85,7 @@ typedef struct tHistoryUpgrade
 typedef Haddress ListHistoUpdate;
 typedef Uaddress BasisListWahana;
 
-
+void printkata(Kata K);
 //UNTUK KEPENTINGAN INISIALISASI WAHANA
 Uaddress AlokUList (infotype X,BinTree Bt,Wahana W);
 

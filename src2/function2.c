@@ -108,7 +108,7 @@ int * player_money)
     }
     while (!IsEmptyStack(exeStack))
     {
-        printf("lagi ekse bosqu\n");
+        //printf("lagi ekse bosqu\n");
         COMMAND C;
         Pop(&exeStack, &C);
         if (Comm(C) == 1)
@@ -134,6 +134,23 @@ int * player_money)
         else if (Comm(C) == 2)
         {
             upgrade();
+            switch (Map(C))
+            {
+                case 1:
+                    
+                    break;
+                case 2:
+                    
+                    break;
+                case 3:
+                    
+                    break;
+                case 4:
+                    
+                    break;
+                default:
+                    break;
+            }
             //dikurang material
             //upgrade ditambah
         }

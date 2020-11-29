@@ -321,6 +321,7 @@ int Adjacency()
     y=Ordinat(player_loc);
     /*1.Antrian, 2.Player, 3.Office, 4.Gerbang, 5.Wahana, 6.Dinding*/
     //sebelah wahana
+    
     if (tipe_point[x-1][y]==5 || tipe_point[x][y-1]==5 ||tipe_point[x+1][y]==5 || tipe_point[x][y+1]==5)
     {
         return(5);
