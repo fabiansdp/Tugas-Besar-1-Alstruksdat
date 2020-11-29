@@ -17,6 +17,7 @@ extern int player_money;
 extern TabEl Resource;
 extern int banyak;
 extern int indeks_buy;
+int temporary_index;
 extern int x,y;
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern int tipe_point[10][20];
@@ -50,8 +51,12 @@ void upgrade()
     printf("ini UPGRADE\n");
 }
 
-void buy()
+void buy(TabEl *Resource, COMMAND C)
 {
+    //ditambah ke resource
+    temporary_index = Name(C);
+    Value(*Resource,temporary_index) += banyak;
+    TulisIsiTab(*Resource);
     printf("Buy berhasil dilakukan\n");
 }
 
@@ -141,7 +146,7 @@ void execute(Stack *S)
         }
         else if (Comm(C) == 3)
         {
-            buy();
+            buy(&Resource,C);
             player_money-=Gold(C);
             // printf("Sisa uang setelah buy %d\n",player_money);
         }

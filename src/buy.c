@@ -165,8 +165,6 @@ boolean EnoughMoney(int money,int banyak,TabEl *Resource){
     else{
         price=banyak*Value(T,i);
         indeks_buy=i;
-        //ditambah ke resource
-        Value(*Resource,i) += banyak;
         return true;
     }
 }
