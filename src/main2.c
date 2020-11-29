@@ -7,7 +7,7 @@
 #include "../ADT/mesinkata.c"
 #include "../ADT/mesinkar.c"
 #include "../ADT/jam.c"
-#include "../ADT/wahana2.c"
+// #include "../ADT/wahana2.c"
 
 #include "../ADT/arraypos.c"
 // #include "../ADT/listlinier.c"

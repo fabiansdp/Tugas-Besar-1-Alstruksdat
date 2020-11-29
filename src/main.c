@@ -7,7 +7,7 @@
 #include "../ADT/mesinkata.c"
 #include "../ADT/mesinkar.c"
 #include "../ADT/jam.c"
-#include "../ADT/wahana2.c"
+// #include "../ADT/wahana2.c"
 
 #include "../ADT/arraypos.c"
 // #include "../ADT/listlinier.c"
@@ -20,7 +20,7 @@
 //kamus peta
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern BasisListWahana B;
-extern MATRIKS L;
+extern MATRIKS L,L1,L2,L3,L4;
 extern Arr_POINT AP;
 // extern int tipe_point;
 extern POINT player_loc;
@@ -99,6 +99,9 @@ int crnt_day;
 int crnt_map;
 int player_money;
 int x,y;
+//kamus main,wahana
+DetilWahana crnt_wahana;
+POINT point_wahana;
 
 void PrintLegend()
 {
@@ -571,15 +574,10 @@ void PrepPhase()
                 temp_jam = DetikToJam(43200);
                 main_loop = true;
                 prep_loop = false;
-<<<<<<< HEAD
                 if (!IsEmptyStack(S))
                 {
                     execute(&S);
                 }
-=======
-                
-                execute(&S);
->>>>>>> 0e82793ae1dcf8a7f5c7bae53258dfc5d8c95203
                 printf("Perintah diexecute\n");
             }
             else if (IsKataSama(ck, com_main))
@@ -681,12 +679,162 @@ void MainPhase()
             {
                 printf("Input repair\n");
                 if(Adjacency() == 5){ // cek player disebelah wahana
-                    if(Status(W,i) == 0){ // cek wahana rusak, MASIH BELUM BENER i nya
-                        Repair(&W,i);
-                        TambahMenit(&crnt_jam,20);
-                        temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
-                    }else printf("ID Wahana : %d\n",ID(W,0));
-                }else printf("You need to go beside Wahana\n");//kalau palyer ga disebelah wahana ga akan bisa repair
+                    x=Absis(player_loc);
+                    y=Ordinat(player_loc);
+                    switch (crnt_map)
+                    {
+                        case 1:
+                            // atas
+                            if (tipe_point[x-1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x-1,y);
+                                crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
+                            }
+                            // kiri
+                            else if (tipe_point[x][y-1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y-1);
+                                crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
+                            }
+                            //bawah
+                            else if (tipe_point[x+1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x+1,y);
+                                crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
+                            }
+                            //kanan
+                            else if (tipe_point[x][y+1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y+1);
+                                crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
+                            }                        
+                            if(crnt_wahana.wahana.status == 0)
+                            { // cek wahana rusak, MASIH BELUM BENER i nya
+                                Repair(&Map2,i);
+                                TambahMenit(&crnt_jam,20);
+                                temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                            }
+                            else 
+                            {
+                                printf("ID Wahana : %d\n",crnt_wahana.wahana.id);
+                            }
+                            break;
+                        case 2:
+                            // atas
+                            if (tipe_point[x-1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x-1,y);
+                                crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
+                            }
+                            // kiri
+                            else if (tipe_point[x][y-1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y-1);
+                                crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
+                            }
+                            //bawah
+                            else if (tipe_point[x+1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x+1,y);
+                                crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
+                            }
+                            //kanan
+                            else if (tipe_point[x][y+1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y+1);
+                                crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
+                            }                        
+                            if(crnt_wahana.wahana.status == 0)
+                            { // cek wahana rusak, MASIH BELUM BENER i nya
+                                Repair(&Map2,i);
+                                TambahMenit(&crnt_jam,20);
+                                temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                            }
+                            else 
+                            {
+                                printf("ID Wahana : %d\n",crnt_wahana.wahana.id);
+                            }
+                            break;
+                        case 3:
+                            // atas
+                            if (tipe_point[x-1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x-1,y);
+                                crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
+                            }
+                            // kiri
+                            else if (tipe_point[x][y-1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y-1);
+                                crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
+                            }
+                            //bawah
+                            else if (tipe_point[x+1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x+1,y);
+                                crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
+                            }
+                            //kanan
+                            else if (tipe_point[x][y+1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y+1);
+                                crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
+                            }                        
+                            if(crnt_wahana.wahana.status == 0)
+                            { // cek wahana rusak, MASIH BELUM BENER i nya
+                                Repair(&Map3,i);
+                                TambahMenit(&crnt_jam,20);
+                                temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                            }
+                            else 
+                            {
+                                printf("ID Wahana : %d\n",crnt_wahana.wahana.id);
+                            }
+                            break;
+                        case 4:
+                            // atas
+                            if (tipe_point[x-1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x-1,y);
+                                crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
+                            }
+                            // kiri
+                            else if (tipe_point[x][y-1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y-1);
+                                crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
+                            }
+                            //bawah
+                            else if (tipe_point[x+1][y]==5)
+                            {
+                                point_wahana = MakePOINT(x+1,y);
+                                crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
+                            }
+                            //kanan
+                            else if (tipe_point[x][y+1]==5)
+                            {
+                                point_wahana = MakePOINT(x,y+1);
+                                crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
+                            }                        
+                            if(crnt_wahana.wahana.status == 0)
+                            { // cek wahana rusak, MASIH BELUM BENER i nya
+                                Repair(&Map4,i);
+                                TambahMenit(&crnt_jam,20);
+                                temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                            }
+                            else 
+                            {
+                                printf("ID Wahana : %d\n",crnt_wahana.wahana.id);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else 
+                {
+                    printf("You need to go beside Wahana\n");//kalau palyer ga disebelah wahana ga akan bisa repair
+                }
             }  
             else if (IsKataSama(ck, com_detail))
             {
@@ -800,6 +948,10 @@ int main()
     crnt_map = 1;
     MakeMATRIKS(10, 20, &L);
     BacaPeta(crnt_map, &L);
+    BacaPeta(1,&L1);
+    BacaPeta(2,&L2);
+    BacaPeta(3,&L3);
+    BacaPeta(4,&L4);
     TitikPeta(L, AP); //set titik pada peta
 
     //setup & PrintPrep

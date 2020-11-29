@@ -53,7 +53,7 @@ int IsOneElmt(List L);
 /* *** Selektor *** */
 infotype FirstElmt (List L);
 /* Mengirimkan elemen pertama sebuah list L yang tidak kosong */
-List Tail(List L);
+List TailList(List L);
 /* Mengirimkan list L tanpa elemen pertamanya, mungkin menjadi list kosong */
 
 /* *** Konstruktor *** */

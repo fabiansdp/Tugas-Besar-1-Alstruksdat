@@ -61,7 +61,7 @@ infotype FirstElmt (List L){
   }
 }
 /* Mengirimkan elemen pertama sebuah list L yang tidak kosong */
-List Tail(List L){
+List TailList(List L){
   if(IsEmpty(L)==0){
     return Next(L);
   }else
