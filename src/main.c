@@ -555,7 +555,7 @@ void PrepPhase()
                 }
                 else
                 {
-                    comm3 = MakeCOMMAND(3, 0, 0, price, crnt_map, player_loc, 3600);
+                    comm3 = MakeCOMMAND(3, indeks_buy, 0, price, crnt_map, player_loc, 3600);
                     Push(&S, comm3);
                     // printf("Input buy\n");
                     total_aksi++;
