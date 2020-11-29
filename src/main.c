@@ -104,6 +104,25 @@ int x,y;
 //kamus main,wahana
 DetilWahana crnt_wahana;
 POINT point_wahana;
+extern ArrWRide W1,W2,W3,W4;
+
+int konvertKata(Kata K){
+    int a = K.Length;
+    int x;
+    int res = 0;
+    for(x=0;x<K.Length;x++){
+        if(K.TabKata[x]>='0' && K.TabKata[x]<='9'){
+            int pangkat = (int) pow(10,a-1);
+            int konvert = (int) K.TabKata[x];
+            konvert = konvert - 48;
+            res = res+(pangkat*(konvert));
+            a = a-1;
+        }else{
+            return -1;
+        }
+    }
+    return res;
+}
 
 void PrintLegend()
 {
@@ -166,7 +185,7 @@ void PrintMain()
     printf("\n");
     printf("Money: %d\n", player_money);
     printf("Current time: %d.%d\n", Hour(crnt_jam), Minute(crnt_jam));
-    printf("Current time: %d.%d\n", Hour(buka), Minute(tutup));
+    printf("Closing time: %d.%d\n", Hour(tutup), Minute(tutup));
     printf("Time Remaining: ");
     if (Hour(temp_jam) > 0)
         printf(" %d hour(s)", Hour(temp_jam));
@@ -195,6 +214,68 @@ void PrintMain()
     default:
         break;
     }
+    //print broken
+    printf("BROKEN WAHANA :\n");
+    switch (crnt_map)
+    {
+    case 1:
+        for (int count = 0; count < Map1.jumlahWahana; count++)
+        {
+            if (Map1.ArrayW[count].wahana.status==1)
+            {
+                printf("Terdeteksi kerusakan");
+                int name_length=Map1.ArrayW[count].wahana.nama.Length;
+                for (int count2 = 0; count2 < name_length; count2++)
+                {
+                    printf("%c",Map1.ArrayW[count].wahana.nama.TabKata[count2]);
+                }
+            }
+        }
+        break;
+    case 2:
+        for (int count = 0; count < Map2.jumlahWahana; count++)
+        {
+            if (Map2.ArrayW[count].wahana.status==1)
+            {
+                printf("Terdeteksi kerusakan");
+                int name_length=Map2.ArrayW[count].wahana.nama.Length;
+                for (int count2 = 0; count2 < name_length; count2++)
+                {
+                    printf("%c",Map2.ArrayW[count].wahana.nama.TabKata[count2]);
+                }
+            }
+        }
+        break;
+    case 3:
+        for (int count = 0; count < Map3.jumlahWahana; count++)
+        {
+            if (Map3.ArrayW[count].wahana.status==1)
+            {
+                int name_length=Map3.ArrayW[count].wahana.nama.Length;
+                for (int count2 = 0; count2 < name_length; count2++)
+                {
+                    printf("%c",Map3.ArrayW[count].wahana.nama.TabKata[count2]);
+                }
+            }
+        }
+        break;
+    case 4:
+        for (int count = 0; count < Map4.jumlahWahana; count++)
+        {
+            if (Map4.ArrayW[count].wahana.status==1)
+            {
+                int name_length=Map4.ArrayW[count].wahana.nama.Length;
+                for (int count2 = 0; count2 < name_length; count2++)
+                {
+                    printf("%c",Map4.ArrayW[count].wahana.nama.TabKata[count2]);
+                }
+            }
+        }
+        break;
+    default:
+        break;
+    }
+    printf("\n");
     printf("Masukkan Perintah: ");    
 }
 
@@ -644,11 +725,17 @@ void PrepPhase()
 
 void MainPhase()
 {
+    //setup antrian
+    // MakeEmpty(&Q1,MaxAntrian);
+    // MakeEmpty(&Q2,MaxAntrian);
+    // MakeEmpty(&Q3,MaxAntrian);
+    // MakeEmpty(&Q4,MaxAntrian);
     //prep phase loop
-    while (main_loop)
+    while(main_loop)
     {
         //Managemen antrian dan wahana rusak
         srand(JamToDetik(crnt_jam));
+        int randomrusak;
         int randomizer=(rand()%10)+1;
         //masuk wahana
         if (randomizer<8)
@@ -735,6 +822,34 @@ void MainPhase()
                 break;
             }
         }
+        else if (randomizer==1)
+        {
+            switch (crnt_map)
+            {
+            case 1:
+                randomrusak = (rand()%Map1.jumlahWahana);
+                Broken(&Map1.ArrayW[randomrusak].wahana);
+                printf("Ada yang rusak di map1\n");
+                break;
+            case 2:
+                randomrusak= (rand()%Map2.jumlahWahana);
+                Broken(&Map2.ArrayW[randomrusak].wahana);
+                printf("Ada yang rusak di map2\n");
+                break;
+            case 3:
+                randomrusak= (rand()%Map3.jumlahWahana);
+                Broken(&Map3.ArrayW[randomrusak].wahana);
+                printf("Ada yang rusak di map3\n");
+                break;
+            case 4:
+                randomrusak= (rand()%Map4.jumlahWahana);
+                Broken(&Map4.ArrayW[randomrusak].wahana);
+                printf("Ada yang rusak di map4\n");
+                break;
+            default:
+                break;
+            }
+        }
         STARTKATA();
         ck = CKata;
         if (EndKata)
@@ -753,7 +868,7 @@ void MainPhase()
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
                 if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
                 {
-                    printf("Masukkan ‘office’ untuk mengakses office\n");
+                    printf("Masukkan kata office untuk mengakses office\n");
                 }
             }
             else if (IsKataSama(ck, com_A))
@@ -828,7 +943,7 @@ void MainPhase()
                                 crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
                             }                        
                             IdWahana = crnt_wahana.id;   
-                            if(Map1.ArrayW[IdWahana].wahana.status == 0)
+                            if(Map1.ArrayW[IdWahana].wahana.status == 1)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
                                 printf("Status sebelum diubah :%d\n",Map1.ArrayW[IdWahana].wahana.status);
                                 Repair(&Map1.ArrayW[IdWahana].wahana);
@@ -866,7 +981,7 @@ void MainPhase()
                                 crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
                             }   
                             IdWahana = crnt_wahana.id;                       
-                            if(Map2.ArrayW[IdWahana].wahana.status == 0)
+                            if(Map2.ArrayW[IdWahana].wahana.status == 1)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
                                 Repair(&Map2.ArrayW[IdWahana].wahana);
                                 printf("Status berubah menjadi :%d\n",Map2.ArrayW[IdWahana].wahana.status);
@@ -900,7 +1015,7 @@ void MainPhase()
                                 crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
                             }
                             IdWahana = crnt_wahana.id;                         
-                            if(Map3.ArrayW[IdWahana].wahana.status == 0)
+                            if(Map3.ArrayW[IdWahana].wahana.status == 1)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
                                 Repair(&Map3.ArrayW[IdWahana].wahana);
                                 printf("Status berubah menjadi :%d\n",Map3.ArrayW[IdWahana].wahana.status);
@@ -934,7 +1049,7 @@ void MainPhase()
                                 crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
                             }
                             IdWahana = crnt_wahana.id;                         
-                            if(Map4.ArrayW[IdWahana].wahana.status == 0)
+                            if(Map4.ArrayW[IdWahana].wahana.status == 1)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
                                 Repair(&Map4.ArrayW[IdWahana].wahana);
                                 printf("Status berubah menjadi :%d\n",Map4.ArrayW[IdWahana].wahana.status);
@@ -994,6 +1109,10 @@ void MainPhase()
             crnt_jam = buka;
             temp_jam = DetikToJam(43200);
             main_loop = false;
+            total_aksi = 0;
+            total_jam = DetikToJam(0);
+            total_uang = 0;
+            total_waktu = 0;
         }
         if (main_loop&&!prep_loop)
         {
@@ -1071,24 +1190,31 @@ int main()
 
     /*antrian*/
     //setup antrian
-    MakeEmpty(&Q1,MaxAntrian);
-    MakeEmpty(&Q2,MaxAntrian);
-    MakeEmpty(&Q3,MaxAntrian);
-    MakeEmpty(&Q4,MaxAntrian);
+    // MakeEmpty(&Q1,MaxAntrian);
+    // MakeEmpty(&Q2,MaxAntrian);
+    // MakeEmpty(&Q3,MaxAntrian);
+    // MakeEmpty(&Q4,MaxAntrian);
+
+    //setup mainphase
+    W1.ElP=0;W2.ElP=0;W3.ElP=0;W4.ElP=0;
 
     /*prep phase loop*/
-    CreateEmptyStack(&S);
     prep_loop = true;
     main_loop = false;
     while (prep_loop||main_loop)
     {
         PrintPrep();
+        CreateEmptyStack(&S);
         PrepPhase();
         printf("%d\n",Map1.jumlahWahana);
         PrintAllWahana(Map1);
+        MakeEmpty(&Q1,MaxAntrian);
+        MakeEmpty(&Q2,MaxAntrian);
+        MakeEmpty(&Q3,MaxAntrian);
+        MakeEmpty(&Q4,MaxAntrian);
         PrintMain();
         MainPhase();
-        puts("Loop");
+        // puts("Loop");
         crnt_day++;
     }
 

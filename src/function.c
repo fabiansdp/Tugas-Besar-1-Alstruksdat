@@ -11,39 +11,72 @@
 // #include "../ADT/listlinier.h"
 #include "../ADT/bintree.h"
 #include "../ADT/listrek.h"
+#include "../ADT/prioqueuechar.h"
 // #include "../ADT/arraypos.h"
 
 extern int player_money;
 extern TabEl Resource;
-extern int banyak;
+extern int banyak; 
 extern int indeks_buy;
 int temporary_index;
 extern int x,y;
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern int tipe_point[10][20];
+extern int crnt_map;
 BasisListWahana B;
+ArrWRide W1,W2,W3,W4; //wahana untuk dinaiki
 // ===================================================PREPARATION PHASE========================================================
 
 void build(ArrayWahana *W, COMMAND C)
 {
     int x = Absis(Coordinate(C))-1;
     int y = Ordinat(Coordinate(C));
-
-    // Cek wahana di lokasi atasnya ada wahana atau tidak
     POINT LokasiAtas = MakePOINT(x, y);
-    DetilWahana CekWahana = CariWahanaByLoc(*W, LokasiAtas);
-
-    // Cek ada wahana, border, office, atau gerbang
-    if ((tipe_point[x][y] != 6) && (tipe_point[x][y] != 3) && (tipe_point[x][y] != 4)) {
-        Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
-        BinTree TreeBaru = SearchUList(B, Name(C));
-        DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
-        PushNewWahana(W, DetilBaru);
-        player_money -= Gold(C);
-
-    } else {
-        puts("Tidak bisa membangun di lokasi ini!");
+    Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
+    BinTree TreeBaru = SearchUList(B, Name(C));
+    DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
+    PushNewWahana(W, DetilBaru);
+    player_money -= Gold(C);
+    //tambah ke WahanaRide
+    switch (crnt_map)
+    {
+    case 1:
+        W1.ArrayW[W1.ElP].MaxP=WahanaBaru.kapasitas;
+        W1.ArrayW[W1.ElP].isBuilt=true;
+        W1.ElP++;
+        break;
+    case 2:
+        W2.ArrayW[W2.ElP].MaxP=WahanaBaru.kapasitas;
+        W2.ArrayW[W2.ElP].isBuilt=true;
+        W2.ElP++;
+        break;
+    case 3:
+        W3.ArrayW[W3.ElP].MaxP=WahanaBaru.kapasitas;
+        W3.ArrayW[W3.ElP].isBuilt=true;
+        W3.ElP++;
+        break;
+    case 4:
+        W4.ArrayW[W4.ElP].MaxP=WahanaBaru.kapasitas;
+        W4.ArrayW[W4.ElP].isBuilt=true;
+        W4.ElP++;
+        break;
+    default:
+        break;
     }
+
+    // // Cek wahana di lokasi atasnya ada wahana atau tidak
+    // POINT LokasiAtas = MakePOINT(x, y);
+    // DetilWahana CekWahana = CariWahanaByLoc(*W, LokasiAtas);
+    // // Cek ada wahana, border, office, atau gerbang
+    // if ((tipe_point[x][y] != 6) && (tipe_point[x][y] != 3) && (tipe_point[x][y] != 4)) {
+    //     Wahana WahanaBaru = SearchWahanaBase(B, Name(C));
+    //     BinTree TreeBaru = SearchUList(B, Name(C));
+    //     DetilWahana DetilBaru = DirikanWahanaBaru((*W).jumlahWahana, WahanaBaru, LokasiAtas, TreeBaru);
+    //     PushNewWahana(W, DetilBaru);
+    //     player_money -= Gold(C);
+    // } else {
+    //     puts("Tidak bisa membangun di lokasi ini!");
+    // }
 }
 
 void upgrade()
@@ -108,6 +141,7 @@ void undo(Stack *S)
 void execute(Stack *S)
 {
     Stack exeStack;
+    CreateEmptyStack(&exeStack);
     while (!IsEmptyStack(*S))
     {
         COMMAND C;
@@ -159,6 +193,12 @@ void execute(Stack *S)
 }
 
 // ==============================================================MAIN PHASE==========================================================
+
+// void Serve()
+// {
+    
+// }
+
 
 // ========================office=============================================
 // void DetailsCommandOffice(List map)

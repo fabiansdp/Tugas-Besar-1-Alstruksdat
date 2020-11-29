@@ -28,6 +28,17 @@ typedef struct {
     addr TAIL;  /* alamat penambahan */
     int MaxElQ;     /* Max elemen queue */
 }PrioQueueChar;
+//untuk serve
+typedef struct {
+    infotype_pq ArrayP[30];   /* array menyimpan infotype_pq */
+    int MaxP,CrntP;     /* MaxP:maks penumpang/kapasitas dan CrntP:banyak penumpang */
+    boolean isBuilt;
+}WahanaRide;
+typedef struct {
+    WahanaRide ArrayW[100];   /* array menyimpan infotype_pq */
+    int ElP;      /* Banyak elemen */
+}ArrWRide;
+
 /* Definisi PrioQueueChar kosong: HEAD=Nil; TAIL=Nil. */
 
 /* ********* AKSES (Selektor) ********* */
