@@ -12,6 +12,7 @@
 #include "../ADT/listrek.c"
 #include "../ADT/arraypos.c"
 #include "../ADT/prioqueuechar.c"
+#include "../ADT/graph.c"
 // #include "../ADT/listlinier.c"
 //include from src
 #include "peta.c"
@@ -20,10 +21,12 @@
 #include "buy.c"
 #include "repair.c"
 #include "office.c"
+//#include "serve.c"
 //kamus peta
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern BasisListWahana B;
-extern MATRIKS L,L1,L2,L3,L4;
+extern MATRIKS L;
+MATRIKS L1,L2,L3,L4;
 extern Arr_POINT AP;
 // extern int tipe_point;
 extern POINT player_loc;
@@ -60,6 +63,7 @@ boolean start_loop;
 boolean prep_loop;
 boolean main_loop;
 //kamus main,kata
+Kata ckserve;
 Kata ck;
 Kata start;
 Kata exit_menu;
@@ -104,11 +108,15 @@ int player_money;
 int x,y;
 //kamus main,wahana
 DetilWahana crnt_wahana;
+DetilWahana tempwahana;
 POINT point_wahana;
 extern ArrWRide W1,W2,W3,W4;
 //kamus main,upgrade
 ListHistoUpdate sejarahUpgrade;
 char mat[20][256];
+//kamus main,graph
+Graph asd;
+gaddrNode gd;
 
 void PrintLegend()
 {
@@ -496,7 +504,7 @@ void ReadKataStart()
     }
 }
 
-void PrepPhase()
+void PrepPhase(MATRIKS *L1,MATRIKS *L2, MATRIKS *L3, MATRIKS *L4)
 {
     //prep phase loop
     while (prep_loop)
@@ -510,12 +518,45 @@ void PrepPhase()
         }
         while (!EndKata)
         {
+            x=Absis(player_loc);
+            y=Ordinat(player_loc);
             if (IsKataSama(ck, com_W))
             {
                 printf("Input w\n");
                 Movement('W', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                if (tipe_point[x-1][y]==4)
+                {
+                    gaddrNode temp_hasil;
+                    switch (crnt_map)
+                    {
+                    case 3:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L3,x,y)='-';
+                        *L3=L;
+                        L=*L2;
+                        crnt_map=2;
+                        temp_hasil=SearchNode(asd,42);
+                        ElmtM(L,Xref(temp_hasil)-1,Yref(temp_hasil))='P';
+                        player_loc=MakePOINT(Xref(temp_hasil)-1,Yref(temp_hasil));
+                        TitikPeta(L,AP); 
+                        break;
+                    case 4:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L4,x,y)='-';
+                        *L4=L;
+                        L=*L1;
+                        crnt_map=1;
+                        temp_hasil=SearchNode(asd,41);
+                        ElmtM(L,Xref(temp_hasil)-1,Yref(temp_hasil))='P';
+                        player_loc=MakePOINT(Xref(temp_hasil)-1,Yref(temp_hasil));
+                        TitikPeta(L,AP);
+                        break;
+                    default:
+                        break;
+                    }
+                }
             }
             else if (IsKataSama(ck, com_A))
             {
@@ -523,6 +564,37 @@ void PrepPhase()
                 Movement('A', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                if (tipe_point[x][y-1]==4)
+                {
+                    gaddrNode temp_hasil;
+                    switch (crnt_map)
+                    {
+                    case 2:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L2,x,y)='-';
+                        *L2=L;
+                        L=*L1;
+                        crnt_map=1;
+                        temp_hasil=SearchNode(asd,31);
+                        ElmtM(L,Xref(temp_hasil),Yref(temp_hasil)-1)='P';
+                        player_loc=MakePOINT(Xref(temp_hasil),Yref(temp_hasil)-1);
+                        TitikPeta(L,AP); 
+                        break;
+                    case 3:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L3,x,y)='-';
+                        *L3=L;
+                        L=*L4;
+                        crnt_map=4;
+                        temp_hasil=SearchNode(asd,34);
+                        ElmtM(L,Xref(temp_hasil),Yref(temp_hasil)-1)='P';
+                        player_loc=MakePOINT(Xref(temp_hasil),Yref(temp_hasil)-1);
+                        TitikPeta(L,AP);
+                        break;
+                    default:
+                        break;
+                    }
+                }
             }
             else if (IsKataSama(ck, com_S))
             {
@@ -530,6 +602,37 @@ void PrepPhase()
                 Movement('S', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                if (tipe_point[x+1][y]==4)
+                {
+                    gaddrNode temp_hasil;
+                    switch (crnt_map)
+                    {
+                    case 1:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L1,x,y)='-';
+                        *L1=L;
+                        L=*L4;
+                        crnt_map=4;
+                        temp_hasil=SearchNode(asd,24);
+                        ElmtM(L,Xref(temp_hasil)+1,Yref(temp_hasil))='P';
+                        player_loc=MakePOINT(Xref(temp_hasil)+1,Yref(temp_hasil));
+                        TitikPeta(L,AP); 
+                        break;
+                    case 2:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L2,x,y)='-';
+                        *L2=L;
+                        L=*L3;
+                        crnt_map=3;
+                        temp_hasil=SearchNode(asd,23);
+                        ElmtM(L,Xref(temp_hasil)+1,Yref(temp_hasil))='P';
+                        player_loc=MakePOINT(Xref(temp_hasil)+1,Yref(temp_hasil));
+                        TitikPeta(L,AP);
+                        break;
+                    default:
+                        break;
+                    }
+                }
             }
             else if (IsKataSama(ck, com_D))
             {
@@ -537,6 +640,38 @@ void PrepPhase()
                 Movement('D', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                if (tipe_point[x][y+1]==4)
+                {
+                    gaddrNode temp_hasil;
+                    switch (crnt_map)
+                    {
+                    case 1:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L1,x,y)='-';
+                        *L1=L;
+                        L=*L2;
+                        crnt_map=2;
+                        temp_hasil=SearchNode(asd,12);
+                        printf("%d %d\n",Xref(temp_hasil),Yref(temp_hasil)+1);
+                        ElmtM(L,Xref(temp_hasil),Yref(temp_hasil)+1)='P';
+                        player_loc=MakePOINT(Xref(temp_hasil),Yref(temp_hasil+1));
+                        TitikPeta(L,AP); 
+                        break;
+                    case 4:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L4,x,y)='-';
+                        *L4=L;
+                        L=*L3;
+                        crnt_map=3;
+                        temp_hasil=SearchNode(asd,13);
+                        ElmtM(L,Xref(temp_hasil),Yref(temp_hasil)+1)='P';
+                        player_loc=MakePOINT(Xref(temp_hasil),Yref(temp_hasil)+1);
+                        TitikPeta(L,AP);
+                        break;
+                    default:
+                        break;
+                    }
+                }
             }
             // COMMAND MakeCOMMAND(int comm, int name, int amount, int gold, int map, POINT coordinate, int time);
             else if (IsKataSama(ck, com_build))
@@ -827,7 +962,7 @@ void PrepPhase()
     }
 }
 
-void MainPhase()
+void MainPhase(MATRIKS *L1,MATRIKS *L2, MATRIKS *L3, MATRIKS *L4)
 {
     //setup antrian
     // MakeEmpty(&Q1,MaxAntrian);
@@ -970,9 +1105,40 @@ void MainPhase()
                 Movement('W', &L);
                 TambahMenit(&crnt_jam, 5);
                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
-                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15 && crnt_map==1)
                 {
                     printf("Masukkan kata office untuk mengakses office\n");
+                }
+                if (tipe_point[x-1][y]==4)
+                {
+                    gaddrNode temp_hasil;
+                    switch (crnt_map)
+                    {
+                    case 3:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L3,x,y)='-';
+                        *L3=L;
+                        L=*L2;
+                        crnt_map=2;
+                        temp_hasil=SearchNode(asd,42);
+                        ElmtM(L,Xref(temp_hasil)-1,Yref(temp_hasil))='P';
+                        player_loc=MakePOINT(Xref(temp_hasil)-1,Yref(temp_hasil));
+                        TitikPeta(L,AP); 
+                        break;
+                    case 4:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L4,x,y)='-';
+                        *L4=L;
+                        L=*L1;
+                        crnt_map=1;
+                        temp_hasil=SearchNode(asd,41);
+                        ElmtM(L,Xref(temp_hasil)-1,Yref(temp_hasil))='P';
+                        player_loc=MakePOINT(Xref(temp_hasil)-1,Yref(temp_hasil));
+                        TitikPeta(L,AP);
+                        break;
+                    default:
+                        break;
+                    }
                 }
             }
             else if (IsKataSama(ck, com_A))
@@ -985,6 +1151,37 @@ void MainPhase()
                 {
                     printf("Masukkan kata office untuk mengakses office\n");
                 }
+                if (tipe_point[x][y-1]==4)
+                {
+                    gaddrNode temp_hasil;
+                    switch (crnt_map)
+                    {
+                    case 2:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L2,x,y)='-';
+                        *L2=L;
+                        L=*L1;
+                        crnt_map=1;
+                        temp_hasil=SearchNode(asd,31);
+                        ElmtM(L,Xref(temp_hasil),Yref(temp_hasil)-1)='P';
+                        player_loc=MakePOINT(Xref(temp_hasil),Yref(temp_hasil)-1);
+                        TitikPeta(L,AP); 
+                        break;
+                    case 3:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L3,x,y)='-';
+                        *L3=L;
+                        L=*L4;
+                        crnt_map=4;
+                        temp_hasil=SearchNode(asd,34);
+                        ElmtM(L,Xref(temp_hasil),Yref(temp_hasil)-1)='P';
+                        player_loc=MakePOINT(Xref(temp_hasil),Yref(temp_hasil)-1);
+                        TitikPeta(L,AP);
+                        break;
+                    default:
+                        break;
+                    }
+                }
             }
             else if (IsKataSama(ck, com_S))
             {
@@ -995,6 +1192,37 @@ void MainPhase()
                 if (Absis(player_loc)==7 && Ordinat(player_loc)==15 && crnt_map==1)
                 {
                     printf("Masukkan kata office untuk mengakses office\n");
+                }
+                if (tipe_point[x+1][y]==4)
+                {
+                    gaddrNode temp_hasil;
+                    switch (crnt_map)
+                    {
+                    case 1:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L1,x,y)='-';
+                        *L1=L;
+                        L=*L4;
+                        crnt_map=4;
+                        temp_hasil=SearchNode(asd,24);
+                        ElmtM(L,Xref(temp_hasil)+1,Yref(temp_hasil))='P';
+                        player_loc=MakePOINT(Xref(temp_hasil)+1,Yref(temp_hasil));
+                        TitikPeta(L,AP); 
+                        break;
+                    case 2:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L2,x,y)='-';
+                        *L2=L;
+                        L=*L3;
+                        crnt_map=3;
+                        temp_hasil=SearchNode(asd,23);
+                        ElmtM(L,Xref(temp_hasil)+1,Yref(temp_hasil))='P';
+                        player_loc=MakePOINT(Xref(temp_hasil)+1,Yref(temp_hasil));
+                        TitikPeta(L,AP);
+                        break;
+                    default:
+                        break;
+                    }
                 }
             }
             else if (IsKataSama(ck, com_D))
@@ -1007,10 +1235,91 @@ void MainPhase()
                 {
                     printf("Masukkan kata office untuk mengakses office\n");
                 }
+                if (tipe_point[x][y+1]==4)
+                {
+                    gaddrNode temp_hasil;
+                    switch (crnt_map)
+                    {
+                    case 1:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L1,x,y)='-';
+                        *L1=L;
+                        L=*L2;
+                        crnt_map=2;
+                        temp_hasil=SearchNode(asd,12);
+                        printf("%d %d\n",Xref(temp_hasil),Yref(temp_hasil)+1);
+                        ElmtM(L,Xref(temp_hasil),Yref(temp_hasil)+1)='P';
+                        player_loc=MakePOINT(Xref(temp_hasil),Yref(temp_hasil+1));
+                        TitikPeta(L,AP); 
+                        break;
+                    case 4:
+                        ElmtM(L,x,y)='-';
+                        ElmtM(*L4,x,y)='-';
+                        *L4=L;
+                        L=*L3;
+                        crnt_map=3;
+                        temp_hasil=SearchNode(asd,13);
+                        ElmtM(L,Xref(temp_hasil),Yref(temp_hasil)+1)='P';
+                        player_loc=MakePOINT(Xref(temp_hasil),Yref(temp_hasil)+1);
+                        TitikPeta(L,AP);
+                        break;
+                    default:
+                        break;
+                    }
+                }
             }
             else if (IsKataSama(ck, com_serve))
             {
-                printf("Input serve\n");
+                // STARTKATA();
+                // ckserve = CKata;
+                // int id_wahana;
+                // if(IsKataSama(ckserve,CandyCrush))
+                // {
+                //     id_wahana = 11;
+                //     serve(id_wahana);
+                //     //tambah waktu
+                // }
+                // else if(IsKataSama(ckserve,ChocolateForest))
+                // {
+                //     id_wahana = 12;
+                //     serve(id_wahana);
+                //     //tambah waktu
+                // }
+                // else if(IsKataSama(ckserve,BombomCar))
+                // {
+                //     id_wahana = 13;
+                //     serve(id_wahana);
+                //     //tambah waktu
+                // }
+                // else if(IsKataSama(ckserve,LemonSplash))
+                // {
+                //     id_wahana = 14;
+                //     serve(id_wahana);
+                //     //tambah waktu
+                // }
+                // else if(IsKataSama(ckserve,CandyVillage))
+                // {
+                //     id_wahana = 15;
+                //     serve(id_wahana);
+                //     //tambah waktu
+                // }
+                // else if(IsKataSama(ckserve,CandySwing))
+                // {
+                //     id_wahana = 16;
+                //     serve(id_wahana);
+                //     //tambah waktu
+                // }
+                // else if(IsKataSama(ckserve,BlackForestTornado))
+                // {
+                //     id_wahana = 17;
+                //     serve(id_wahana);
+                //     //tambah waktu
+                // }
+                // else
+                // {
+                //     printf("Wahana is not available\n");
+                // }
+ 
             }
             else if (IsKataSama(ck, com_repair))
             {
@@ -1438,6 +1747,34 @@ int main()
     //setup mainphase
     W1.ElP=0;W2.ElP=0;W3.ElP=0;W4.ElP=0;
 
+    //setup graph
+    //<, ^, >, V = Gerbang
+    //<=1,'^'=2,'>'=3, 'V'=4
+    //ID=Tipe+peta
+    //inisialisasi titik pada graph
+    //map1
+    CreateGraph(&asd,31,2,19);
+    InsertNode(&asd,41,9,9,&gd);
+    //map2    
+    InsertNode(&asd,42,9,9,&gd);
+    InsertNode(&asd,12,2,0,&gd);
+    //map3     
+    InsertNode(&asd,23,0,9,&gd);
+    InsertNode(&asd,13,7,0,&gd);
+    //map4 
+    InsertNode(&asd,24,0,9,&gd);
+    InsertNode(&asd,34,7,19,&gd);
+    // //inisialisasi sisi pada graph
+    // void InsertEdge(Graph * G, infotype prec, infotype succ);
+    InsertEdge(&asd,31,12);
+    InsertEdge(&asd,41,24);
+    InsertEdge(&asd,42,23);
+    InsertEdge(&asd,12,31);
+    InsertEdge(&asd,23,42);
+    InsertEdge(&asd,13,34);
+    InsertEdge(&asd,24,41);
+    InsertEdge(&asd,34,13);
+    PrintGraph(asd);
     /*prep phase loop*/
     prep_loop = true;
     main_loop = false;
@@ -1445,7 +1782,7 @@ int main()
     {
         PrintPrep();
         CreateEmptyStack(&S);
-        PrepPhase();
+        PrepPhase(&L1,&L2,&L3,&L4);
         printf("%d\n",Map1.jumlahWahana);
         PrintAllWahana(Map1);
         MakeEmpty(&Q1,MaxAntrian);
@@ -1453,7 +1790,7 @@ int main()
         MakeEmpty(&Q3,MaxAntrian);
         MakeEmpty(&Q4,MaxAntrian);
         PrintMain();
-        MainPhase();
+        MainPhase(&L1,&L2,&L3,&L4);
         // puts("Loop");
         crnt_day++;
     }

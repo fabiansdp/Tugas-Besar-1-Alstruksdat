@@ -6,7 +6,8 @@
 #include "../ADT/point.c"
 
 /* Kamus */
-MATRIKS L,L1,L2,L3,L4;
+MATRIKS L;
+// L1,L2,L3,L4;
 typedef struct {
 	POINT P[200];
     int tipe[200];
@@ -15,6 +16,7 @@ Arr_POINT AP;
 int tipe_point[10][20];
 POINT player_loc; 
 
+extern int crnt_map;
 // char L[10][20];
 /* Algoritma */
 void BacaPeta(int x, MATRIKS *L)
@@ -197,7 +199,7 @@ void Movement(char ch, MATRIKS *L)
             //ubah matriks peta
             ElmtM(*L,x-1,y)=ElmtM(*L,x,y);
             ElmtM(*L,x,y)='-';
-            if (x==7&&y==15)
+            if (x==7&&y==15 && crnt_map==1)
             {
                 ElmtM(*L,x,y)='O';
             }
@@ -218,7 +220,7 @@ void Movement(char ch, MATRIKS *L)
             tipe_point[x][y]=0;
             //ubah matriks peta
             ElmtM(*L,x,y-1)=ElmtM(*L,x,y);
-            if (x==7&&y==15)
+            if (x==7&&y==15 && crnt_map==1)
             {
                 ElmtM(*L,x,y)='O';
             }
@@ -239,7 +241,7 @@ void Movement(char ch, MATRIKS *L)
             tipe_point[x][y]=0;
             //ubah matriks peta
             ElmtM(*L,x+1,y)=ElmtM(*L,x,y);
-            if (x==7&&y==15)
+            if (x==7&&y==15 && crnt_map==1)
             {
                 ElmtM(*L,x,y)='O';
             }
@@ -260,7 +262,7 @@ void Movement(char ch, MATRIKS *L)
             tipe_point[x][y]=0;
             //ubah matriks peta
             ElmtM(*L,x,y+1)=ElmtM(*L,x,y);
-            if (x==7&&y==15)
+            if (x==7&&y==15&& crnt_map==1)
             {
                 ElmtM(*L,x,y)='O';
             }

@@ -54,14 +54,7 @@ typedef struct {
 #define MaxEl(Q)    (Q).MaxElQ
 #define ElmtQ(Q,i)   (Q).T[(i)]
 #define WahanaPengunjung(e) (e).whn_p
-/* ********* Prototype ********* */
-boolean IsEmptyQueue (PrioQueueChar Q);
-/* Mengirim true jika Q kosong: lihat definisi di atas */
-boolean IsFullQueue (PrioQueueChar Q);
-/* Mengirim true jika tabel penampung elemen Q sudah penuh */
-/* yaitu mengandung elemen sebanyak MaxEl */
-int NBElmtQueue (PrioQueueChar Q);
-/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
+#define WahanaRide(Q,i) (Q).ArrayW[i]
 
 /* *** Kreator *** */
 void MakeEmpty (PrioQueueChar * Q, int Max);

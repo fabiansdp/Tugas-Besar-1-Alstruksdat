@@ -4,18 +4,20 @@
 #include"boolean.h"
 
 //konstruktor
-void CreateGraph(Graph * L,infotype X){
-    FirstGraf(*L) = GrafAlokNode(X);
+void CreateGraph(Graph * L,infotypeG Id,infotypeG X,infotypeG Y){
+    FirstGraf(*L) = GrafAlokNode(Id,X,Y);
 }
 
-gaddrNode GrafAlokNode(infotype X){
+gaddrNode GrafAlokNode(infotypeG Id,infotypeG X,infotypeG Y){
     GrafNode * a;
     a = (GrafNode *) malloc(sizeof(GrafNode));
     if(a!=NULL){
-        IdGraf(a) = X;
+        IdGraf(a) = Id;
         NPred(a) = 0;
         Trail(a) = NULL;
-        NextGraf(a) = NULL;  
+        NextGraf(a) = NULL;
+        Xref(a) = X;
+        Yref(a) = Y;  
     }
     return a;
 }
@@ -39,7 +41,7 @@ void dealokSuccNode(addrSuccNode Pn){
 }
 
 //fungsilain
-gaddrNode SearchNode(Graph G,infotype X){
+gaddrNode SearchNode(Graph G,infotypeG X){
     if(FirstGraf(G)==NULL){
         return NULL;
     }else if(IdGraf(FirstGraf(G))==X){
@@ -50,7 +52,7 @@ gaddrNode SearchNode(Graph G,infotype X){
     }
 }
 
-addrSuccNode SearchEdge(Graph G, infotype prec, infotype succ){
+addrSuccNode SearchEdge(Graph G, infotypeG prec, infotypeG succ){
     gaddrNode a = FirstGraf(G);
     boolean flag = false;
     addrSuccNode retadr = NULL;
@@ -74,9 +76,9 @@ addrSuccNode SearchEdge(Graph G, infotype prec, infotype succ){
     return retadr;
 }
 
-void InsertNode(Graph * G, infotype X, gaddrNode * Pn){
+void InsertNode(Graph * G, infotypeG Id,infotypeG X,infotypeG Y, gaddrNode * Pn){
     if(FirstGraf(*G)==NULL){
-        (*Pn) = GrafAlokNode(X);
+        (*Pn) = GrafAlokNode(Id,X,Y);
         FirstGraf(*G) = (*Pn);
     }else{
         gaddrNode a = FirstGraf(*G);
@@ -85,12 +87,13 @@ void InsertNode(Graph * G, infotype X, gaddrNode * Pn){
             a = NextGraf(a);
         }
 
-        (*Pn) = GrafAlokNode(X);
-        NextGraf(a) = (*Pn);
+        gaddrNode gg = GrafAlokNode(Id,X,Y);
+        NextGraf(a) = gg;
+        (*Pn) = gg;
     }
 }
 
-void InsertEdge(Graph * G, infotype prec, infotype succ){
+void InsertEdge(Graph * G, infotypeG prec, infotypeG succ){
     if(SearchNode(*G,prec)!=NULL && SearchNode(*G,succ)!=NULL){
         gaddrNode lok =  SearchNode(*G,prec);
         gaddrNode tuj =  SearchNode(*G,succ);
@@ -107,7 +110,7 @@ void InsertEdge(Graph * G, infotype prec, infotype succ){
         
     }else if(SearchNode(*G,prec)!=NULL){
         gaddrNode p;
-        InsertNode(G,succ,&p);
+        InsertNode(G,succ,0,0,&p);
         gaddrNode lok =  SearchNode(*G,prec);
         NPred(p)++;
         addrSuccNode c = Trail(lok);
@@ -122,13 +125,13 @@ void InsertEdge(Graph * G, infotype prec, infotype succ){
     }else if(SearchNode(*G,succ)!=NULL){
         gaddrNode p;
         gaddrNode tuj =  SearchNode(*G,succ);
-        InsertNode(G,prec,&p);
+        InsertNode(G,prec,0,0,&p);
         Trail(p) = AlokSuccNode(tuj);
         NPred(tuj)++;
     }else{
         gaddrNode p,pp;
-        InsertNode(G,prec,&p);
-        InsertNode(G,succ,&pp);
+        InsertNode(G,prec,0,0,&p);
+        InsertNode(G,succ,0,0,&pp);
         NPred(pp)++;
         Trail(p) = AlokSuccNode(pp);
     }
@@ -138,7 +141,7 @@ void PrintGraph(Graph G){
     gaddrNode a = FirstGraf(G);
     while (a!=NULL)
     {
-        printf("<%d> => ",IdGraf(a));
+        printf("<%d (%d,%d)> => ",IdGraf(a),Xref(a),Yref(a));
         addrSuccNode b = Trail(a);
         while (b!=NULL)
         {
