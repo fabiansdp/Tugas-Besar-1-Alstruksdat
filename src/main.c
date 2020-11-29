@@ -799,6 +799,7 @@ void MainPhase()
                 if(Adjacency() == 5){ // cek player disebelah wahana
                     x=Absis(player_loc);
                     y=Ordinat(player_loc);
+                    int IdWahana;
                     switch (crnt_map)
                     {
                         case 1:
@@ -826,12 +827,17 @@ void MainPhase()
                                 point_wahana = MakePOINT(x,y+1);
                                 crnt_wahana = CariWahanaByLoc(Map1, point_wahana);
                             }                        
-                            if(crnt_wahana.wahana.status == 0)
+                            IdWahana = crnt_wahana.id;   
+                            if(Map1.ArrayW[IdWahana].wahana.status == 0)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
-                                Repair(&crnt_wahana);
-                                printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
+                                printf("Status sebelum diubah :%d\n",Map1.ArrayW[IdWahana].wahana.status);
+                                Repair(&Map1.ArrayW[IdWahana].wahana);
+                                printf("Status berubah menjadi :%d\n",Map1.ArrayW[IdWahana].wahana.status);
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
+                            }
+                            else{
+                                printf("Status akhir :%d\n",Map1.ArrayW[IdWahana].wahana.status);
                             }
                             break;
                         case 2:
@@ -858,11 +864,12 @@ void MainPhase()
                             {
                                 point_wahana = MakePOINT(x,y+1);
                                 crnt_wahana = CariWahanaByLoc(Map2, point_wahana);
-                            }                        
-                            if(crnt_wahana.wahana.status == 0)
+                            }   
+                            IdWahana = crnt_wahana.id;                       
+                            if(Map2.ArrayW[IdWahana].wahana.status == 0)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
-                                Repair(&crnt_wahana);
-                                printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
+                                Repair(&Map2.ArrayW[IdWahana].wahana);
+                                printf("Status berubah menjadi :%d\n",Map2.ArrayW[IdWahana].wahana.status);
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
                             }
@@ -891,11 +898,12 @@ void MainPhase()
                             {
                                 point_wahana = MakePOINT(x,y+1);
                                 crnt_wahana = CariWahanaByLoc(Map3, point_wahana);
-                            }                        
-                            if(crnt_wahana.wahana.status == 0)
+                            }
+                            IdWahana = crnt_wahana.id;                         
+                            if(Map3.ArrayW[IdWahana].wahana.status == 0)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
-                                Repair(&crnt_wahana);
-                                printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
+                                Repair(&Map3.ArrayW[IdWahana].wahana);
+                                printf("Status berubah menjadi :%d\n",Map3.ArrayW[IdWahana].wahana.status);
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
                             }
@@ -924,11 +932,12 @@ void MainPhase()
                             {
                                 point_wahana = MakePOINT(x,y+1);
                                 crnt_wahana = CariWahanaByLoc(Map4, point_wahana);
-                            }                        
-                            if(crnt_wahana.wahana.status == 0)
+                            }
+                            IdWahana = crnt_wahana.id;                         
+                            if(Map4.ArrayW[IdWahana].wahana.status == 0)
                             { // cek wahana rusak, MASIH SALAH NGUBAH STATUS
-                                Repair(&crnt_wahana);
-                                printf("Status berubah menjadi :%d\n",crnt_wahana.wahana.status);
+                                Repair(&Map4.ArrayW[IdWahana].wahana);
+                                printf("Status berubah menjadi :%d\n",Map4.ArrayW[IdWahana].wahana.status);
                                 TambahMenit(&crnt_jam,20);
                                 temp_jam = DetikToJam(JamToDetik(temp_jam) - 1200);
                             }

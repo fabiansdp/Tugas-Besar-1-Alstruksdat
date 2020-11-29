@@ -1,8 +1,7 @@
 #include "../ADT/wahana.h"
 #include <stdlib.h>
-#define StatusWahana(W) (W)->wahana.status
 
-extern DetilWahana crnt_wahana;
+
 //wahanaya rusak random
 int random_number_range(int lower, int upper) { // generate number between lower and upper
    int i,random_num;
@@ -19,8 +18,8 @@ void Broken(ArrayWahana W){
     //kalau rusak ga bisa digunain
     // pemain bisa memperbaiki wahana kalau ada di deket wahana
 }
-void Repair(DetilWahana *crnt_wahana){
-    StatusWahana(crnt_wahana) = 1;
+void Repair(Wahana *W){
+    W->status = 1;
 }
     //ubah status wahana menjadi bisa dipakai
    
