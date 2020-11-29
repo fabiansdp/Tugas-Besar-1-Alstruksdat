@@ -608,6 +608,14 @@ void MainPhase()
             else if (IsKataSama(ck, com_office))
             {
                 printf("Input office\n");
+                if (Absis(player_loc)==7 && Ordinat(player_loc)==15)
+                {
+                    printf("Masuk ke office\n");
+                }
+                else
+                {
+                    printf("Tidak berada di office \n");
+                }
             }
             else if (IsKataSama(ck, com_prepare))
             {
