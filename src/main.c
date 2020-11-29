@@ -16,12 +16,12 @@
 // #include "../ADT/listlinier.c"
 //include from src
 #include "peta.c"
-#include "antrian.c"
+// #include "antrian.c"
 #include "function.c"
 #include "buy.c"
 #include "repair.c"
 #include "office.c"
-//#include "serve.c"
+#include "serve.c"
 //kamus peta
 extern ArrayWahana Map1, Map2, Map3, Map4;
 extern BasisListWahana B;
@@ -192,18 +192,22 @@ void PrintMain()
     case 1:
         printf("Antrian[%d/%d]:\n",NBElmtQueue(Q1),MaxAntrian);
         PrintAntrian(Q1,Map1);
+        // PrintAntrian(Q,Map1);
         break;
     case 2:
         printf("Antrian[%d/%d]:\n",NBElmtQueue(Q2),MaxAntrian);
         PrintAntrian(Q2,Map2);
+        // PrintAntrian(Q,Map2);
         break;
     case 3:
         printf("Antrian[%d/%d]:\n",NBElmtQueue(Q3),MaxAntrian);
         PrintAntrian(Q3,Map3);
+        // PrintAntrian(Q,Map3);
         break;
     case 4:
         printf("Antrian[%d/%d]:\n",NBElmtQueue(Q4),MaxAntrian);
         PrintAntrian(Q4,Map4);
+        // PrintAntrian(Q,Map4);
         break;
     default:
         break;
@@ -992,6 +996,7 @@ void MainPhase(MATRIKS *L1,MATRIKS *L2, MATRIKS *L3, MATRIKS *L4)
                     // Kesabaran(temp)=default_angka;
                     /*Selama tidak full, bisa tambah antrian*/
                     TambahAntrian(&Q1,Map1,temp);
+                  //  TambahAntrian(&Q,Map1,temp);
                     /*Setiap bertambah waktu tambah antrian(not implemented)*/
                     crntname++; /*Nama selanjutnya*/
                     if (crntname==27)
@@ -1011,6 +1016,7 @@ void MainPhase(MATRIKS *L1,MATRIKS *L2, MATRIKS *L3, MATRIKS *L4)
                     // Kesabaran(temp)=default_angka;
                     /*Selama tidak full, bisa tambah antrian*/
                     TambahAntrian(&Q2,Map2,temp);
+                   // TambahAntrian(&Q,Map2,temp);
                     /*Setiap bertambah waktu tambah antrian(not implemented)*/
                     crntname++; /*Nama selanjutnya*/
                     if (crntname==27)
@@ -1030,6 +1036,7 @@ void MainPhase(MATRIKS *L1,MATRIKS *L2, MATRIKS *L3, MATRIKS *L4)
                     // Kesabaran(temp)=default_angka;
                     /*Selama tidak full, bisa tambah antrian*/
                     TambahAntrian(&Q3,Map3,temp);
+                    // TambahAntrian(&Q,Map3,temp);
                     /*Setiap bertambah waktu tambah antrian(not implemented)*/
                     crntname++; /*Nama selanjutnya*/
                     if (crntname==27)
@@ -1049,6 +1056,7 @@ void MainPhase(MATRIKS *L1,MATRIKS *L2, MATRIKS *L3, MATRIKS *L4)
                     // Kesabaran(temp)=default_angka;
                     /*Selama tidak full, bisa tambah antrian*/
                     TambahAntrian(&Q4,Map4,temp);
+                    // TambahAntrian(&Q,Map4,temp);
                     /*Setiap bertambah waktu tambah antrian(not implemented)*/
                     crntname++; /*Nama selanjutnya*/
                     if (crntname==27)
@@ -1270,49 +1278,55 @@ void MainPhase(MATRIKS *L1,MATRIKS *L2, MATRIKS *L3, MATRIKS *L4)
             }
             else if (IsKataSama(ck, com_serve))
             {
-                // STARTKATA();
+                infotype_pq served;
+                KurangAntrian(&Q1,&served);
+                int indeks_whn=served.indexwahana[0];
+                player_money += Map1.ArrayW[indeks_whn].wahana.harga;
+                TambahMenit(&crnt_jam, 5);
+                temp_jam = DetikToJam(JamToDetik(temp_jam) - 300);
+                // STARTKATA(); Map1.ArrayW[count].wahana.status==1
                 // ckserve = CKata;
                 // int id_wahana;
                 // if(IsKataSama(ckserve,CandyCrush))
                 // {
                 //     id_wahana = 11;
-                //     serve(id_wahana);
+                //     serve(Q);
                 //     //tambah waktu
                 // }
                 // else if(IsKataSama(ckserve,ChocolateForest))
                 // {
                 //     id_wahana = 12;
-                //     serve(id_wahana);
+                //     serve(Q);
                 //     //tambah waktu
                 // }
                 // else if(IsKataSama(ckserve,BombomCar))
                 // {
                 //     id_wahana = 13;
-                //     serve(id_wahana);
+                //     serve(Q);
                 //     //tambah waktu
                 // }
                 // else if(IsKataSama(ckserve,LemonSplash))
                 // {
                 //     id_wahana = 14;
-                //     serve(id_wahana);
+                //     serve(Q);
                 //     //tambah waktu
                 // }
                 // else if(IsKataSama(ckserve,CandyVillage))
                 // {
                 //     id_wahana = 15;
-                //     serve(id_wahana);
+                //     serve(Q);
                 //     //tambah waktu
                 // }
                 // else if(IsKataSama(ckserve,CandySwing))
                 // {
                 //     id_wahana = 16;
-                //     serve(id_wahana);
+                //     serve(Q);
                 //     //tambah waktu
                 // }
                 // else if(IsKataSama(ckserve,BlackForestTornado))
                 // {
                 //     id_wahana = 17;
-                //     serve(id_wahana);
+                //     serve(Q);
                 //     //tambah waktu
                 // }
                 // else
