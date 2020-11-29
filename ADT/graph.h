@@ -9,6 +9,8 @@ typedef struct tSuccNode *addrSuccNode;
 typedef struct gNode
 {
     int id;
+    int X;
+    int Y;
     int NPred;
     gaddrNode Next;
     addrSuccNode Trail;
@@ -35,11 +37,12 @@ typedef int infotype;
 #define NPred(Pn) (Pn)->NPred
 #define NextGraf(Pn) (Pn)->Next
 #define Nexts(Pt) (Pt)->Nexts
-
+#define Xref(Pn) (Pn)->X
+#define Yref(Pn) (Pn)->Y
 //konstruktor
-void CreateGraph(Graph * L,infotype X);
+void CreateGraph(Graph * L,infotype Id,infotype X,infotype Y);
 
-gaddrNode GrafAlokNode(infotype X);
+gaddrNode GrafAlokNode(infotype Id,infotype X,infotype Y);
 
 void GrafDealokNode(gaddrNode P);
 
@@ -52,7 +55,7 @@ gaddrNode SearchNode(Graph G,infotype X);
 
 addrSuccNode SearchEdge(Graph G, infotype prec, infotype succ);
 
-void InsertNode(Graph * G, infotype X, gaddrNode * Pn);
+void InsertNode(Graph * G, infotype Id,infotype X,infotype Y, gaddrNode * Pn);
 
 void InsertEdge(Graph * G, infotype prec, infotype succ);
 
